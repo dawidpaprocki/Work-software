@@ -17,18 +17,23 @@ public class Controller
 {
 
 
-    public TextField Delivery_Company;
-    public Button Delivery_add;
-    public TextField Delivery_Name;
+    public TextField Delivery_Material;
+    public TextField Delivery_Ek;
+    public TextField Delivery_Vk;
     public TextField Delivery_Amount_Truck;
     public TextField Delivery_Amount;
     public TextField Delivery_To;
     public TextField Delivery_From;
+    public TextField Delivery_Plate;
+
+    public Button Delivery_add;
 
     @FXML
     private TableView<table> tables;
     @FXML
     private TableColumn<table, String> ColumnData;
+    @FXML
+    private TableColumn<table, String> ColumnMaterial;
     @FXML
     private TableColumn<table, String> ColumnPlate;
     @FXML
@@ -83,7 +88,8 @@ public class Controller
                         rs.getString(8),
                         rs.getString(9),
                         rs.getString(10),
-                        rs.getString(11)
+                        rs.getString(11),
+                        rs.getString(12)
                 ));
             }
 
@@ -98,6 +104,7 @@ public class Controller
         }
 
         ColumnData.setCellValueFactory(new PropertyValueFactory<>("Data"));
+        ColumnMaterial.setCellValueFactory(new PropertyValueFactory<>("Material"));
         ColumnPlate.setCellValueFactory(new PropertyValueFactory<>("Plate"));
         ColumnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
         ColumnFinal_Amount.setCellValueFactory(new PropertyValueFactory<>("Final_Amount"));
@@ -118,13 +125,14 @@ public class Controller
     @FXML
     public void addButton()
     {
-        String dnText = Delivery_Name.getText();
+        String dnText = Delivery_Material.getText();
+        String dpText = Delivery_Plate.getText();
         String datText = Delivery_Amount_Truck.getText();
         String daText = Delivery_Amount.getText();
         String dtText = Delivery_To.getText();
         String dfText = Delivery_From.getText();
-
-
+        String dekText = Delivery_Ek.getText();
+        String dvkText = Delivery_Vk.getText();
 
 
 
@@ -142,8 +150,8 @@ public class Controller
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO All_View (Data,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
-                    "VALUES ('15-05-2018','WGM 5rc3','" + (daText) + "' , 10000,'" + (dfText) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','ZMW/1/04/2018','ZZZ/01/04/2018','WNT/004/01/04' );";
+            String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
+                    "VALUES ('15-05-2018','" + (dnText) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (dfText) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
             stmt.executeUpdate(sql);
 
 
@@ -155,8 +163,15 @@ public class Controller
             System.exit(0);
         }
 
-      //  System.out.println(dcText);
-        Delivery_Company.setText("");
+      // System.out.println(sql);
+        Delivery_Material.setText("");
+        Delivery_Plate.setText("");
+        Delivery_Amount_Truck.setText("");
+        Delivery_Amount.setText("");
+        Delivery_To.setText("");
+        Delivery_From.setText("");
+        Delivery_Ek.setText("");
+        Delivery_Vk.setText("");
     }
 
 

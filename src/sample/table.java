@@ -15,6 +15,7 @@ public class table
 {
 
     private final StringProperty Data;
+    private final StringProperty Material;
     private final StringProperty Plate;
     private final StringProperty Amount;
     private final StringProperty Final_Amount;
@@ -32,10 +33,11 @@ public class table
 
 // String Froms, String Tos, String Vk, String Ek
     public table
-    (String Data,String Plate,String Amount,String Final_Amount,
+    (String Data,String Material,String Plate,String Amount,String Final_Amount,
      String Froms,String Tos,String Truck,String Order,String Vk,String Ek,String Doc)
     {
         this.Data = new SimpleStringProperty(Data);
+        this.Material = new SimpleStringProperty(Material);
         this.Plate = new SimpleStringProperty(Plate);
         this.Amount = new SimpleStringProperty(Amount);
         this.Final_Amount = new SimpleStringProperty(Final_Amount);
@@ -52,6 +54,7 @@ public class table
     }
 
     public  String Data(){return Data.get();}
+    public  String Material(){return Material.get();}
     public  String Plate(){return Plate.get();}
     public  String Amount(){return Amount.get();}
     public  String Final_Amount(){return Final_Amount.get();}
@@ -67,6 +70,7 @@ public class table
 
 
     public  void Data(String value){Data.set(value);}
+    public  void Material(String value){Material.set(value);}
     public  void Plate(String value){Plate.set(value);}
     public  void Amount(String value){Amount.set(value);}
     public  void Final_Amount(String value){Final_Amount.set(value);}
@@ -82,6 +86,9 @@ public class table
 
     public StringProperty DataProperty() {
         return Data;
+    }
+    public StringProperty MaterialProperty() {
+        return Material;
     }
     public StringProperty PlateProperty() {
         return Plate;
