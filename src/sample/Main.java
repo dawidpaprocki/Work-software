@@ -20,6 +20,8 @@ public class Main extends Application
         cont.initialize();
         cont.Listchoice();
         cont.ListchoiceMaterial();
+        cont.combo();
+        cont.ListchoiceContract();
 
 
         primaryStage.setTitle("Hello World");

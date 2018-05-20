@@ -18,7 +18,6 @@ public class Controller
 
 
     public TextField Delivery_Material;
-    public TextField Delivery_Ek;
     public TextField Delivery_Vk;
     public TextField Delivery_Amount_Truck;
     public TextField Delivery_Amount;
@@ -28,14 +27,17 @@ public class Controller
 
     public Button Delivery_add;
     public ChoiceBox choice;
-  //  public Button choiceboxtest;
+    public Button choiceboxtest;
     public ChoiceBox choiceMaterial;
     public Button addBuy;
-
     public ChoiceBox choiceMaterialBuyContract;
+
     public TextField NrBuyContract;
     public TextField AmountContractBuy;
     public TextField TruckContractBuy;
+    public ChoiceBox ChoiceContractBuy;
+    public ChoiceBox choiceContract;
+    public ComboBox comobox;
 
 
     @FXML
@@ -67,8 +69,9 @@ public class Controller
 
     private ObservableList<table>data;
 
-    ObservableList checklist = FXCollections.observableArrayList();
+    ObservableList checklist = FXCollections.observableArrayList();  ObservableList Combolist = FXCollections.observableArrayList();
     ObservableList Mchecklist = FXCollections.observableArrayList();
+    ObservableList Cchecklist = FXCollections.observableArrayList();
     @FXML
     void initialize()
     {
@@ -132,6 +135,7 @@ public class Controller
 
 
     }
+    int Customerid;
 
     @FXML
     public void addButton()
@@ -141,7 +145,7 @@ public class Controller
         String datText = Delivery_Amount_Truck.getText();
         String daText = Delivery_Amount.getText();
         String dtText = Delivery_To.getText();
-        String dekText = Delivery_Ek.getText();
+        //String dekText = Delivery_Ek.getText();
         String dvkText = Delivery_Vk.getText();
 
         Object NameOfCompany = choice.getValue();
@@ -150,6 +154,9 @@ public class Controller
         Object NameOfMaterial = choiceMaterial.getValue();
         String MaterialToString = String.valueOf(NameOfMaterial);
 
+        Object NameOfContract = choiceContract.getValue();
+        String ContractToString = String.valueOf(NameOfContract);
+
 
 
 
@@ -157,7 +164,6 @@ public class Controller
 
         Connection c = null;
         Statement stmt = null;
-
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
@@ -166,7 +172,7 @@ public class Controller
 
             stmt = c.createStatement();
             String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
-                    "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
+                    "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','nic','" + (ContractToString) + "' );";
             stmt.executeUpdate(sql);
 
 
@@ -183,7 +189,6 @@ public class Controller
         Delivery_Amount_Truck.setText("");
         Delivery_Amount.setText("");
         Delivery_To.setText("");
-        Delivery_Ek.setText("");
         Delivery_Vk.setText("");
     }
 
@@ -215,6 +220,66 @@ public class Controller
             System.exit(0);
         }
         choice.setItems(checklist);
+        ChoiceContractBuy.setItems(checklist);
+
+
+    }
+    @FXML
+    public void combo()
+    {
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT NAME FROM Customers;" );
+
+            while ( rs.next() )
+            {
+                Combolist.add(rs.getString("Name"));
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        comobox.setItems(Combolist);
+        System.out.println(comobox.getValue());
+       String s = String.valueOf(comobox.getValue());
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT id FROM Customers WHERE Name = '" + s + "' ;" );
+
+            while ( rs.next() )
+            {
+                System.out.println((rs.getInt("id")));
+                Customerid = ((rs.getInt("id")));
+
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println(Customerid);
+        ListchoiceContract();
+
+
 
     }
 
@@ -248,9 +313,47 @@ public class Controller
         choiceMaterial.setItems(Mchecklist);
         choiceMaterialBuyContract.setItems(Mchecklist);
 
+
+
     }
 
+    @FXML
+    public void ListchoiceContract()
+    {
 
+        Cchecklist.clear();
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            System.out.println("bum"+ Customerid);
+            ResultSet rs = stmt.executeQuery( "SELECT ContractName FROM ContractsOpen Where idCustomer = '" + Customerid + "';" );
+
+            while ( rs.next() )
+            {
+                Cchecklist.add(rs.getString("ContractName"));
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        choiceContract.setItems(Cchecklist);
+        System.out.println(Cchecklist);
+
+
+
+    }
+
+    int id;
     @FXML
     public void addButtonContractBuy()
     {
@@ -259,13 +362,43 @@ public class Controller
         String ACBText = AmountContractBuy.getText();
         String TCBText = TruckContractBuy.getText();
 
+        Object NameOfCompanyBuyContract = ChoiceContractBuy.getValue();
+        String NameBuyToString = String.valueOf(NameOfCompanyBuyContract);
 
-        Object NameOfMaterialBuyContract = choiceMaterialBuyContract.getValue();
-        String MaterialContractBuyToString = String.valueOf(NameOfMaterialBuyContract);
 
 
         Connection c = null;
         Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT id FROM Customers WHERE NAME = '" + NameBuyToString + "' ;" );
+
+            while ( rs.next() )
+            {
+                System.out.println((rs.getInt("id")));
+               id = ((rs.getInt("id")));
+
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+
+
+
+        Object NameOfMaterialBuyContract = choiceMaterialBuyContract.getValue();
+        String MaterialContractBuyToString = String.valueOf(NameOfMaterialBuyContract);
+
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -274,8 +407,8 @@ public class Controller
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO ContractsOpen (idCostumer,idName,NrTruck,NrTruckContract,Amount,OpenClose) " +
-                    "VALUES ('','" + (MaterialContractBuyToString) + "','" + (TCBText) + "' , '0' ,'" + (ACBText) + "','0') ;";
+            String sql = "INSERT INTO ContractsOpen (idCustomer,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
+                    "VALUES ('"+ id +"','" + (MaterialContractBuyToString) + "','" + (TCBText) + "' , '0' ,'" + (NBCText) + "','" + (ACBText) + "','0') ;";
             stmt.executeUpdate(sql);
 
 
@@ -292,7 +425,6 @@ public class Controller
         AmountContractBuy.setText("");
         TruckContractBuy.setText("");
         Delivery_To.setText("");
-        Delivery_Ek.setText("");
         Delivery_Vk.setText("");
     }
 
