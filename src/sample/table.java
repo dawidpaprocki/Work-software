@@ -8,10 +8,6 @@ import javafx.collections.ObservableList;
 import javax.swing.text.TabableView;
 
 public class table
-
-
-
-
 {
 
     private final StringProperty Data;

@@ -18,6 +18,9 @@ public class Main extends Application
         Parent root = loader.load();
         Controller cont = loader.getController();
         cont.initialize();
+        cont.Listchoice();
+        cont.ListchoiceMaterial();
+
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1000, 950));

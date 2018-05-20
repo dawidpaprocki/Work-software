@@ -27,6 +27,11 @@ public class Controller
     public TextField Delivery_Plate;
 
     public Button Delivery_add;
+    public ChoiceBox choice;
+  //  public Button choiceboxtest;
+    public ChoiceBox choiceMaterial;
+    public Button addBuy;
+
 
     @FXML
     private TableView<table> tables;
@@ -57,7 +62,8 @@ public class Controller
 
     private ObservableList<table>data;
 
-
+    ObservableList checklist = FXCollections.observableArrayList();
+    ObservableList Mchecklist = FXCollections.observableArrayList();
     @FXML
     void initialize()
     {
@@ -119,21 +125,25 @@ public class Controller
         tables.setItems(null);
         tables.setItems(data);
 
-    }
 
+    }
 
     @FXML
     public void addButton()
     {
-        String dnText = Delivery_Material.getText();
+
         String dpText = Delivery_Plate.getText();
         String datText = Delivery_Amount_Truck.getText();
         String daText = Delivery_Amount.getText();
         String dtText = Delivery_To.getText();
-        String dfText = Delivery_From.getText();
         String dekText = Delivery_Ek.getText();
         String dvkText = Delivery_Vk.getText();
 
+        Object NameOfCompany = choice.getValue();
+        String NameToString = String.valueOf(NameOfCompany);
+
+        Object NameOfMaterial = choiceMaterial.getValue();
+        String MaterialToString = String.valueOf(NameOfMaterial);
 
 
 
@@ -151,7 +161,7 @@ public class Controller
 
             stmt = c.createStatement();
             String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
-                    "VALUES ('15-05-2018','" + (dnText) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (dfText) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
+                    "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
             stmt.executeUpdate(sql);
 
 
@@ -163,17 +173,130 @@ public class Controller
             System.exit(0);
         }
 
-      // System.out.println(sql);
-        Delivery_Material.setText("");
+
         Delivery_Plate.setText("");
         Delivery_Amount_Truck.setText("");
         Delivery_Amount.setText("");
         Delivery_To.setText("");
-        Delivery_From.setText("");
         Delivery_Ek.setText("");
         Delivery_Vk.setText("");
     }
 
+    @FXML
+    public void Listchoice()
+    {
+
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT NAME FROM Customers;" );
+
+            while ( rs.next() )
+            {
+                checklist.add(rs.getString("Name"));
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        choice.setItems(checklist);
+
+    }
+
+    @FXML
+    public void ListchoiceMaterial()
+    {
+
+        Connection c = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT NAME FROM Material;" );
+
+            while ( rs.next() )
+            {
+                Mchecklist.add(rs.getString("Name"));
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        choiceMaterial.setItems(Mchecklist);
+
+    }
+
+    @FXML
+    public void addButtonContractBuy()
+    {
+
+        String dpText = Delivery_Plate.getText();
+        String datText = Delivery_Amount_Truck.getText();
+        String daText = Delivery_Amount.getText();
+        String dtText = Delivery_To.getText();
+        String dekText = Delivery_Ek.getText();
+        String dvkText = Delivery_Vk.getText();
+
+        Object NameOfCompany = choice.getValue();
+        String NameToString = String.valueOf(NameOfCompany);
+
+        Object NameOfMaterial = choiceMaterial.getValue();
+        String MaterialToString = String.valueOf(NameOfMaterial);
+
+
+
+
+        System.out.println("działa button");
+
+        Connection c = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            System.out.println("Opened database successfully");
+
+            stmt = c.createStatement();
+            String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
+                    "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
+            stmt.executeUpdate(sql);
+
+
+            stmt.close();
+            c.commit();
+            c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+
+        Delivery_Plate.setText("");
+        Delivery_Amount_Truck.setText("");
+        Delivery_Amount.setText("");
+        Delivery_To.setText("");
+        Delivery_Ek.setText("");
+        Delivery_Vk.setText("");
+    }
 
 
 }
