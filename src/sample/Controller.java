@@ -32,6 +32,11 @@ public class Controller
     public ChoiceBox choiceMaterial;
     public Button addBuy;
 
+    public ChoiceBox choiceMaterialBuyContract;
+    public TextField NrBuyContract;
+    public TextField AmountContractBuy;
+    public TextField TruckContractBuy;
+
 
     @FXML
     private TableView<table> tables;
@@ -241,30 +246,23 @@ public class Controller
             System.exit(0);
         }
         choiceMaterial.setItems(Mchecklist);
+        choiceMaterialBuyContract.setItems(Mchecklist);
 
     }
+
 
     @FXML
     public void addButtonContractBuy()
     {
 
-        String dpText = Delivery_Plate.getText();
-        String datText = Delivery_Amount_Truck.getText();
-        String daText = Delivery_Amount.getText();
-        String dtText = Delivery_To.getText();
-        String dekText = Delivery_Ek.getText();
-        String dvkText = Delivery_Vk.getText();
-
-        Object NameOfCompany = choice.getValue();
-        String NameToString = String.valueOf(NameOfCompany);
-
-        Object NameOfMaterial = choiceMaterial.getValue();
-        String MaterialToString = String.valueOf(NameOfMaterial);
+        String NBCText = NrBuyContract.getText();
+        String ACBText = AmountContractBuy.getText();
+        String TCBText = TruckContractBuy.getText();
 
 
+        Object NameOfMaterialBuyContract = choiceMaterialBuyContract.getValue();
+        String MaterialContractBuyToString = String.valueOf(NameOfMaterialBuyContract);
 
-
-        System.out.println("działa button");
 
         Connection c = null;
         Statement stmt = null;
@@ -276,8 +274,8 @@ public class Controller
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
-                    "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','" + (dekText) + "','WNT/004/01/04' );";
+            String sql = "INSERT INTO ContractsOpen (idCostumer,idName,NrTruck,NrTruckContract,Amount,OpenClose) " +
+                    "VALUES ('','" + (MaterialContractBuyToString) + "','" + (TCBText) + "' , '0' ,'" + (ACBText) + "','0') ;";
             stmt.executeUpdate(sql);
 
 
@@ -290,9 +288,9 @@ public class Controller
         }
 
 
-        Delivery_Plate.setText("");
-        Delivery_Amount_Truck.setText("");
-        Delivery_Amount.setText("");
+        NrBuyContract.setText("");
+        AmountContractBuy.setText("");
+        TruckContractBuy.setText("");
         Delivery_To.setText("");
         Delivery_Ek.setText("");
         Delivery_Vk.setText("");
