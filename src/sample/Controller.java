@@ -145,7 +145,7 @@ public class Controller
         String datText = Delivery_Amount_Truck.getText();
         String daText = Delivery_Amount.getText();
         String dtText = Delivery_To.getText();
-        //String dekText = Delivery_Ek.getText();
+
         String dvkText = Delivery_Vk.getText();
 
         Object NameOfCompany = choice.getValue();
@@ -164,16 +164,50 @@ public class Controller
 
         Connection c = null;
         Statement stmt = null;
-        try {
+        try
+        {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
             c.setAutoCommit(false);
             System.out.println("Opened database successfully");
-
+            try{
             stmt = c.createStatement();
             String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
                     "VALUES ('15-05-2018','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','nic','" + (ContractToString) + "' );";
-            stmt.executeUpdate(sql);
+            String sql1 = "UPDATE ContractsOpen set NrTruckContract = (NrTruckContract + '" + (datText) + "')where ContractNAme = '" + (ContractToString) + "'";
+            String sql2 = "update ContractsOpen set OpenClose = 1 WHERE  NrTruck = NrTruckContract";
+            String sql3 = "insert into ContractsClose select * From ContractsOpen where openclose =1";
+            String sql4 = "delete From ContractsOpen where openclose =1";
+
+            stmt.execute(sql) ;
+            stmt.execute(sql1);
+            stmt.execute(sql2);
+            stmt.execute(sql3);
+            stmt.execute(sql4);}
+            catch ( Exception e ) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.exit(0);
+            }
+           /* try{
+                stmt = c.createStatement();
+                String sql = "UPDATE ContractsOpen set NrTruckContract = '" + (datText) + "'where ContractNAme = '" + (ContractToString) + "'";
+
+                stmt.executeUpdate(sql);}
+            catch ( Exception e ) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.exit(0);
+            }  /*      zjebane
+            try{
+                stmt = c.createStatement();
+                String sql = "INSERT INTO ContractsClose SELECT * FROM ContractsOpen WHERE ";
+
+                stmt.executeUpdate(sql);}
+            catch ( Exception e ) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.exit(0);
+            }   */
+
+
 
 
             stmt.close();
@@ -224,7 +258,7 @@ public class Controller
 
 
     }
-    @FXML
+
     public void combo()
     {
         Connection c = null;
@@ -252,7 +286,7 @@ public class Controller
         }
         comobox.setItems(Combolist);
         System.out.println(comobox.getValue());
-       String s = String.valueOf(comobox.getValue());
+        String s = String.valueOf(comobox.getValue());
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
