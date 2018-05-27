@@ -73,7 +73,7 @@ public class Controller
 
     ObservableList BuyToSellList = FXCollections.observableArrayList();  ObservableList Combolist = FXCollections.observableArrayList();
     ObservableList Mchecklist = FXCollections.observableArrayList();
-    ObservableList Cchecklist = FXCollections.observableArrayList();
+    ObservableList Cchecklist = FXCollections.observableArrayList(); ObservableList ContractSellList = FXCollections.observableArrayList();
 
     int Customerid;
     String MaterialName;
@@ -163,6 +163,7 @@ public class Controller
 
     }
 
+    String contractname;
     @FXML
     public void addButton()
     {
@@ -179,8 +180,6 @@ public class Controller
                         String datText = Delivery_Amount_Truck.getText();
                         System.out.println("sprawdzam środek" + datapickerString.length());
 
-                        String dvkText = "nie";
-
                         Object NameOfCompany = comobox.getValue();
                         String NameToString = String.valueOf(NameOfCompany);
 
@@ -189,6 +188,23 @@ public class Controller
 
                         Object NameOfContract = NrContractBuy.getValue();
                         String ContractToString = String.valueOf(NameOfContract);
+
+                        Object NameOfContractSell = NrContractSell.getValue();
+                        String ContractSellToString = String.valueOf(NameOfContractSell);
+
+                        System.out.println(ContractSellToString+"sell kontrakt");
+
+                        if (ContractSellToString.length() >4)
+                        {
+                            ContractSellToString = contractname;
+
+                        }
+                        else
+                        {
+                            contractname = "dopisz";
+
+                        }
+                        System.out.println(contractname);
 
 
                         try {
@@ -207,7 +223,7 @@ public class Controller
                                 try {
                                     stmt = c.createStatement();
                                     String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
-                                            "VALUES ('" + (datapickerString) + "','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (dvkText) + "','nic','" + (ContractToString) + "' );";
+                                            "VALUES ('" + (datapickerString) + "','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (contractname) + "','" + (ContractToString) + "','nic' );";
                                     String sql1 = "UPDATE ContractsOpenBuy set NrTruckContract = (NrTruckContract + '" + (datText) + "')where ContractNAme = '" + (ContractToString) + "'";
                                     String sql2 = "update ContractsOpenBuy set OpenClose = 1 WHERE  NrTruck = NrTruckContract";
                                     String sql3 = "insert into ContractsClose select * From ContractsOpenBuy where openclose =1";
@@ -237,7 +253,6 @@ public class Controller
                             Delivery_Amount_Truck.setText("");
                             Delivery_Amount.setText("");
                             Delivery_To.setText("");
-                            comobox.valueProperty().set(null);
                             MateriaID.setText("");
                             datapickererror.setText("");
 
@@ -517,8 +532,8 @@ public class Controller
                             System.out.println("Opened database successfully");
 
                             stmt = c.createStatement();
-                            String sql = "INSERT INTO ContractsOpenBuy (idSell,idCustomer,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
-                                    "VALUES ('" + idBuyToSell + "','" + id + "','" + (MaterialContractBuyToString) + "','" + (TCBText) + "' , '0' ,'" + (NBCText) + "','" + (ACBText) + "','0') ;";
+                            String sql = "INSERT INTO ContractsOpenBuy (idSell,idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
+                                    "VALUES ('" + idBuyToSell + "','" + id + "','"+(NameBuyToString) +"','" + (MaterialContractBuyToString) + "','" + (TCBText) + "' , '0' ,'" + (NBCText) + "','" + (ACBText) + "','0') ;";
                             stmt.executeUpdate(sql);
 
 

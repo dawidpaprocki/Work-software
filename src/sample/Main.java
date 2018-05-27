@@ -26,7 +26,7 @@ public class Main extends Application
 
 
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 1000, 950));
+        primaryStage.setScene(new Scene(root, 1300, 800));
         primaryStage.show();
 
 
