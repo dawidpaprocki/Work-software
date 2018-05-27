@@ -31,3 +31,4 @@ public class SQLiteJDBC {
         System.out.println("Records created successfully");
     }
 }
+// <ComboBox fx:id="ChocieContractSell" layoutX="14.0" layoutY="292.0" onAction="#ContractBuyToSell" prefWidth="150.0" />

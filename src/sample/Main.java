@@ -17,11 +17,12 @@ public class Main extends Application
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         Controller cont = loader.getController();
+
         cont.initialize();
-        cont.Listchoice();
-        cont.ListchoiceMaterial();
         cont.combo();
         cont.ListchoiceContract();
+        cont.materiallist();
+        cont.ListchoiceContractBuyToSell();
 
 
         primaryStage.setTitle("Hello World");

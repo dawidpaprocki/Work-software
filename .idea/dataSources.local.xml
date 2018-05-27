@@ -6,6 +6,7 @@
       <secret-storage>master_key</secret-storage>
       <auth-required>false</auth-required>
       <first-sync>true</first-sync>
+      <introspection-schemas>*:</introspection-schemas>
     </data-source>
   </component>
 </project>
