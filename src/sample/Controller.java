@@ -7,11 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sample.tablePackage.MainTable;
+import sample.tablePackage.table;
+
 import java.sql.*;
 import java.sql.Connection;
 
 public class Controller
 {
+
+
     public Label MateriaID;
     public TextField Delivery_Amount_Truck;
     public TextField Delivery_Amount;
@@ -69,6 +74,20 @@ public class Controller
     @FXML
     private TableColumn<table, String> ColumnDoc;
 
+    @FXML
+    private TableView<TableContractOpenBuy> TableContractOpenBuy;
+    @FXML
+    private TableColumn<table, String> ColumnCustomerName;
+    private ObservableList<TableContractOpenBuy>data2;
+
+    @FXML
+    private TableView<TableContractOpenSell> TableContractOpenSell;
+    @FXML
+    private TableColumn<table, String> ColumnCustomerNameSell;
+    private ObservableList<TableContractOpenSell>OpenSellData;
+
+
+
     private ObservableList<table>data;
 
     ObservableList BuyToSellList = FXCollections.observableArrayList();  ObservableList Combolist = FXCollections.observableArrayList();
@@ -77,6 +96,7 @@ public class Controller
 
     int Customerid;
     String MaterialName;
+
 
    /* public void datapickecheck()
     {
@@ -102,38 +122,36 @@ public class Controller
         choiceMaterialBuyContract.setItems(Mchecklist);
         choiceMaterialSellContract.setItems(Mchecklist);
     }
-
+//    combo C;
     @FXML
     public void initialize()
     {
-        data = FXCollections.observableArrayList();
+//        C = new combo(comobox, ChoiceContractBuy, ChoiceContractSell, Combolist);
+        Object MainTable = new MainTable(data,tables,ColumnData,ColumnMaterial,ColumnPlate,ColumnAmount,ColumnFinal_Amount,ColumnFroms,ColumnTos,ColumnTruck,ColumnOrder,ColumnVk,ColumnEk,ColumnDoc);
+
+
 
         Connection c = null;
         Statement stmt = null;
+
+
+
+        data2 = FXCollections.observableArrayList();
+
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
             c.setAutoCommit(false);
             stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT * FROM All_View;" );
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM all_view;" );
 
             while ( rs.next() )
             {
-                data.add(new table
-                (
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12)
-                ));
+                data2.add(new TableContractOpenBuy
+                        (
+                                rs.getString(4)
+
+                        ));
             }
             rs.close();
             stmt.close();
@@ -145,22 +163,47 @@ public class Controller
             System.exit(0);
         }
 
-        ColumnData.setCellValueFactory(new PropertyValueFactory<>("Data"));
-        ColumnMaterial.setCellValueFactory(new PropertyValueFactory<>("Material"));
-        ColumnPlate.setCellValueFactory(new PropertyValueFactory<>("Plate"));
-        ColumnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        ColumnFinal_Amount.setCellValueFactory(new PropertyValueFactory<>("Final_Amount"));
-        ColumnFroms.setCellValueFactory(new PropertyValueFactory<>("Froms"));
-        ColumnTos.setCellValueFactory(new PropertyValueFactory<>("Tos"));
-        ColumnTruck.setCellValueFactory(new PropertyValueFactory<>("Truck"));
-        ColumnOrder.setCellValueFactory(new PropertyValueFactory<>("Order"));
-        ColumnVk.setCellValueFactory(new PropertyValueFactory<>("Vk"));
-        ColumnEk.setCellValueFactory(new PropertyValueFactory<>("Ek"));
-        ColumnDoc.setCellValueFactory(new PropertyValueFactory<>("Doc"));
+        ColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
 
-        tables.setItems(null);
-        tables.setItems(data);
 
+        TableContractOpenBuy.setItems(null);
+        TableContractOpenBuy.setItems(data2);
+
+
+
+
+        OpenSellData = FXCollections.observableArrayList();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:organizmy.db");
+            c.setAutoCommit(false);
+            stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery( "SELECT * FROM ContractsOpenSell;" );
+
+            while ( rs.next() )
+            {
+                OpenSellData.add(new TableContractOpenSell
+                        (
+                                rs.getString(4)
+
+                        ));
+            }
+            rs.close();
+            stmt.close();
+            c.close();
+        }
+        catch ( Exception e )
+        {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+
+        ColumnCustomerNameSell.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
+
+
+        TableContractOpenSell.setItems(null);
+        TableContractOpenSell.setItems(OpenSellData);
     }
 
     String contractname;
@@ -224,6 +267,7 @@ public class Controller
                                     stmt = c.createStatement();
                                     String sql = "INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc) " +
                                             "VALUES ('" + (datapickerString) + "','" + (MaterialToString) + "','" + (dpText) + "','" + (daText) + "' , 10000,'" + (NameToString) + "' ,'" + (dtText) + "','" + (datText) + "','12-E','" + (contractname) + "','" + (ContractToString) + "','nic' );";
+
                                     String sql1 = "UPDATE ContractsOpenBuy set NrTruckContract = (NrTruckContract + '" + (datText) + "')where ContractNAme = '" + (ContractToString) + "'";
                                     String sql2 = "update ContractsOpenBuy set OpenClose = 1 WHERE  NrTruck = NrTruckContract";
                                     String sql3 = "insert into ContractsClose select * From ContractsOpenBuy where openclose =1";
@@ -256,10 +300,10 @@ public class Controller
                             MateriaID.setText("");
                             datapickererror.setText("");
 
-                        } catch (NumberFormatException e) {
-                            Delivery_Amount.setText("Tylko liczby");
-                            System.out.println("nie integer");
-                        }
+                            } catch (NumberFormatException e) {
+                                Delivery_Amount.setText("Tylko liczby");
+                                System.out.println("nie integer");
+                            }
                     }
                     else
                     {

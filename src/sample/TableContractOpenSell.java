@@ -7,14 +7,15 @@ import javafx.collections.ObservableList;
 
 import javax.swing.text.TabableView;
 
-public class TableContractOpenBuy
+
+public class TableContractOpenSell
 {
 
 
     private final StringProperty CustomerName;
 
 
-    public TableContractOpenBuy
+    public TableContractOpenSell
     (String CustomerName){
 
         this.CustomerName = new SimpleStringProperty(CustomerName);

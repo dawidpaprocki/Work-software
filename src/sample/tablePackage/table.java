@@ -1,4 +1,4 @@
-package sample;
+package sample.tablePackage;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
