@@ -19,7 +19,7 @@ public class Main extends Application
         Controller cont = loader.getController();
 
         cont.initialize();
-        cont.combo();
+
         cont.ListchoiceContract();
         cont.materiallist();
         cont.ListchoiceContractBuyToSell();

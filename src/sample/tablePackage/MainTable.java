@@ -6,12 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.connectionPackage.SelectAll;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import sample.connectionPackage.SelectTable;
 
 public class MainTable {
     @FXML
@@ -50,8 +45,8 @@ public class MainTable {
 
         data = FXCollections.observableArrayList();
 
-        SelectAll selectAll = new SelectAll();
-        SelectAll.SelectAll("All_View",data);
+        SelectTable selectAll = new SelectTable();
+        SelectTable.SelectAll("All_view",data,"*");
 
         ColumnData.setCellValueFactory(new PropertyValueFactory<>("Data"));
         ColumnMaterial.setCellValueFactory(new PropertyValueFactory<>("Material"));

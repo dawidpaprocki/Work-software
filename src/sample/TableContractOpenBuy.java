@@ -1,11 +1,7 @@
 package sample;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
-
-import javax.swing.text.TabableView;
 
 public class TableContractOpenBuy
 {

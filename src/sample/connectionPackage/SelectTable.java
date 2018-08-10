@@ -8,23 +8,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
-/**
- * This class is used to select a list of records from DB table
- * using PreparedStatement.
- * @author codesjava
- */
-public class SelectAll {
+    public class SelectTable {
 
     private static ObservableList<table>data;
 
-    public static void SelectAll(String what,ObservableList<table> date){
+    public static void SelectAll(String from,ObservableList<table> date ,String what){
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         data = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM "+ what;
+        String query = "SELECT "+ what + " FROM "+ from;
 
         try{
             //get connection
