@@ -46,7 +46,6 @@ public class SelectCombolist {
 //        System.out.println(combolist+"działa?");
     }
 
-
     public ObservableList getCombolist() {
         return combolist;
     }
@@ -54,4 +53,8 @@ public class SelectCombolist {
     public void setCombolist(ObservableList combolist) {
         this.combolist = combolist;
     }
+
+
+
+
 }

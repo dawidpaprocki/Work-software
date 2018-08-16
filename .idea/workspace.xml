@@ -2,31 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit5_r5_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_12.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Work-software 2.1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mysql-connector-java-8.0.12.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/combo/ChoiceCustomersName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/combo/MaterialList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/combo/SelecCustomerId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/combo/SelectCombolist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/connection/DBconnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/table/SelectTable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/table/table.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/sample/pirmary/primaryControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/organizmy.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/praca2/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/praca2/sample/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/praca2/sample/Material.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/praca2/sample/TableContractOpenBuy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/praca2/sample/open.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/praca2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/DbConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kamilek.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kamilek/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kamilek/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kamilek/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kamilek/sample/sample.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Material.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/SQLiteJDBC.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/TableContractOpenBuy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/combo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/open.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/s.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/table.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/pirmary/primaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/pirmary/primaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/pirmary/primaryFXML.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/pirmary/primaryFXML.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/sale/saleFXML.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sale/saleFXML.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/sale/salecontractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sale/salecontractController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/table/tableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/table/tableController.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,82 +91,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SelectTable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/table/SelectTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="primaryController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="276" selection-start-line="276" selection-end-line="276" />
+            <state relative-caret-position="17">
+              <caret line="238" column="40" selection-start-line="238" selection-start-column="40" selection-end-line="238" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#initialize#0;class#primaryController#0" />
                 <element signature="method#addButton#0;class#primaryController#0" />
-                <element signature="method#Materialprepare#0;class#primaryController#0" />
-                <element signature="method#SelectComboBoxList#0;class#primaryController#0" />
-                <element signature="e#10639#10640#0" expanded="true" />
-                <element signature="e#10680#10681#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ComboCustomersName.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SelectCombolist.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectCombolist.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="26" column="31" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DBconnection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/connection/DBconnection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OpenCuContractController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
+      <file leaf-file-name="salecontractController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sample/sale/salecontractController.java">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -174,11 +116,16 @@
       <list>
         <option value="Interface" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Arquillian JUnit Test Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ł</find>
+    </findStrings>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -196,7 +143,6 @@
         <option value="$PROJECT_DIR$/src/sample/sample.fxml" />
         <option value="$PROJECT_DIR$/src/sample/table.java" />
         <option value="$PROJECT_DIR$/src/sample/table/tableFXML.fxml" />
-        <option value="$PROJECT_DIR$/src/sample/sale/salecontractController.java" />
         <option value="$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContract/OpenCuContract.java" />
         <option value="$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContract.java" />
         <option value="$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContract/OpenCuContractController.java" />
@@ -208,11 +154,15 @@
         <option value="$PROJECT_DIR$/src/sample/sale/saleFXML.fxml" />
         <option value="$PROJECT_DIR$/src/sample/pirmary/primaryFXML.fxml" />
         <option value="$PROJECT_DIR$/src/sample/combo/SelectComboBoxList.java" />
-        <option value="$PROJECT_DIR$/src/sample/combo/SelectCombolist.java" />
-        <option value="$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/sample/pirmary/primaryController.java" />
         <option value="$PROJECT_DIR$/test/sample/pirmary/primaryControllerTest.java" />
+        <option value="$PROJECT_DIR$/src/sample/combo/SelectCombolist.java" />
+        <option value="$PROJECT_DIR$/src/sample/pirmary/primaryController.java" />
+        <option value="$PROJECT_DIR$/src/sample/combo/MaterialList.java" />
+        <option value="$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java" />
+        <option value="$PROJECT_DIR$/src/sample/combo/SelecCustomerId.java" />
+        <option value="$PROJECT_DIR$/src/sample/combo/ChoiceCustomersName.java" />
+        <option value="$PROJECT_DIR$/src/sample/sale/salecontractController.java" />
       </list>
     </option>
   </component>
@@ -241,35 +191,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Work-software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Work-software" type="462c0819:PsiDirectoryNode" />
+              <item name="Work-Software 2.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Work-Software 2.0" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Work-software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Work-software" type="462c0819:PsiDirectoryNode" />
+              <item name="Work-Software 2.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Work-Software 2.0" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Work-software" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Work-software" type="462c0819:PsiDirectoryNode" />
+              <item name="Work-Software 2.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Work-Software 2.0" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="sample" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Work-software" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Work-Software 2.0" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="Work-Software 2.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -289,8 +243,8 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.Arquillian JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/junit5-r5.2.0.zip!/" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Work-software-master" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -300,13 +254,13 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="sample.pirmary" />
     </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="sample.combo" />
       <recent name="sample.Connection" />
       <recent name="sample.table" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\srel2\Documents\GitHub\Kamilek" />
@@ -330,7 +284,7 @@
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="sample.Main" />
-      <module name="Work-software 2.0" />
+      <module name="Work-software 2.1" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -361,7 +315,7 @@
       <patterns />
     </configuration>
     <configuration name="primaryControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Work-software 2.0" />
+      <module name="Work-software 2.1" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="sample.pirmary.*" />
@@ -456,8 +410,10 @@
       <workItem from="1534273738160" duration="93000" />
       <workItem from="1534276222214" duration="15000" />
       <workItem from="1534277520514" duration="2589000" />
-      <workItem from="1534330454815" duration="14527000" />
-      <workItem from="1534367984037" duration="290000" />
+      <workItem from="1534330454815" duration="15294000" />
+      <workItem from="1534439389458" duration="9016000" />
+      <workItem from="1534448900765" duration="23000" />
+      <workItem from="1534449012805" duration="5000" />
     </task>
     <servers />
   </component>
@@ -485,14 +441,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18857000" />
+    <option name="totallyTimeSpent" value="28378000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1688" y="24" width="1696" height="1026" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="6" />
       <window_info anchor="bottom" id="TODO" order="9" />
-      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
@@ -500,12 +455,12 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="15" weight="0.291939" />
-      <window_info anchor="bottom" id="Run" order="4" visible="true" weight="0.029279279" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.27559912" />
       <window_info anchor="bottom" id="Terminal" order="5" weight="0.24335814" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Designer" order="0" />
       <window_info anchor="bottom" id="JFormDesigner Bindings" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.16564792" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.20660147" />
       <window_info anchor="right" id="Database" order="8" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -514,23 +469,25 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.39978212" />
       <window_info anchor="right" id="JetGradle" order="9" />
+      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="3" />
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Profiler" order="13" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Problems" order="14" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Application Servers" order="16" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Application Servers" order="16" />
       <window_info id="Designer" order="0" />
       <window_info anchor="right" id="Palette" order="6" />
       <window_info anchor="bottom" id="JFormDesigner Bindings" order="0" />
+      <window_info id="Image Layers" order="5" />
       <window_info anchor="bottom" id="Run" order="4" weight="0.32897604" />
       <window_info anchor="right" id="JetGradle" order="9" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -544,7 +501,6 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="12" />
-      <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Problems" order="14" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
@@ -554,7 +510,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.12846482" />
       <window_info anchor="right" id="Database" order="8" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info id="Image Layers" order="5" />
+      <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
@@ -575,7 +531,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -583,66 +539,47 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="4046">
+          <caret line="238" column="40" lean-forward="true" selection-start-line="238" selection-start-column="40" selection-end-line="238" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#addButton#0;class#primaryController#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/table/SelectTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectCombolist.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" column="31" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/connection/DBconnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
+        <state relative-caret-position="1904">
+          <caret line="218" column="8" selection-start-line="218" selection-start-column="8" selection-end-line="222" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addButton#0;class#primaryController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/table/SelectTable.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectCombolist.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/connection/DBconnection.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4692">
           <caret line="276" selection-start-line="276" selection-end-line="276" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#primaryController#0" />
             <element signature="method#addButton#0;class#primaryController#0" />
-            <element signature="method#Materialprepare#0;class#primaryController#0" />
-            <element signature="method#SelectComboBoxList#0;class#primaryController#0" />
-            <element signature="e#10639#10640#0" expanded="true" />
-            <element signature="e#10680#10681#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -654,50 +591,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/table/tableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/table/tableController.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#primaryController#0" />
             <element signature="method#addButton#0;class#primaryController#0" />
-            <element signature="method#Materialprepare#0;class#primaryController#0" />
-            <element signature="method#SelectComboBoxList#0;class#primaryController#0" />
-            <element signature="e#10639#10640#0" expanded="true" />
-            <element signature="e#10680#10681#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/sale/salecontractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/sale/salecontractController.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -713,9 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -731,9 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -748,9 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -762,22 +664,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/ipmlements.java" />
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/table.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/hi/hi.java" />
-    <entry file="file://$PROJECT_DIR$/src/sample/table/table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-796">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/lang/System.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -785,41 +673,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/table/tableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="59" column="75" lean-forward="true" selection-start-line="59" selection-start-column="75" selection-end-line="59" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/sale/salecontractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/connection/DBconnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/table/SelectTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/tableOpenContracts/OpenCuContractController.java" />
     <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/javafx.controls/javafx/scene/control/ChoiceBox.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
@@ -828,58 +682,56 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectComboBoxList.java" />
-    <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectCombolist.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" column="31" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/sample/pirmary/primaryControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="49" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
+    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="276" selection-start-line="276" selection-end-line="276" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#primaryController#0" />
-            <element signature="method#addButton#0;class#primaryController#0" />
-            <element signature="method#Materialprepare#0;class#primaryController#0" />
-            <element signature="method#SelectComboBoxList#0;class#primaryController#0" />
-            <element signature="e#10639#10640#0" expanded="true" />
-            <element signature="e#10680#10681#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="323">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/java.base/java/io/PrintStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="879" column="16" selection-start-line="879" selection-start-column="16" selection-end-line="879" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/table/SelectTable.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/table/table.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/MaterialList.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/connection/DBconnection.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/SelectCombolist.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/ComboCustomersName.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/SelecCustomerId.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/table/tableController.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/pirmary/primaryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="238" column="40" selection-start-line="238" selection-start-column="40" selection-end-line="238" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#addButton#0;class#primaryController#0" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/combo/ChoiceCustomersName.java" />
+    <entry file="file://$PROJECT_DIR$/src/sample/sale/salecontractController.java">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
@@ -933,7 +785,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Kamilek</last-edited>
+          <last-edited>Work-software 2.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

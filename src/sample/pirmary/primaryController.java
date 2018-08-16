@@ -275,14 +275,14 @@ public class primaryController {
 
     public void ListOfChoiceCotract(){
         String comboBoxList = String.valueOf(ComboBox.getValue());
-        System.out.println("comboboxlis"+ comboBoxList);
+
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;
 
 
         String query = "SELECT ContractName FROM ContractsOpenBuy Where idCustomer = '" + Customerid + "';";
-        System.out.println(query);
+
         try{
             //get connection
             conn = DBconnection.getConnection();
@@ -304,7 +304,7 @@ public class primaryController {
             e.printStackTrace();
         }
         NrContractBuy.setItems(ChoiceContractList);
-        System.out.println("wywołanie listy kontraktów"  + ChoiceContractList);
+        System.out.println("wywołanie listy kontraktów "  + ChoiceContractList);
     }
 
     public ObservableList getChoiceContractList() {
