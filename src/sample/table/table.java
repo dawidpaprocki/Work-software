@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 
 public class table
 {
-
+    private final StringProperty Id;
     private final StringProperty Data;
     private final StringProperty Material;
     private final StringProperty Plate;
@@ -25,9 +25,10 @@ public class table
 
 // String Froms, String Tos, String Vk, String Ek
     public table
-    (String Data,String Material,String Plate,String Amount,String Final_Amount,
+    (String Id,String Data,String Material,String Plate,String Amount,String Final_Amount,
      String Froms,String Tos,String Truck,String Order,String Vk,String Ek,String Doc)
     {
+        this.Id = new SimpleStringProperty(Id);
         this.Data = new SimpleStringProperty(Data);
         this.Material = new SimpleStringProperty(Material);
         this.Plate = new SimpleStringProperty(Plate);
@@ -45,6 +46,7 @@ public class table
 
     }
 
+    public  String Id(){return Id.get();}
     public  String Data(){return Data.get();}
     public  String Material(){return Material.get();}
     public  String Plate(){return Plate.get();}
@@ -60,7 +62,7 @@ public class table
 
 
 
-
+    public  void Id(String value){Id.set(value);}
     public  void Data(String value){Data.set(value);}
     public  void Material(String value){Material.set(value);}
     public  void Plate(String value){Plate.set(value);}
@@ -75,7 +77,9 @@ public class table
     public  void Doc(String value){Doc.set(value);}
 
 
-
+    public StringProperty IdProperty() {
+        return Id;
+    }
     public StringProperty DataProperty() {
         return Data;
     }

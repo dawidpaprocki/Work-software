@@ -32,6 +32,7 @@ public static void SelectAll(String from,ObservableList<table> date ,String what
         while (rs.next()) {
             data.add(new table
                     (
+
                             rs.getString(1),
                             rs.getString(2),
                             rs.getString(3),
@@ -43,7 +44,8 @@ public static void SelectAll(String from,ObservableList<table> date ,String what
                             rs.getString(9),
                             rs.getString(10),
                             rs.getString(11),
-                            rs.getString(12)
+                            rs.getString(12),
+                            rs.getString(13)
                     ));
         }
 
