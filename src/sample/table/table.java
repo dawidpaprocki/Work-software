@@ -23,7 +23,6 @@ public class table
 
 
 
-// String Froms, String Tos, String Vk, String Ek
     public table
     (String Id,String Data,String Material,String Plate,String Amount,String Final_Amount,
      String Froms,String Tos,String Truck,String Order,String Vk,String Ek,String Doc)

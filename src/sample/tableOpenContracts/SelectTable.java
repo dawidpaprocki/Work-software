@@ -1,8 +1,9 @@
-package sample.table;
+package sample.tableOpenContracts;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.connection.DBconnection;
+import sample.table.table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +11,9 @@ import java.sql.ResultSet;
 
 public class SelectTable {
 
-private static ObservableList<table>data;
+private static ObservableList<TableContractOpenBuy>data;
 
-public static void SelectAll(String from, ObservableList<table> date , String what){
+public static void SelectAll(String from, ObservableList<TableContractOpenBuy> date , String what){
 
     Connection conn = null;
     PreparedStatement preparedStatement = null;
@@ -30,7 +31,7 @@ public static void SelectAll(String from, ObservableList<table> date , String wh
         //execute query
         ResultSet rs = preparedStatement.executeQuery(query);
         while (rs.next()) {
-            data.add(new table
+            data.add(new TableContractOpenBuy
                     (
 
                             rs.getString(1),
@@ -38,31 +39,27 @@ public static void SelectAll(String from, ObservableList<table> date , String wh
                             rs.getString(3),
                             rs.getString(4),
                             rs.getString(5),
-                            rs.getString(6),
-                            rs.getString(7),
-                            rs.getString(8),
-                            rs.getString(9),
-                            rs.getString(10),
-                            rs.getString(11),
-                            rs.getString(12),
-                            rs.getString(13)
+                            rs.getString(6)
+
+
                     ));
         }
 
         //close connection
         preparedStatement.close();
         conn.close();
-    }catch(Exception e){
-        e.printStackTrace();
+    } catch ( Exception e ) {
+        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        System.exit(0);
     }
 }
 
 
-public ObservableList<table> getData() {
+public ObservableList<TableContractOpenBuy> getData() {
     return data;
 }
 
-public void setData(ObservableList<table> data) {
+public void setData(ObservableList<TableContractOpenBuy> data) {
     this.data = data;
 }
 }
