@@ -59,6 +59,11 @@
             <fx:include source="../sale/saleFXML.fxml" />
          </children>
       </Pane>
+      <Pane layoutX="15.0" layoutY="183.0">
+         <children>
+            <fx:include source="../purchase/purchaseFXML.fxml" />
+         </children>
+      </Pane>
 
     </children>
 
