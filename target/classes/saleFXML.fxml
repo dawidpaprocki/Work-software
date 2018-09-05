@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="346.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sale.salecontractController">
+
+    <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutY="-1.0" prefHeight="369.0" prefWidth="190.0" text="Kontrakt sprzedażowy" textAlignment="CENTER">
+        <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="325.0" prefWidth="188.0">
+                <children>
+                    <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="149.0" text="Nazwa Firmy" />
+                    <ChoiceBox fx:id="ChoiceContractSell" layoutX="14.0" layoutY="31.0" prefWidth="150.0" />
+                    <TextField fx:id="NrSellContract" layoutX="14.0" layoutY="79.0" />
+                    <Label layoutX="14.0" layoutY="62.0" prefHeight="17.0" prefWidth="149.0" text="Numer kontraktu" />
+                    <Label layoutX="14.0" layoutY="110.0" prefHeight="17.0" prefWidth="149.0" text="Materiał" />
+                    <TextField fx:id="AmountContractSell" layoutX="14.0" layoutY="177.0" />
+                    <Label layoutX="14.0" layoutY="160.0" prefHeight="17.0" prefWidth="149.0" text="Ilość ton" />
+                    <TextField fx:id="TruckContractSell" layoutX="14.0" layoutY="229.0" />
+                    <Label layoutX="14.0" layoutY="212.0" prefHeight="17.0" prefWidth="149.0" text="Ilość aut" />
+                    <Button fx:id="addSell" layoutX="37.0" layoutY="267.0" mnemonicParsing="false" onAction="#addContractButton" prefHeight="25.0" prefWidth="92.0" text="Dodaj" />
+                    <ChoiceBox fx:id="choiceMaterialSellContract" layoutX="14.0" layoutY="127.0" prefWidth="150.0" />
+                </children>
+            </AnchorPane>
+        </content>
+    </TitledPane>
+
+</AnchorPane>
