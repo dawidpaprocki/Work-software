@@ -18,6 +18,7 @@ public class table
     private final StringProperty Vk;
     private final StringProperty Ek;
     private final StringProperty Ams_doc;
+    private final StringProperty Color;
 
 
 
@@ -25,7 +26,7 @@ public class table
 
     public table
     (String Id, String Data, String Material, String Truck, String Amount, String Final_Amount,
-     String Froms, String Tos, String Truck_Nr, String Order, String Vk, String Ek, String Ams_doc)
+     String Froms, String Tos, String Truck_Nr, String Order, String Vk, String Ek, String Ams_doc, String Color)
     {
         this.Id = new SimpleStringProperty(Id);
         this.Data = new SimpleStringProperty(Data);
@@ -40,6 +41,7 @@ public class table
         this.Vk = new SimpleStringProperty(Vk);
         this.Ek = new SimpleStringProperty(Ek);
         this.Ams_doc = new SimpleStringProperty(Ams_doc);
+        this.Color = new SimpleStringProperty(Color);
 
 
 
@@ -58,25 +60,28 @@ public class table
     public  String Vk(){return Vk.get();}
     public  String Ek(){return Ek.get();}
     public  String Ams_doc(){return Ams_doc.get();}
+    public  String Color(){return Color.get();}
 
 
 
-    public  void Id(String value){Id.set(value);}
-    public  void Data(String value){Data.set(value);}
-    public  void Material(String value){Material.set(value);}
-    public  void Truck(String value){
+    public  void setId(String value){Id.set(value);}
+    public  void setData(String value){Data.set(value);}
+    public  void setMaterial(String value){Material.set(value);}
+    public  void setTruck(String value){
         Truck.set(value);}
-    public  void Amount(String value){Amount.set(value);}
-    public  void Final_Amount(String value){Final_Amount.set(value);}
-    public  void Froms(String value){Froms.set(value);}
-    public  void Tos(String value){Tos.set(value);}
-    public  void Truck_Nr(String value){
+    public  void setAmount(String value){Amount.set(value);}
+    public  void setFinal_Amount(String value){Final_Amount.set(value);}
+    public  void setFroms(String value){Froms.set(value);}
+    public  void setTos(String value){Tos.set(value);}
+    public  void setTruck_Nr(String value){
         Truck_Nr.set(value);}
-    public  void Order(String value){Order.set(value);}
-    public  void Vk(String value){Vk.set(value);}
-    public  void Ek(String value){Ek.set(value);}
-    public  void Ams_doc(String value){
+    public  void setOrder(String value){Order.set(value);}
+    public  void setVk(String value){Vk.set(value);}
+    public  void setEk(String value){Ek.set(value);}
+    public  void setAms_doc(String value){
         Ams_doc.set(value);}
+    public  void setColor(String value){
+        Color.set(value);}
 
 
     public StringProperty IdProperty() {
@@ -117,6 +122,9 @@ public class table
     }
     public StringProperty Ams_docProperty() {
         return Ams_doc;
+    }
+    public StringProperty ColorProperty() {
+        return Color;
     }
 
 

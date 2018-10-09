@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="table.tableController">
+<AnchorPane prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="table.tableController">
    <children>
-       <TableView fx:id="tables" editable="true" layoutY="41.0" prefHeight="930.0" prefWidth="1000.0">
+       <TableView fx:id="tables" editable="true" layoutY="41.0" prefHeight="930.0" prefWidth="1000.0" styleClass="table-row-cell" stylesheets="@style.css">
            <columns>
             <TableColumn fx:id="Id" prefWidth="27.0" text="id" />
                <TableColumn fx:id="Data" onEditCommit="#doChange" prefWidth="74.0" text="Data" />
@@ -23,6 +23,7 @@
                <TableColumn fx:id="Vk" prefWidth="73.0" text="Vk" />
                <TableColumn fx:id="Ek" prefWidth="64.0" text="Ek" />
                <TableColumn fx:id="Ams_doc" onEditCommit="#doChange" prefWidth="103.0" text="Nr. Dokumentu" />
+            <TableColumn fx:id="Color" onEditCommit="#doChange" prefWidth="103.0" text="Color" />
            </columns>
        </TableView>
       <Button fx:id="refresh" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" text="refresh" />

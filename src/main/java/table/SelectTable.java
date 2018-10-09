@@ -45,7 +45,8 @@ public static void SelectAll(String from, ObservableList<table> date , String wh
                             rs.getString(10),
                             rs.getString(11),
                             rs.getString(12),
-                            rs.getString(13)
+                            rs.getString(13),
+                            rs.getString(14)
                     ));
         }
 

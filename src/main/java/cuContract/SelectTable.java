@@ -3,7 +3,7 @@ package cuContract;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import connection.DBconnection;
-import cuContract.tableOpenContracts.TableContractOpenBuy;
+import cuContract.tableOpenContracts.table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,9 @@ import java.sql.ResultSet;
 
 public class SelectTable {
 
-private static ObservableList<TableContractOpenBuy>data;
+private static ObservableList<table>data;
 
-public static void SelectAll(String from, ObservableList<TableContractOpenBuy> date , String what){
+public static void SelectAll(String from, ObservableList<table> date , String what){
 
     Connection conn = null;
     PreparedStatement preparedStatement = null;
@@ -31,7 +31,7 @@ public static void SelectAll(String from, ObservableList<TableContractOpenBuy> d
         //execute query
         ResultSet rs = preparedStatement.executeQuery(query);
         while (rs.next()) {
-            data.add(new TableContractOpenBuy
+            data.add(new table
                     (
 
                             rs.getString(1),
@@ -55,11 +55,11 @@ public static void SelectAll(String from, ObservableList<TableContractOpenBuy> d
 }
 
 
-public ObservableList<TableContractOpenBuy> getData() {
+public ObservableList<table> getData() {
     return data;
 }
 
-public void setData(ObservableList<TableContractOpenBuy> data) {
+public void setData(ObservableList<table> data) {
     this.data = data;
 }
 }

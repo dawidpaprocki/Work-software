@@ -7,33 +7,33 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import cuContract.SelectTable;
-import cuContract.tableOpenContracts.TableContractOpenBuy;
+import cuContract.tableOpenContracts.table;
 
 public class OpenCuContractControllerSell {
 
 
     @FXML
-    private TableView <TableContractOpenBuy> OpenCuContactTable;
+    private TableView <table> OpenCuContactTable;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnCustomerName;
+    private TableColumn<table, String> ColumnCustomerName;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnIdName;
+    private TableColumn<table, String> ColumnIdName;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnNrTruckContract;
+    private TableColumn<table, String> ColumnNrTruckContract;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnNrTruck;
+    private TableColumn<table, String> ColumnNrTruck;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnAmount;
+    private TableColumn<table, String> ColumnAmount;
 
     @FXML
-    private TableColumn<TableContractOpenBuy, String> ColumnContractName;
+    private TableColumn<table, String> ColumnContractName;
 
-    private ObservableList<TableContractOpenBuy> data;
+    private ObservableList<table> data;
 
     public void initialize(){
         data = FXCollections.observableArrayList();
@@ -47,7 +47,6 @@ public class OpenCuContractControllerSell {
         ColumnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("NrTruckContract"));
         ColumnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
         ColumnContractName.setCellValueFactory(new PropertyValueFactory<>("ContractName"));
-
         OpenCuContactTable.setItems(null);
         OpenCuContactTable.setItems(selectTable.getData());
 

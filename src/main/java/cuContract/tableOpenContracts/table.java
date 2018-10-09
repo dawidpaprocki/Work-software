@@ -3,7 +3,7 @@ package cuContract.tableOpenContracts;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class TableContractOpenBuy
+public class table
 {
 
 
@@ -18,7 +18,7 @@ public class TableContractOpenBuy
 
 
 
-    public TableContractOpenBuy
+    public table
     (String CustomerName,String idName,String NrTruck,String NrTruckContract,String Amount,
      String ContractName)
     {
