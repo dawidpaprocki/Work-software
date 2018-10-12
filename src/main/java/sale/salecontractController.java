@@ -1,14 +1,15 @@
 package sale;
 
+import combo.ComboCustomers;
+import combo.DataOperationAll;
+import combo.MaterialList;
+import combo.SelectOneThing;
+import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import combo.ChoiceCustomersName;
-import combo.MaterialList;
-import combo.SelecCustomerId;
-import connection.DBconnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class salecontractController {
 
     public void initialize() {
         // Receiving company names
-        ChoiceCustomersName choiceContractSell = new ChoiceCustomersName(ChoiceContractSell);
+        new ComboCustomers(ChoiceContractSell, "Select Name From Customers", "Name", "ChoiceBox");
 
         MaterialList materialList = new MaterialList(choiceMaterialSellContract);
         // Receiving material list
@@ -54,36 +55,38 @@ public class salecontractController {
         // Receiving material type.
         Object Material = choiceMaterialSellContract.getValue();
         // Receiving id from company name.
-        SelecCustomerId selecCustomerId = new SelecCustomerId(String.valueOf(CompanyName));
-        id = selecCustomerId.getId();
+        SelectOneThing selectOneThing = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(CompanyName) + "'", "id");
+        id = selectOneThing.getId();
 
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;
 
-        String query = "INSERT INTO ContractsOpenSell (idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
+//        String query = "INSERT INTO ContractsOpenSell (idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
+//                "VALUES ('" + id + "','" + (String.valueOf(CompanyName)) + "','" + (String.valueOf(Material)) + "','" + (TruckContractSell.getText()) + "' , '0' ,'" +
+//                (NrSellContract.getText()) + "','" + (AmountContractSell.getText()) + "','0') ;";
+        new DataOperationAll( "INSERT INTO ContractsOpenSell (idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
                 "VALUES ('" + id + "','" + (String.valueOf(CompanyName)) + "','" + (String.valueOf(Material)) + "','" + (TruckContractSell.getText()) + "' , '0' ,'" +
-                (NrSellContract.getText()) + "','" + (AmountContractSell.getText()) + "','0') ;";
-
-
-        try {
-            //get connection
-            conn = DBconnection.getConnection();
-
-            //create preparedStatement
-            preparedStatement = conn.prepareStatement(query);
-
-            //execute query
-            preparedStatement.execute(query);
-
-
-            //close connection
-            preparedStatement.close();
-            conn.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+                (NrSellContract.getText()) + "','" + (AmountContractSell.getText()) + "','0') ;");
+//
+//        try {
+//            //get connection
+//            conn = DBconnection.getConnection();
+//
+//            //create preparedStatement
+//            preparedStatement = conn.prepareStatement(query);
+//
+//            //execute query
+//            preparedStatement.execute(query);
+//
+//
+//            //close connection
+//            preparedStatement.close();
+//            conn.close();
+//        } catch (Exception e) {
+//            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//            System.exit(0);
+//        }
 
         NrSellContract.clear();
         AmountContractSell.clear();

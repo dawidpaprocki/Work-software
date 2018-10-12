@@ -29,8 +29,8 @@ public class tableColor {
                             setStyle("-fx-control-inner-background: '" + color + "'  ;  -fx-border-color:  '" + color + "'; -fx-table-cell-border-color:'" + color + "';  -fx-border-width: 0px;  ");
                             item.setColor(color);
 
-
-                        } else {
+                        //errors to null and empty space need to check this expetion
+                        } else if( color != null && !color.equals("null")) {
                             setStyle("-fx-control-inner-background: '" + item.Color() + "' ;  -fx-border-color:  '" + item.Color() + "'; -fx-table-cell-border-color:'" + item.Color() + "';  -fx-border-width: 0px;");
 //
                         }

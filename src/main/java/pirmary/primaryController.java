@@ -1,6 +1,6 @@
 package pirmary;
 
-import combo.ComboCustomersName;
+import combo.ComboCustomers;
 import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,8 +78,7 @@ public class primaryController {
  public void initialize(){
 
 
-     ComboCustomersName comboCustomersName = new ComboCustomersName(choiceCustomerNameBox);
-
+     new ComboCustomers(choiceCustomerNameBox, "Select Name From Customers","Name","ComboBox");
 
 
  }

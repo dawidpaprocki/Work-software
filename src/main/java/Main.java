@@ -1,3 +1,4 @@
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,9 +16,13 @@ public class Main extends Application {
         primaryStage.show();
 
     }
-//    C:\Users\srel2\Documents\GitHub\Work-software\src\main\java\sample.fxml
+
 
     public static void main(String[] args) {
         launch(args);
+
     }
+
+
+
 }

@@ -1,29 +1,27 @@
 package purchase;
 
+import combo.*;
+import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import combo.ChoiceCustomersName;
-import combo.MaterialList;
-import combo.SelecCustomerId;
-import connection.DBconnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class purchaseContractController {
 
     @FXML
-    private ChoiceBox ChoiceContractBuy;
+    private ChoiceBox choiceCustomerNameBuy;
 
     @FXML
-    private TextField NrBuyContract;
+    private TextField nrBuyContract;
 
     @FXML
-    private TextField AmountContractBuy;
+    private TextField amountContractBuy;
 
     @FXML
     private Button addBuy;
@@ -32,86 +30,52 @@ public class purchaseContractController {
     private ChoiceBox choiceMaterialBuyContract;
 
     @FXML
-    private TextField TruckContractBuy;
+    private TextField truckContractBuy;
 
     @FXML
-    private ChoiceBox ChoiceContractBuyToSell;
+    private ChoiceBox choiceCustomerNameSell;
 
-    private ObservableList MaterialList = FXCollections.observableArrayList();
+    private ObservableList materialList = FXCollections.observableArrayList();
 
     public void initialize() {
         // Receiving company names
-        ChoiceCustomersName choiceContractSell = new ChoiceCustomersName(ChoiceContractBuy);
+        new ComboCustomers(choiceCustomerNameBuy,"Select Name From Customers","Name","ChoiceBox");
+        new ComboCustomers(choiceCustomerNameSell,"Select Name From Customers","Name","ChoiceBox"); // need to be optimized
+
 
         MaterialList materialList = new MaterialList(choiceMaterialBuyContract);
         // Receiving material list
-        MaterialList = materialList.getMaterialLIst();
+        this.materialList = materialList.getMaterialLIst();
         // Adding material list to the choicebox
-        choiceMaterialBuyContract.setItems(MaterialList);
+        choiceMaterialBuyContract.setItems(this.materialList);
 
 
     }
 
-    int id;
-    int idBuyToSell;
     public void addContractButton() { // do zmiany cały kod.
         // Receiving company name.
-        Object CompanyName = ChoiceContractBuy.getValue();
+        Object CompanyName = choiceCustomerNameBuy.getValue();
         // Receiving material type.
         Object Material = choiceMaterialBuyContract.getValue();
-        // Receiving id from company name.
-        Object NameOfCompanyBuyToSell = ChoiceContractBuyToSell.getValue();
+        // Receiving name from company name.
+        Object NameOfCompanyBuyToSell = choiceCustomerNameSell.getValue();
+
+        SelectOneThing selectSellerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(CompanyName) + "'","id");
+        int idBuyer = selectSellerId.getId();
+        SelectOneThing slectBuyerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(NameOfCompanyBuyToSell) + "'","id");
+        int idSeller = slectBuyerId.getId();
+
+        new DataOperationAll( "INSERT INTO ContractsOpenBuy (idSell,idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
+                "VALUES ('" + idSeller + "','" + idBuyer + "','" + (String.valueOf(CompanyName)) + "','" + (String.valueOf(Material)) + "','" + (truckContractBuy.getText()) + "' , '0' ,'" +
+                (nrBuyContract.getText()) + "','" + (amountContractBuy.getText()) + "','0') ;");
 
 
-        SelecCustomerId selecCustomerId = new SelecCustomerId(String.valueOf(CompanyName));
-        idBuyToSell = selecCustomerId.getId();
-
-
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-
-
-
-
-        String query2 = " SELECT id FROM ContractsOpenSell WHERE ContractNAME = '" +  (String.valueOf(NameOfCompanyBuyToSell)) + "' ;";
-
-        String query3 = "INSERT INTO ContractsOpenBuy (idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
-                "VALUES ('" + id + "','" + (String.valueOf(CompanyName)) + "','" + (String.valueOf(Material)) + "','" + (TruckContractBuy.getText()) + "' , '0' ,'" +
-                (NrBuyContract.getText()) + "','" + (AmountContractBuy.getText()) + "','0') ;";
-
-
-
-        try {
-            //get connection
-            conn = DBconnection.getConnection();
-
-            //create preparedStatement
-            preparedStatement = conn.prepareStatement(query2);
-            //execute query
-
-
-            ResultSet rs2 = preparedStatement.executeQuery(query2);
-
-            while (rs2.next()) {
-                System.out.println((rs2.getInt("id")));
-                id = ((rs2.getInt("id")));
-            }
-
-
-
-            preparedStatement = conn.prepareStatement(query3);
-            preparedStatement.execute(query3);
-            //close connection
-            preparedStatement.close();
-            conn.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-
-        NrBuyContract.clear();
-        AmountContractBuy.clear();
-        TruckContractBuy.clear();
+        choiceMaterialBuyContract.setValue(null);
+        choiceCustomerNameSell.setValue(null);
+        choiceCustomerNameBuy.setValue(null);
+        nrBuyContract.clear();
+        amountContractBuy.clear();
+        truckContractBuy.clear();
 
 
 

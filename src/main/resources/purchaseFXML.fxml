@@ -13,18 +13,17 @@
             <AnchorPane>
                 <children>
                     <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="149.0" text="Nazwa Firmy" />
-                    <ChoiceBox fx:id="ChoiceContractBuy" layoutX="14.0" layoutY="31.0" prefWidth="150.0" />
-
-                    <TextField fx:id="NrBuyContract" layoutX="14.0" layoutY="79.0" />
+                    <ChoiceBox fx:id="choiceCustomerNameBuy" layoutX="14.0" layoutY="31.0" prefWidth="150.0" />
+                    <TextField fx:id="nrBuyContract" layoutX="14.0" layoutY="79.0" />
                     <Label layoutX="14.0" layoutY="62.0" prefHeight="17.0" prefWidth="149.0" text="Numer kontraktu" />
                     <Label layoutX="14.0" layoutY="110.0" prefHeight="17.0" prefWidth="149.0" text="Materiał" />
-                    <TextField fx:id="AmountContractBuy" layoutX="14.0" layoutY="177.0" />
+                    <TextField fx:id="amountContractBuy" layoutX="14.0" layoutY="177.0" />
                     <Label layoutX="14.0" layoutY="160.0" prefHeight="17.0" prefWidth="149.0" text="Ilość ton" />
                     <Label layoutX="14.0" layoutY="212.0" prefHeight="17.0" prefWidth="149.0" text="Ilość aut" />
                     <Button fx:id="addBuy" layoutX="37.0" layoutY="267.0" mnemonicParsing="false" onAction="#addContractButton" prefHeight="25.0" prefWidth="92.0" text="Dodaj" />
                     <ChoiceBox fx:id="choiceMaterialBuyContract" layoutX="14.0" layoutY="127.0" prefWidth="150.0" />
-                    <TextField fx:id="TruckContractBuy" layoutX="13.0" layoutY="229.0" />
-                    <ChoiceBox fx:id="ChoiceContractBuyToSell" layoutX="14.0" layoutY="305.0" prefWidth="150.0" />
+                    <TextField fx:id="truckContractBuy" layoutX="13.0" layoutY="229.0" />
+                    <ChoiceBox fx:id="choiceCustomerNameSell" layoutX="14.0" layoutY="305.0" prefWidth="150.0" />
 
                 </children></AnchorPane>
         </content>
