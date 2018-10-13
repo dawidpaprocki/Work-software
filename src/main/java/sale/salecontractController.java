@@ -1,9 +1,6 @@
 package sale;
 
-import combo.ComboCustomers;
-import combo.DataOperationAll;
-import combo.MaterialList;
-import combo.SelectOneThing;
+import combo.*;
 import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,9 +34,10 @@ public class salecontractController {
         // Receiving company names
         new ComboCustomers(ChoiceContractSell, "Select Name From Customers", "Name", "ChoiceBox");
 
-        MaterialList materialList = new MaterialList(choiceMaterialSellContract);
+
+
         // Receiving material list
-        MaterialList = materialList.getMaterialLIst();
+        new SelectListOfThings("SELECT NAME FROM Material","Name",MaterialList);
         // Adding material list to the choicebox
         choiceMaterialSellContract.setItems(MaterialList);
 

@@ -20,6 +20,14 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+//        try{
+//            int num = Integer.parseInt("Mosiądz");
+//            // is an integer!
+//            System.out.println("jest");
+//        } catch (NumberFormatException e) {
+//            // not an integer!
+//            System.out.println("nie jest");
+//        }
 
     }
 

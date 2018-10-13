@@ -41,11 +41,12 @@ public class purchaseContractController {
         // Receiving company names
         new ComboCustomers(choiceCustomerNameBuy,"Select Name From Customers","Name","ChoiceBox");
         new ComboCustomers(choiceCustomerNameSell,"Select Name From Customers","Name","ChoiceBox"); // need to be optimized
+        String query = "SELECT NAME FROM Material";
 
 
-        MaterialList materialList = new MaterialList(choiceMaterialBuyContract);
+
         // Receiving material list
-        this.materialList = materialList.getMaterialLIst();
+        new SelectListOfThings("SELECT NAME FROM Material","Name",materialList);
         // Adding material list to the choicebox
         choiceMaterialBuyContract.setItems(this.materialList);
 

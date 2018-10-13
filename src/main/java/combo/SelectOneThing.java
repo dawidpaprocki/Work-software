@@ -36,6 +36,7 @@ public class SelectOneThing {
 
 
                 try{
+                    Integer.parseInt(rs.getString(columnLabel));
                     anInt = rs.getInt(columnLabel);
                     // is an integer!
                 } catch (NumberFormatException e) {
@@ -57,7 +58,7 @@ public class SelectOneThing {
         return anInt;
     }
 
-    public String getAnSrting() {
+    public String getSrting() {
         return anSrting;
     }
 
