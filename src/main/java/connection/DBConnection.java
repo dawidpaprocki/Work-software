@@ -3,7 +3,7 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DBconnection {
+public class DBConnection {
     //JDBC and database properties.
     private static final String DB_DRIVER ="com.mysql.cj.jdbc.Driver";
     private static final String DB_URL ="jdbc:mysql://localhost:3307/new_schema?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET";

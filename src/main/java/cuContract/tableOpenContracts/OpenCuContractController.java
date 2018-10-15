@@ -3,7 +3,6 @@ package cuContract.tableOpenContracts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -15,60 +14,60 @@ public class OpenCuContractController {
 
 
     @FXML
-    private TableView <table> OpenCuContactTable;
+    private TableView <Table> openCuContactTable;
 
     @FXML
-    private TableColumn<table, String> ColumnCustomerName;
+    private TableColumn<Table, String> columnCustomerName;
 
     @FXML
-    private TableColumn<table, String> ColumnidName;
+    private TableColumn<Table, String> columnIdName;
 
     @FXML
-    private TableColumn<table, String> ColumnNrTruckContract;
+    private TableColumn<Table, String> columnNrTruckContract;
 
     @FXML
-    private TableColumn<table, String> ColumnNrTruck;
+    private TableColumn<Table, String> columnNrTruck;
 
     @FXML
-    private TableColumn<table, String> ColumnAmount;
+    private TableColumn<Table, String> columnAmount;
 
     @FXML
-    private TableColumn<table, String> ColumnContractName;
+    private TableColumn<Table, String> columnContractName;
 
-    private ObservableList<table> data;
+    private ObservableList<Table> data;
 
     public void initialize(){
         data = FXCollections.observableArrayList();
         SelectTable selectTable = new SelectTable();
-        SelectTable.SelectAll("contractsopenbuy",data,"CustomerName,idName,NrTruckContract,NrTruck,Amount,ContractName");
+        SelectTable.SelectAll("contractsopenbuy",data,"CustomerName,idName,nrTruckContract,nrTruck,amount,contractName");
 //
-//        TableRow<table> row = new TableRow<>();
+//        TableRow<Table> row = new TableRow<>();
 //        row.setStyle("-fx-background-color:red;");
-//        OpenCuContactTable.setRowFactory(row.);
+//        openCuContactTable.setRowFactory(row.);
 
 
 
 
-        ColumnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        ColumnidName.setCellValueFactory(new PropertyValueFactory<>("idName"));
-        ColumnNrTruck.setCellValueFactory(new PropertyValueFactory<>("NrTruck"));
-        ColumnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("NrTruckContract"));
-        ColumnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        ColumnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        ColumnContractName.setCellValueFactory(new PropertyValueFactory<>("ContractName"));
-        OpenCuContactTable.setItems(null);
-        OpenCuContactTable.setItems(selectTable.getData());
+        columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
+        columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
+        columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
+        columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
+        columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
+        openCuContactTable.setItems(null);
+        openCuContactTable.setItems(selectTable.getData());
 
-        OpenCuContactTable.setRowFactory(row -> new TableRow<table>() {
+        openCuContactTable.setRowFactory(row -> new TableRow<Table>() {
             @Override
-            public void updateItem(table item, boolean empty) {
+            public void updateItem(Table item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (item == null || empty) {
                     setStyle("");
                 } else {
 
-                    if (item.CustomerName().equals("Ameba")) {
+                    if (item.getCustomerName().equals("Ameba")) {
                         setStyle("-fx-background-color: red;");
 
                     } else {

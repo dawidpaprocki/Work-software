@@ -32,8 +32,8 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <fx:include source="OpenCuContractSell.fxml" GridPane.columnIndex="1" />
-                        <fx:include source="OpenCuContract.fxml" />
+                        <fx:include source="openCuContractSell.fxml" GridPane.columnIndex="1" />
+                        <fx:include source="openCuContract.fxml" />
                      </children>
                   </GridPane>
               </content>

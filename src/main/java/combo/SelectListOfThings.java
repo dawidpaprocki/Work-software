@@ -1,6 +1,6 @@
 package combo;
 
-import connection.DBconnection;
+import connection.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 
 public class SelectListOfThings {
 
-   private ObservableList combolist = FXCollections.observableArrayList();
+   private ObservableList comboList = FXCollections.observableArrayList();
 
 
 
@@ -19,16 +19,12 @@ public class SelectListOfThings {
 
     public SelectListOfThings(String whatToDo, String columnLabel, ObservableList list){
 
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-
-
         try{
             //get connection
-            conn = DBconnection.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             //create preparedStatement
-            preparedStatement = conn.prepareStatement(whatToDo);
+            PreparedStatement preparedStatement = conn.prepareStatement(whatToDo);
 
             //execute query
             ResultSet rs = preparedStatement.executeQuery(whatToDo);
@@ -44,15 +40,15 @@ public class SelectListOfThings {
             e.printStackTrace();
         }
 
-//        System.out.println(combolist+"działa?");
+//        System.out.println(comboList+"działa?");
     }
 
-    public ObservableList getCombolist() {
-        return combolist;
+    public ObservableList getComboList() {
+        return comboList;
     }
 
-    public void setCombolist(ObservableList combolist) {
-        this.combolist = combolist;
+    public void setComboList(ObservableList comboList) {
+        this.comboList = comboList;
     }
 
 

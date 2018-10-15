@@ -3,7 +3,7 @@
 //import javafx.collections.FXCollections;
 //import javafx.collections.ObservableList;
 //import javafx.scene.control.ChoiceBox;
-//import connection.DBconnection;
+//import connection.DBConnection;
 //
 //import java.sql.Connection;
 //import java.sql.PreparedStatement;
@@ -21,11 +21,11 @@
 //
 //        Connection conn = null;
 //        PreparedStatement preparedStatement = null;
-//        String query = "SELECT NAME FROM Material";
+//        String query = "SELECT NAME FROM material";
 ////        System.out.println(query);
 //        try{
 //            //get connection
-//            conn = DBconnection.getConnection();
+//            conn = DBConnection.getConnection();
 //
 //            //create preparedStatement
 //            preparedStatement = conn.prepareStatement(query);

@@ -1,9 +1,9 @@
 package cuContract;
 
+import connection.DBConnection;
+import cuContract.tableOpenContracts.Table;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import connection.DBconnection;
-import cuContract.tableOpenContracts.table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,27 +11,26 @@ import java.sql.ResultSet;
 
 public class SelectTable {
 
-private static ObservableList<table>data;
+private static ObservableList<Table>data;
 
-public static void SelectAll(String from, ObservableList<table> date , String what){
+public static void SelectAll(String from, ObservableList<Table> date , String what){
 
-    Connection conn = null;
-    PreparedStatement preparedStatement = null;
+
     data = FXCollections.observableArrayList();
 
     String query = "SELECT "+ what + " FROM "+ from;
 
     try{
         //get connection
-        conn = DBconnection.getConnection();
+        Connection conn = DBConnection.getConnection();
 
         //create preparedStatement
-        preparedStatement = conn.prepareStatement(query);
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
 
         //execute query
         ResultSet rs = preparedStatement.executeQuery(query);
         while (rs.next()) {
-            data.add(new table
+            data.add(new Table
                     (
 
                             rs.getString(1),
@@ -55,11 +54,11 @@ public static void SelectAll(String from, ObservableList<table> date , String wh
 }
 
 
-public ObservableList<table> getData() {
+public ObservableList<Table> getData() {
     return data;
 }
 
-public void setData(ObservableList<table> data) {
+public void setData(ObservableList<Table> data) {
     this.data = data;
 }
 }

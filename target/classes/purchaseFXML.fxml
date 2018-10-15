@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="purchase.purchaseContractController">
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="purchase.PurchaseContractController">
     <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="376.0" prefWidth="188.0" text="Kontrakt zakupowy" textAlignment="CENTER">
         <content>
             <AnchorPane>

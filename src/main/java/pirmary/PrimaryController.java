@@ -4,18 +4,13 @@ import combo.ComboCustomers;
 import combo.DataOperationAll;
 import combo.SelectListOfThings;
 import combo.SelectOneThing;
-import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-
-public class primaryController {
+public class PrimaryController {
 
 
     @FXML
@@ -61,18 +56,18 @@ public class primaryController {
     private ComboBox choiceCustomerNameBox;
 
     @FXML
-    private Label materiaID;
+    private Label materialID;
 
     @FXML
     private DatePicker datePickerChoice;
 
     @FXML
-    private Label datapickererror;
+    private Label dataPickError;
 
 
     private String contractName;
 
-    ObservableList ChoiceContractList = FXCollections.observableArrayList();
+    ObservableList choiceContractList = FXCollections.observableArrayList();
 
 
     public void initialize() {
@@ -84,28 +79,28 @@ public class primaryController {
     }
 
     public void addButton() {
-        Object datapicker = datePickerChoice.getValue();
-        String datapickerString = String.valueOf(datePickerChoice.getValue());
+//        Object datapicker = datePickerChoice.getValue();
+        String dataPickerString = String.valueOf(datePickerChoice.getValue());
 
         String deliveryAmountText = deliveryAmount.getText();
-        String deliveryToText = deliveryTo.getText();
-        String deliveryPlateText = deliveryPlate.getText();
+//        String deliveryToText = deliveryTo.getText();
+//        String deliveryPlateText = deliveryPlate.getText();
 
         if (deliveryPlate.getText().length() > 0) {
             if (deliveryTo.getText().length() > 0) {
                 if (deliveryAmount.getText().length() > 0) {
-                    if (((datapickerString.length()) > 0) && (datapickerString != "null")) {
+                    if (((dataPickerString.length()) > 0) && (dataPickerString != "null")) {
 
-                        System.out.println("sprawdzam środek" + datapickerString.length());
+//                        System.out.println("sprawdzam środek" + datapickerString.length());
 
-                        Object nameOfCompany = choiceCustomerNameBox.getValue();
-
-
-                        String MaterialToString = String.valueOf(materiaID.getText());
-
-
-                        Object NameOfContract = nrContractBuy.getValue();
-                        String ContractToString = String.valueOf(nrContractBuy.getValue());
+//                        Object nameOfCompany = choiceCustomerNameBox.getValue();
+//
+//
+//                        String MaterialToString = String.valueOf(materialID.getText());
+//
+//
+//                        Object NameOfContract = nrContractBuy.getValue();
+//                        String ContractToString = String.valueOf(nrContractBuy.getValue());
 
                         Object NameOfContractSell = nrContractSell.getValue();
                         String ContractSellToString = String.valueOf(NameOfContractSell);
@@ -124,13 +119,13 @@ public class primaryController {
                         try {
                             Integer.parseInt(deliveryAmountText);
 
-                            new DataOperationAll("INSERT INTO All_View (Data,Material,Truck,Amount,Final_Amount,Froms,Tos,Truck_Nr,Transport_Order,Vk,Ek,Ams_doc,color) " +
-                                    "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materiaID.getText())) + "','" + (deliveryPlate.getText()) +
+                            new DataOperationAll("INSERT INTO All_View (data,material,truck,amount,finalAmount,froms,tos,truckNr,Transport_Order,vk,ek,amsDoc,color) " +
+                                    "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materialID.getText())) + "','" + (deliveryPlate.getText()) +
                                     "','" + (deliveryAmountText) + "' , 'Do uzupełnienia!','" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ,'" + (deliveryTo.getText()) +
                                     "',1,'Do uzupełnienia!','" + (contractName) + "','" + (String.valueOf(nrContractBuy.getValue())) + "','Do uzupełnienia!','white' );");
 
-                            new DataOperationAll("UPDATE ContractsOpenBuy set NrTruckContract = (NrTruckContract + 1) where ContractNAme = '" + (ContractToString) + "'");
-                            new DataOperationAll("update ContractsOpenBuy set OpenClose = 1 WHERE  NrTruck = NrTruckContract");
+                            new DataOperationAll("UPDATE ContractsOpenBuy set nrTruckContract = (nrTruckContract + 1) where ContractNAme = '" + (String.valueOf(nrContractBuy.getValue())) + "'");
+                            new DataOperationAll("update ContractsOpenBuy set OpenClose = 1 WHERE  nrTruck = nrTruckContract");
                             new DataOperationAll("insert into ContractsClose select * From ContractsOpenBuy where openclose =1");
                             new DataOperationAll("delete From ContractsOpenBuy where openclose =1");
 
@@ -138,8 +133,8 @@ public class primaryController {
                             deliveryPlate.clear();
                             deliveryAmount.clear();
                             deliveryTo.clear();
-                            materiaID.setText("");
-                            datapickererror.setText("");
+                            materialID.setText("");
+                            dataPickError.setText("");
                             choiceCustomerNameBox.setValue(null);
                             nrContractBuy.setValue(null);
                             datePickerChoice.setValue(null);
@@ -149,7 +144,7 @@ public class primaryController {
                             System.out.println("nie integer");
                         }
                     } else {
-                        datapickererror.setText("Wymagana Data");
+                        dataPickError.setText("Wymagana data");
                     }
                 } else {
                     deliveryAmount.setText("Wpisz ilość");
@@ -164,37 +159,37 @@ public class primaryController {
 
     }
 
-    public void Materialprepare() {
+    public void materialPrepare() {
 
-
-
-        System.out.println("--------------");
-        String NameOfContract = String.valueOf(nrContractBuy.getValue());
-        System.out.println("Materialprepare działa " + NameOfContract);
-        System.out.println(NameOfContract);
-        SelectOneThing selectOneThing = new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where ContractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName");
-        System.out.println(selectOneThing.getSrting());
-        materiaID.setText( new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where ContractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName").getSrting());
-
-        System.out.println("Nazwa materiału" + materiaID.getText());
+//
+//
+//        System.out.println("--------------");
+//        String NameOfContract = String.valueOf(nrContractBuy.getValue());
+//        System.out.println("materialPrepare działa " + NameOfContract);
+//        System.out.println(NameOfContract);
+//        SelectOneThing selectOneThing = new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where contractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName");
+//        System.out.println(selectOneThing.getString());
+        materialID.setText( new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where contractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName").getString());
+//
+//        System.out.println("Nazwa materiału" + materialID.getText());
     }
 
 
-    public int customerid;
+    public int customerId;
 
-    public void SelectComboBoxList() {
-        String comboBoxList = String.valueOf(choiceCustomerNameBox.getValue());
-        System.out.println(comboBoxList);
+    public void selectComboBoxList() {
+//        String comboBoxList = String.valueOf(choiceCustomerNameBox.getValue());
+//        System.out.println(comboBoxList);
 //
 //        Connection conn = null;
 //        PreparedStatement preparedStatement = null;
 
-        customerid = new SelectOneThing("SELECT id FROM Customers WHERE Name = '" + comboBoxList + "' ", "id").getId();
+        customerId = new SelectOneThing("SELECT id FROM Customers WHERE Name = '" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ", "id").getId();
 //        String query = "SELECT id FROM Customers WHERE Name = '" + comboBoxList + "' ";
 //        System.out.println(query);
 //        try {
 //            //get connection
-//            conn = DBconnection.getConnection();
+//            conn = DBConnection.getConnection();
 //
 //            //create preparedStatement
 //            preparedStatement = conn.prepareStatement(query);
@@ -203,7 +198,7 @@ public class primaryController {
 //            ResultSet rs = preparedStatement.executeQuery(query);
 //            while (rs.next()) {
 //                System.out.println((rs.getInt("id")));
-//                customerid = ((rs.getInt("id")));
+//                customerId = ((rs.getInt("id")));
 //            }
 //
 //            //close connection
@@ -212,12 +207,12 @@ public class primaryController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        ListOfChoiceCotract();
+        listOfChoiceCotract();
 
 
     }
 
-    public void ListOfChoiceCotract() {
+    public void listOfChoiceCotract() {
 //        String comboBoxList = String.valueOf(choiceCustomerNameBox.getValue());
 //
 //
@@ -225,11 +220,11 @@ public class primaryController {
 //        PreparedStatement preparedStatement = null;
 //
 //
-//        String query = "SELECT ContractName FROM ContractsOpenBuy Where idCustomer = '" + customerid + "';";
-        new SelectListOfThings("SELECT ContractName FROM ContractsOpenBuy Where idCustomer = '" + customerid + "';","ContractNAme",ChoiceContractList);
+//        String query = "SELECT contractName FROM ContractsOpenBuy Where idCustomer = '" + customerId + "';";
+        new SelectListOfThings("SELECT contractName FROM ContractsOpenBuy Where idCustomer = '" + customerId + "';","ContractNAme", choiceContractList);
 //        try {
 //            //get connection
-//            conn = DBconnection.getConnection();
+//            conn = DBConnection.getConnection();
 //
 //            //create preparedStatement
 //            preparedStatement = conn.prepareStatement(query);
@@ -237,7 +232,7 @@ public class primaryController {
 //            //execute query
 //            ResultSet rs = preparedStatement.executeQuery(query);
 //            while (rs.next()) {
-//                ChoiceContractList.add(rs.getString("ContractName"));
+//                choiceContractList.add(rs.getString("contractName"));
 //            }
 //
 //            //close connection
@@ -246,11 +241,11 @@ public class primaryController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        nrContractBuy.setItems(ChoiceContractList);
-        System.out.println("wywołanie listy kontraktów " + ChoiceContractList);
+        nrContractBuy.setItems(choiceContractList);
+//        System.out.println("wywołanie listy kontraktów " + choiceContractList);
     }
 
     public ObservableList getChoiceContractList() {
-        return ChoiceContractList;
+        return choiceContractList;
     }
 }

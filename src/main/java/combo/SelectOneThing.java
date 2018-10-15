@@ -1,6 +1,6 @@
 package combo;
 
-import connection.DBconnection;
+import connection.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,25 +10,20 @@ import java.sql.ResultSet;
 
 public class SelectOneThing {
 
-   private ObservableList combolist = FXCollections.observableArrayList();
+   private ObservableList comboList = FXCollections.observableArrayList();
 
 
     private int anInt;
-    private String anSrting;
+    private String anString;
 
     public SelectOneThing(String whatToDo, String columnLabel){
 
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-
-
-
         try{
             //get connection
-            conn = DBconnection.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             //create preparedStatement
-            preparedStatement = conn.prepareStatement(whatToDo);
+            PreparedStatement  preparedStatement = conn.prepareStatement(whatToDo);
 
             //execute query
             ResultSet rs = preparedStatement.executeQuery(whatToDo);
@@ -40,7 +35,7 @@ public class SelectOneThing {
                     anInt = rs.getInt(columnLabel);
                     // is an integer!
                 } catch (NumberFormatException e) {
-                    anSrting = rs.getString(columnLabel);
+                    anString = rs.getString(columnLabel);
                     // not an integer! its String !
                 }
 
@@ -52,26 +47,26 @@ public class SelectOneThing {
             e.printStackTrace();
         }
 
-//        System.out.println(combolist+"działa?");
+//        System.out.println(comboList+"działa?");
     }
     public int getId() {
         return anInt;
     }
 
-    public String getSrting() {
-        return anSrting;
+    public String getString() {
+        return anString;
     }
 
-    public void setAnSrting(String anSrting) {
-        this.anSrting = anSrting;
+    public void setAnString(String anString) {
+        this.anString = anString;
     }
 
-    public ObservableList getCombolist() {
-        return combolist;
+    public ObservableList getComboList() {
+        return comboList;
     }
 
-    public void setCombolist(ObservableList combolist) {
-        this.combolist = combolist;
+    public void setComboList(ObservableList comboList) {
+        this.comboList = comboList;
     }
 
 

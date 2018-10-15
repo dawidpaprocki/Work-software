@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pirmary.primaryController">
+<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pirmary.PrimaryController">
 
 
     <children>
@@ -30,7 +30,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <Label layoutY="6.0" prefHeight="17.0" prefWidth="149.0" text="Numer kontraktu" />
-                                <ComboBox fx:id="nrContractBuy" layoutY="23.0" onAction="#Materialprepare" onMouseClicked="#Materialprepare" prefWidth="150.0" />
+                                <ComboBox fx:id="nrContractBuy" layoutY="23.0" onAction="#materialPrepare" onMouseClicked="#materialPrepare" prefWidth="150.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -47,11 +47,11 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ComboBox fx:id="choiceCustomerNameBox" layoutX="14.0" layoutY="84.0" onAction="#SelectComboBoxList" prefWidth="150.0" />
-        <Label fx:id="materiaID" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
+        <ComboBox fx:id="choiceCustomerNameBox" layoutX="14.0" layoutY="84.0" onAction="#selectComboBoxList" prefWidth="150.0" />
+        <Label fx:id="materialID" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
 
         <DatePicker fx:id="datePickerChoice" layoutX="660.0" layoutY="38.0" />
-        <Label fx:id="datapickererror" layoutX="660.0" layoutY="21.0" prefHeight="17.0" prefWidth="150.0" text="Data:" />
+        <Label fx:id="dataPickError" layoutX="660.0" layoutY="21.0" prefHeight="17.0" prefWidth="150.0" text="Data:" />
       <Pane layoutX="221.0" layoutY="183.0" prefHeight="369.0" prefWidth="191.0">
          <children>
             <fx:include source="saleFXML.fxml" />

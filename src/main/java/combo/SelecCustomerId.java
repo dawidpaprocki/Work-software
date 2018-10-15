@@ -1,6 +1,6 @@
 //package combo;
 //
-//import connection.DBconnection;
+//import connection.DBConnection;
 //
 //import java.sql.Connection;
 //import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@
 //
 //        try {
 //            //get connection
-//            conn = DBconnection.getConnection();
+//            conn = DBConnection.getConnection();
 //
 //            //create preparedStatement
 //            preparedStatement = conn.prepareStatement(query);

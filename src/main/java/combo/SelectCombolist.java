@@ -2,7 +2,7 @@
 //
 //import javafx.collections.FXCollections;
 //import javafx.collections.ObservableList;
-//import connection.DBconnection;
+//import connection.DBConnection;
 //
 //import java.sql.Connection;
 //import java.sql.PreparedStatement;
@@ -24,7 +24,7 @@
 //
 //        try{
 //            //get connection
-//            conn = DBconnection.getConnection();
+//            conn = DBConnection.getConnection();
 //
 //            //create preparedStatement
 //            preparedStatement = conn.prepareStatement(query);
@@ -46,11 +46,11 @@
 ////        System.out.println(combolist+"działa?");
 //    }
 //
-//    public ObservableList getCombolist() {
+//    public ObservableList getComboList() {
 //        return combolist;
 //    }
 //
-//    public void setCombolist(ObservableList combolist) {
+//    public void setComboList(ObservableList combolist) {
 //        this.combolist = combolist;
 //    }
 //

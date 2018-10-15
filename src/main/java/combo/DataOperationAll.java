@@ -1,25 +1,21 @@
 package combo;
 
-import connection.DBconnection;
+import connection.DBConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class DataOperationAll {
     public DataOperationAll(String what) {
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-
-
 
         try
 
         {
             //get connection
-            conn = DBconnection.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             //create preparedStatement
-            preparedStatement = conn.prepareStatement(what);
+            PreparedStatement preparedStatement = conn.prepareStatement(what);
 
             //execute query
             preparedStatement.execute(what);

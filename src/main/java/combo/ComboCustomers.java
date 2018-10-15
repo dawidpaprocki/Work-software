@@ -11,23 +11,23 @@ public class ComboCustomers {
     private ComboBox comboBox;
 
 
-    private ObservableList Combolist = FXCollections.observableArrayList();
+    private ObservableList comboList = FXCollections.observableArrayList();
 
 
-    public ComboCustomers(Object object, String toDo, String ColumnLabel, String typeOfObject) {
+    public ComboCustomers(Object object, String toDo, String columnLabel, String typeOfObject) {
 
-        new SelectListOfThings(toDo,ColumnLabel, Combolist);
+        new SelectListOfThings(toDo,columnLabel, comboList);
         switch (typeOfObject) {
             case ("ChoiceBox"):
                 ChoiceBox    choiceBox = (ChoiceBox) object;
 
-                choiceBox.setItems(getCombolist());
+                choiceBox.setItems(getComboList());
                 break;
             case ("ComboBox"):
                 ComboBox    comboBox = (ComboBox) object;
 
 
-                comboBox.setItems(getCombolist());
+                comboBox.setItems(getComboList());
                 break;
 
         }
@@ -52,11 +52,11 @@ public class ComboCustomers {
         this.comboBox = comboBox;
     }
 
-    public ObservableList getCombolist() {
-        return Combolist;
+    public ObservableList getComboList() {
+        return comboList;
     }
 
-    public void setCombolist(ObservableList combolist) {
-        Combolist = combolist;
+    public void setComboList(ObservableList comboList) {
+        this.comboList = comboList;
     }
 }

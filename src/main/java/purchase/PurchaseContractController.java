@@ -1,7 +1,6 @@
 package purchase;
 
 import combo.*;
-import connection.DBconnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,10 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-public class purchaseContractController {
+public class PurchaseContractController {
 
     @FXML
     private ChoiceBox choiceCustomerNameBuy;
@@ -41,12 +37,9 @@ public class purchaseContractController {
         // Receiving company names
         new ComboCustomers(choiceCustomerNameBuy,"Select Name From Customers","Name","ChoiceBox");
         new ComboCustomers(choiceCustomerNameSell,"Select Name From Customers","Name","ChoiceBox"); // need to be optimized
-        String query = "SELECT NAME FROM Material";
-
-
 
         // Receiving material list
-        new SelectListOfThings("SELECT NAME FROM Material","Name",materialList);
+        new SelectListOfThings("SELECT NAME FROM material","Name",materialList);
         // Adding material list to the choicebox
         choiceMaterialBuyContract.setItems(this.materialList);
 
@@ -55,19 +48,19 @@ public class purchaseContractController {
 
     public void addContractButton() { // do zmiany cały kod.
         // Receiving company name.
-        Object CompanyName = choiceCustomerNameBuy.getValue();
+        Object companyName = choiceCustomerNameBuy.getValue();
         // Receiving material type.
-        Object Material = choiceMaterialBuyContract.getValue();
+        Object material = choiceMaterialBuyContract.getValue();
         // Receiving name from company name.
-        Object NameOfCompanyBuyToSell = choiceCustomerNameSell.getValue();
+        Object nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue();
 
-        SelectOneThing selectSellerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(CompanyName) + "'","id");
+        SelectOneThing selectSellerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(companyName) + "'","id");
         int idBuyer = selectSellerId.getId();
-        SelectOneThing slectBuyerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(NameOfCompanyBuyToSell) + "'","id");
-        int idSeller = slectBuyerId.getId();
+        SelectOneThing selectBuyerId = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(nameOfCompanyBuyToSell) + "'","id");
+        int idSeller = selectBuyerId.getId();
 
-        new DataOperationAll( "INSERT INTO ContractsOpenBuy (idSell,idCustomer,CustomerName,idName,NrTruck,NrTruckContract,ContractName,Amount,OpenClose) " +
-                "VALUES ('" + idSeller + "','" + idBuyer + "','" + (String.valueOf(CompanyName)) + "','" + (String.valueOf(Material)) + "','" + (truckContractBuy.getText()) + "' , '0' ,'" +
+        new DataOperationAll( "INSERT INTO ContractsOpenBuy (idSell,idCustomer,CustomerName,idName,nrTruck,nrTruckContract,contractName,amount,OpenClose) " +
+                "VALUES ('" + idSeller + "','" + idBuyer + "','" + (String.valueOf(companyName)) + "','" + (String.valueOf(material)) + "','" + (truckContractBuy.getText()) + "' , '0' ,'" +
                 (nrBuyContract.getText()) + "','" + (amountContractBuy.getText()) + "','0') ;");
 
 
