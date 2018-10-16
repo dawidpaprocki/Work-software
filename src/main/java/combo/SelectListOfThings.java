@@ -40,6 +40,8 @@ public class SelectListOfThings {
             e.printStackTrace();
         }
 
+        comboList.setAll(list);
+
 //        System.out.println(comboList+"działa?");
     }
 
@@ -47,9 +49,6 @@ public class SelectListOfThings {
         return comboList;
     }
 
-    public void setComboList(ObservableList comboList) {
-        this.comboList = comboList;
-    }
 
 
 
