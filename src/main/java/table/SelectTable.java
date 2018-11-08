@@ -12,6 +12,18 @@ public class SelectTable {
 
     private static ObservableList<Table> data;
 
+    /**
+     * <h1>Select Table Class</h1>
+     *
+     * This class connecting with DB for get specify data and filling ObservableList passed by constructor.
+     *
+     * @param from passing name of table in DB.
+     * @param date passing ObservableList.
+     * @param what passing function in SQL to get specify data.
+     * @return returning data to fill ObservableList.
+     */
+
+
     public static void SelectAll(String from, ObservableList<Table> date, String what) {
 
         data = FXCollections.observableArrayList();
@@ -19,6 +31,7 @@ public class SelectTable {
         String query = "SELECT " + what + " FROM " + from;
 
         try {
+
             //get connection
             Connection conn = DBConnection.getConnection();
 
@@ -51,6 +64,7 @@ public class SelectTable {
             //close connection
             preparedStatement.close();
             conn.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

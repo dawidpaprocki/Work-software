@@ -67,7 +67,8 @@ public class PrimaryController {
 
     private String contractName;
 
-    ObservableList choiceContractList = FXCollections.observableArrayList();
+    ObservableList choiceContractListBuy = FXCollections.observableArrayList();
+    ObservableList choiceContractListSell = FXCollections.observableArrayList();
 
 
     public void initialize() {
@@ -102,32 +103,49 @@ public class PrimaryController {
 //                        Object NameOfContract = nrContractBuy.getValue();
 //                        String ContractToString = String.valueOf(nrContractBuy.getValue());
 
-                        Object NameOfContractSell = nrContractSell.getValue();
-                        String ContractSellToString = String.valueOf(NameOfContractSell);
-
-                        System.out.println(ContractSellToString + "sell kontrakt");
-
-                        if (ContractSellToString.length() > 4) { // sprawdzic czemu 4? co autor miał na myśli
-                            ContractSellToString = contractName;
-
-                        } else {
-                            contractName = "dopisz";
-
-                        }
-                        System.out.println(contractName);
+//                        Object NameOfContractSell = nrContractSell.getValue();
+//                        String ContractSellToString = String.valueOf(NameOfContractSell);
+//
+//                        System.out.println(ContractSellToString + "sell kontrakt");
+//
+//                        if (ContractSellToString.length() > 4) { // sprawdzic czemu 4? co autor miał na myśli
+//                            ContractSellToString = contractName;
+//
+//                        } else {
+//                            contractName = "dopisz";
+//
+//                        }
+//                        System.out.println(contractName);
 
                         try {
                             Integer.parseInt(deliveryAmountText);
 
-                            new DataOperationAll("INSERT INTO All_View (data,material,truck,amount,finalAmount,froms,tos,truckNr,Transport_Order,vk,ek,amsDoc,color) " +
-                                    "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materialID.getText())) + "','" + (deliveryPlate.getText()) +
-                                    "','" + (deliveryAmountText) + "' , 'Do uzupełnienia!','" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ,'" + (deliveryTo.getText()) +
-                                    "',1,'Do uzupełnienia!','" + (contractName) + "','" + (String.valueOf(nrContractBuy.getValue())) + "','Do uzupełnienia!','white' );");
+                            if (type == 0) {
+                                System.out.println("type 0");
+                                deliveryType(nrContractBuy, "ContractsOpenBuy");
 
-                            new DataOperationAll("UPDATE ContractsOpenBuy set nrTruckContract = (nrTruckContract + 1) where ContractNAme = '" + (String.valueOf(nrContractBuy.getValue())) + "'");
-                            new DataOperationAll("update ContractsOpenBuy set OpenClose = 1 WHERE  nrTruck = nrTruckContract");
-                            new DataOperationAll("insert into ContractsClose select * From ContractsOpenBuy where openclose =1");
-                            new DataOperationAll("delete From ContractsOpenBuy where openclose =1");
+                                new DataOperationAll("INSERT INTO All_View (data,material,truck,amount,finalAmount,froms,tos,truckNr,transportOrder,vk,ek,amsDoc,color) " +
+                                        "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materialID.getText())) + "','" + (deliveryPlate.getText()) +
+                                        "','" + (deliveryAmountText) + "' , 0 ,'" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ,'" + (deliveryTo.getText()) +
+                                        "',1,'Do uzupełnienia!','Do uzupełnienia!','" + (String.valueOf(nrContractBuy.getValue())) + "','Do uzupełnienia!','white' );");
+                            } else {
+                                System.out.println("type 1");
+                                deliveryType(nrContractSell, "ContractsOpenSell");
+                                System.out.println("tu");
+                                new DataOperationAll("INSERT INTO All_View (data,material,truck,amount,finalAmount,froms,tos,truckNr,transportOrder,vk,ek,amsDoc,color) " +
+                                        "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materialID.getText())) + "','" + (deliveryPlate.getText()) +
+                                        "','" + (deliveryAmountText) + "' , 0 ,'" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ,'" + (deliveryTo.getText()) +
+                                        "',1,'Do uzupełnienia!','" + (String.valueOf(nrContractSell.getValue())) + "','Do uzupełnienia!','Do uzupełnienia!','white' );");
+                            }
+//                            new DataOperationAll("INSERT INTO All_View (data,material,truck,amount,finalAmount,froms,tos,truckNr,Transport_Order,vk,ek,amsDoc,color) " +
+//                                    "VALUES ('" + (String.valueOf(datePickerChoice.getValue())) + "','" + (String.valueOf(materialID.getText())) + "','" + (deliveryPlate.getText()) +
+//                                    "','" + (deliveryAmountText) + "' , 'Do uzupełnienia!','" + (String.valueOf(choiceCustomerNameBox.getValue())) + "' ,'" + (deliveryTo.getText()) +
+//                                    "',1,'Do uzupełnienia!','" + (contractName) + "','" + (String.valueOf(nrContractBuy.getValue())) + "','Do uzupełnienia!','white' );");
+//
+//                            new DataOperationAll("UPDATE ContractsOpenBuy set nrTruckContract = (nrTruckContract + 1) where ContractNAme = '" + (String.valueOf(nrContractBuy.getValue())) + "'");
+//                            new DataOperationAll("update ContractsOpenBuy set OpenClose = 1 WHERE  nrTruck = nrTruckContract");
+//                            new DataOperationAll("insert into ContractsClose select * From ContractsOpenBuy where openclose =1");
+//                            new DataOperationAll("delete From ContractsOpenBuy where openclose =1");
 
 
                             deliveryPlate.clear();
@@ -159,17 +177,46 @@ public class PrimaryController {
 
     }
 
-    public void materialPrepare() {
+    private int type;
 
+    public void deliveryType(ComboBox typeOfDelivery, String contractType) {
+
+
+        new DataOperationAll("UPDATE " + contractType + " set nrTruckContract = (nrTruckContract + 1) where ContractName = '" + (String.valueOf(typeOfDelivery.getValue())) + "'");
+        new DataOperationAll("update " + contractType + " set OpenClose = 1 WHERE  nrTruck = nrTruckContract");
+        new DataOperationAll("insert into ContractsClose select * From " + contractType + " where openClose =1");
+        new DataOperationAll("delete From " + contractType + " where openclose =1");
+
+
+    }
+
+    public void materialPrepareBuy() {
+        type = 0;
 //
 //
 //        System.out.println("--------------");
 //        String NameOfContract = String.valueOf(nrContractBuy.getValue());
-//        System.out.println("materialPrepare działa " + NameOfContract);
+//        System.out.println("materialPrepareBuy działa " + NameOfContract);
 //        System.out.println(NameOfContract);
 //        SelectOneThing selectOneThing = new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where contractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName");
 //        System.out.println(selectOneThing.getString());
-        materialID.setText( new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where contractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName").getString());
+        materialID.setText(new SelectOneThing("SELECT idName FROM ContractsOpenBuy Where contractName = '" + (String.valueOf(nrContractBuy.getValue())) + "'", "idName").getString());
+//
+//        System.out.println("Nazwa materiału" + materialID.getText());
+    }
+
+
+    public void materialPrepareSell() {
+        type = 1;
+////
+//
+//        System.out.println("--------------");
+//        String NameOfContract = String.valueOf(nrContractBuy.getValue());
+//        System.out.println("materialPrepareBuy działa " + NameOfContract);
+//        System.out.println(NameOfContract);
+//        SelectOneThing selectOneThing = new SelectOneThing("SELECT idName FROM ContractsOpenSell Where contractName = '" + (String.valueOf(nrContractSell.getValue())) + "'", "idName");
+//        System.out.println(selectOneThing.getString());
+        materialID.setText(new SelectOneThing("SELECT idName FROM ContractsOpenSell Where contractName = '" + (String.valueOf(nrContractSell.getValue())) + "'", "idName").getString());
 //
 //        System.out.println("Nazwa materiału" + materialID.getText());
     }
@@ -221,7 +268,8 @@ public class PrimaryController {
 //
 //
 //        String query = "SELECT contractName FROM ContractsOpenBuy Where idCustomer = '" + customerId + "';";
-        new SelectListOfThings("SELECT contractName FROM ContractsOpenBuy Where idCustomer = '" + customerId + "';","ContractNAme", choiceContractList);
+        new SelectListOfThings("SELECT contractName FROM ContractsOpenBuy Where idCustomer = '" + customerId + "';", "ContractNAme", choiceContractListBuy);
+        new SelectListOfThings("SELECT contractName FROM ContractsOpenSell Where idCustomer = '" + customerId + "';", "ContractNAme", choiceContractListSell);
 //        try {
 //            //get connection
 //            conn = DBConnection.getConnection();
@@ -232,7 +280,7 @@ public class PrimaryController {
 //            //execute query
 //            ResultSet rs = preparedStatement.executeQuery(query);
 //            while (rs.next()) {
-//                choiceContractList.add(rs.getString("contractName"));
+//                choiceContractListBuy.add(rs.getString("contractName"));
 //            }
 //
 //            //close connection
@@ -241,11 +289,9 @@ public class PrimaryController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        nrContractBuy.setItems(choiceContractList);
-//        System.out.println("wywołanie listy kontraktów " + choiceContractList);
+        nrContractBuy.setItems(choiceContractListBuy);
+        nrContractSell.setItems(choiceContractListSell);
+//        System.out.println("wywołanie listy kontraktów " + choiceContractListBuy);
     }
 
-    public ObservableList getChoiceContractList() {
-        return choiceContractList;
-    }
 }

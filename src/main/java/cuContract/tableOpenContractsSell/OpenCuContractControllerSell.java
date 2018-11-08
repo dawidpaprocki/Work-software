@@ -13,7 +13,7 @@ public class OpenCuContractControllerSell {
 
 
     @FXML
-    private TableView <Table> openCuContactTable;
+    private TableView<Table> openCuContactTable;
 
     @FXML
     private TableColumn<Table, String> columnCustomerName;
@@ -33,12 +33,13 @@ public class OpenCuContractControllerSell {
     @FXML
     private TableColumn<Table, String> columnContractName;
 
+
     private ObservableList<Table> data;
 
-    public void initialize(){
+    public void initialize() {
         data = FXCollections.observableArrayList();
         SelectTable selectTable = new SelectTable();
-        SelectTable.SelectAll("contractsopensell",data,"CustomerName,idName,nrTruckContract,nrTruck,amount,contractName");
+        SelectTable.SelectAll("contractsopensell", data, "CustomerName,idName,nrTruckContract,nrTruck,amount,contractName");
 
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
@@ -51,10 +52,10 @@ public class OpenCuContractControllerSell {
         openCuContactTable.setItems(selectTable.getData());
 
 
-
-
-
     }
+//    public void refresh(){
+//        openCuContactTable.refresh();
+//    }
 
 
 }

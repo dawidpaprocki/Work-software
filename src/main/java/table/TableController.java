@@ -11,6 +11,21 @@ import javafx.scene.control.cell.TextFieldTableCell;
 
 public class TableController {
 
+
+    /**
+     * <h1> Table Controller Class</h1>
+     *
+     * Class with multiple responsibilities:
+     * - Filling table in JavaFX by {@link Table}
+     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
+     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
+     * - Contain Method for making background color on row by {@link #color(ActionEvent)}
+     * refresh - table refreshing button
+     * colorChoice - Simple color picker to get color value
+     *
+     *
+     */
+
     @FXML
     public Button refresh;
     @FXML
@@ -60,17 +75,22 @@ public class TableController {
     private TableColumn<Table, String> color;
 
     private ObservableList<Table> getData;
-    //    boolean dateDownloaded = false;
+
     private SelectTable selectAll = new SelectTable();
+
+    /**
+     * <h2> initialize Method</h2>
+     * Method started with program start.
+     * filling table View by Data from Data Base
+     * setting background color based on Value in Data Base.
+     *
+     */
 
     public void initialize() {
 
         getData = FXCollections.observableArrayList();
-//        if(dateDownloaded == false) {
 
         SelectTable.SelectAll("All_view", getData, "*");
-//            dateDownloaded = true;
-//        }
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -125,8 +145,18 @@ public class TableController {
     }
 
 
-    private String temporaryColor = "#fd6c6cff";
 
+
+    /**
+     * <h2> doChange Method </h2>
+     *
+     * Getting parameter of wanted cell to edit.
+     * Updating cell by inserting new value
+     * Updating Data Base with new value.
+     *
+     */
+    //temporary color
+    private String temporaryColor = "#fd6c6cff";
 
     public void doChange(TableColumn.CellEditEvent<Table, String> tableStringCellEditEvent) {
 
@@ -136,7 +166,6 @@ public class TableController {
         String idOfRow = tableStringCellEditEvent.getRowValue().getId();
         //get id of column
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-        System.out.println(idOfColumn);
         //updating changes to getData base
         new DataOperationAll("UPDATE all_view SET " + idOfColumn + "  =  '" + newMaterial + "' Where ID = '" + idOfRow + "'");
 
@@ -144,29 +173,23 @@ public class TableController {
 
     public void refresh(ActionEvent actionEvent) {
         SelectTable.SelectAll("All_view", getData, "*");
-        System.out.println("działa");
     }
-
+    /**
+     * <h2> color Method </h2>
+     *
+     * Changing value of default color by getting new value form {@link #colorChoice}
+     * Updating in Data Base value of new color.
+     *
+     */
     public void color(ActionEvent actionEvent) {
 
 
         temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
-        System.out.println(temporaryColor);
 
         String colorId = tables.getSelectionModel().getSelectedItem().getId();
-        System.out.println(colorId);
 
-
-//
-//
         TablePosition tablePosition;
         tablePosition = tables.getFocusModel().getFocusedCell();
-
-//
-//        System.out.println(tablePosition);
-//        System.out.println(tablePosition.getRow());
-//        System.out.println(tablePosition.getTableColumn());
-//
 
 
         new DataOperationAll("UPDATE all_view SET " + "color" + "  =  '" + temporaryColor + "' Where ID = '" + colorId + "'");

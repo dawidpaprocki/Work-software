@@ -5,6 +5,8 @@ import javafx.beans.property.StringProperty;
 
 public class Table
 
+        // Wrong Columns Names need to be change.
+
 {
     private final StringProperty id;
     private final StringProperty data;
@@ -22,9 +24,25 @@ public class Table
     private final StringProperty color;
 
 
-
-
-
+    /**
+     * <h1>Table Class</h1>
+     * Class is responsible for connecting tableView with table from Data Base.
+     *
+     * @param id select Unique number of transaction
+     * @param data select Date cell
+     * @param material select Material type
+     * @param truck select number of trucks
+     * @param amount select amount of material
+     * @param finalAmount select amount of material after contact with Customer
+     * @param froms select Name of seller Customer of this transaction
+     * @param tos select Name of buyer Customer
+     * @param truckNr select number of truck plate
+     * @param order select transport order
+     * @param vk select Name of sell contract
+     * @param ek select Name of buy contract
+     * @param amsDoc select number of accountant document
+     * @param color select row color value
+     */
     public Table
     (String id, String data, String material, String truck, String amount, String finalAmount,
      String froms, String tos, String truckNr, String order, String vk, String ek, String amsDoc, String color)
