@@ -1,6 +1,9 @@
 package table;
 
 import combo.DataOperationAll;
+import crud.controller.controllers.AllViewController;
+import crud.model.GenericDaoImpl;
+import entity.AllView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,73 +11,80 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
+import org.hibernate.SessionFactory;
+import utils.HibernateUtils;
+
+
+import javax.persistence.EntityManager;
+import java.util.List;
 
 public class TableController {
 
 
-    /**
-     * <h1> Table Controller Class</h1>
-     *
-     * Class with multiple responsibilities:
-     * - Filling table in JavaFX by {@link Table}
-     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
-     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
-     * - Contain Method for making background color on row by {@link #color(ActionEvent)}
-     * refresh - table refreshing button
-     * colorChoice - Simple color picker to get color value
-     *
-     *
-     */
+//    /**
+//     * <h1> Table Controller Class</h1>
+//     *
+//     * Class with multiple responsibilities:
+//     * - Filling table in JavaFX by {@link Table}
+//     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
+//     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
+//     * - Contain Method for making background color on row by {@link #color(ActionEvent)}
+//     * refresh - table refreshing button
+//     * colorChoice - Simple color picker to get color value
+//     *
+//     *
+//     */
 
     @FXML
     public Button refresh;
     @FXML
     public ColorPicker colorChoice;
     @FXML
-    private TableView<Table> tables;
+    private TableView<AllView> tables;
 
     @FXML
-    public TableColumn<Table, String> id;
+    public TableColumn<AllView, Integer> id;
     @FXML
-    private TableColumn<Table, String> data;
+    private TableColumn<AllView, String> data;
 
     @FXML
-    private TableColumn<Table, String> material;
+    private TableColumn<AllView, String> material;
 
     @FXML
-    private TableColumn<Table, String> truck;
+    private TableColumn<AllView, String> truck;
 
     @FXML
-    private TableColumn<Table, String> amount;
+    private TableColumn<AllView, Integer> amount;
 
     @FXML
-    private TableColumn<Table, String> finalAmount;
+    private TableColumn<AllView, Integer> finalAmount;
 
     @FXML
-    private TableColumn<Table, String> froms;
+    private TableColumn<AllView, String> froms;
 
     @FXML
-    private TableColumn<Table, String> tos;
+    private TableColumn<AllView, String> tos;
 
     @FXML
-    private TableColumn<Table, String> truckNr;
+    private TableColumn<AllView, String> truckNr;
 
     @FXML
-    private TableColumn<Table, String> order;
+    private TableColumn<AllView, String> TransportOrder;
 
     @FXML
-    private TableColumn<Table, String> vk;
+    private TableColumn<AllView, String> vk;
 
     @FXML
-    private TableColumn<Table, String> ek;
+    private TableColumn<AllView, String> ek;
 
     @FXML
-    private TableColumn<Table, String> amsDoc;
+    private TableColumn<AllView, String> amsDoc;
 
     @FXML
-    private TableColumn<Table, String> color;
+    private TableColumn<AllView, String> color;
 
-    private ObservableList<Table> getData;
+    private ObservableList<AllView> getData;
 
     private SelectTable selectAll = new SelectTable();
 
@@ -88,9 +98,18 @@ public class TableController {
 
     public void initialize() {
 
+        final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+        final EntityManager entityManager = sessionFactory.createEntityManager();
+
+        GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllView.class);
+        AllViewController allViewController = new AllViewController(genericDao);
+        List<AllView> list = allViewController.selectList();
+
+
         getData = FXCollections.observableArrayList();
 
-        SelectTable.SelectAll("All_view", getData, "*");
+//        SelectTable.SelectAll("All_view", getData, "*");
+        getData.addAll(list);
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -102,18 +121,18 @@ public class TableController {
         froms.setCellValueFactory(new PropertyValueFactory<>("froms"));
         tos.setCellValueFactory(new PropertyValueFactory<>("tos"));
         truckNr.setCellValueFactory(new PropertyValueFactory<>("truckNr"));
-        order.setCellValueFactory(new PropertyValueFactory<>("order"));
+        TransportOrder.setCellValueFactory(new PropertyValueFactory<>("TransportOrder"));
         vk.setCellValueFactory(new PropertyValueFactory<>("vk"));
         ek.setCellValueFactory(new PropertyValueFactory<>("ek"));
         amsDoc.setCellValueFactory(new PropertyValueFactory<>("amsDoc"));
         color.setCellValueFactory(new PropertyValueFactory<>("amsDoc"));
 
         tables.setItems(null);
-        tables.setItems(selectAll.getData());
+        tables.setItems(getData);
 
-        tables.setRowFactory(row -> new TableRow<Table>() {
+        tables.setRowFactory(row -> new TableRow<AllView>() {
             @Override
-            public void updateItem(Table item, boolean empty) {
+            public void updateItem(AllView item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (empty) {
@@ -129,15 +148,16 @@ public class TableController {
         });
 
 
+
         material.setCellFactory(TextFieldTableCell.forTableColumn());
         data.setCellFactory(TextFieldTableCell.forTableColumn());
         truck.setCellFactory(TextFieldTableCell.forTableColumn());
-        amount.setCellFactory(TextFieldTableCell.forTableColumn());
-        finalAmount.setCellFactory(TextFieldTableCell.forTableColumn());
+        amount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        finalAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         froms.setCellFactory(TextFieldTableCell.forTableColumn());
         tos.setCellFactory(TextFieldTableCell.forTableColumn());
         truckNr.setCellFactory(TextFieldTableCell.forTableColumn());
-        order.setCellFactory(TextFieldTableCell.forTableColumn());
+        TransportOrder.setCellFactory(TextFieldTableCell.forTableColumn());
         amsDoc.setCellFactory(TextFieldTableCell.forTableColumn());
         color.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -172,7 +192,7 @@ public class TableController {
     }
 
     public void refresh(ActionEvent actionEvent) {
-        SelectTable.SelectAll("All_view", getData, "*");
+//        SelectTable.SelectAll("All_view", getData, "*");
     }
     /**
      * <h2> color Method </h2>
@@ -182,23 +202,23 @@ public class TableController {
      *
      */
     public void color(ActionEvent actionEvent) {
-
-
-        temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
-
-        String colorId = tables.getSelectionModel().getSelectedItem().getId();
-
-        TablePosition tablePosition;
-        tablePosition = tables.getFocusModel().getFocusedCell();
-
-
-        new DataOperationAll("UPDATE all_view SET " + "color" + "  =  '" + temporaryColor + "' Where ID = '" + colorId + "'");
-        TableColor TableColor = new TableColor();
-
-        tables = TableColor.color(tables, tablePosition, temporaryColor);
-        tables.refresh();
-
-
+//
+//
+//        temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
+//
+//        String colorId = tables.getSelectionModel().getSelectedItem().getId();
+//
+//        TablePosition tablePosition;
+//        tablePosition = tables.getFocusModel().getFocusedCell();
+//
+//
+//        new DataOperationAll("UPDATE all_view SET " + "color" + "  =  '" + temporaryColor + "' Where ID = '" + colorId + "'");
+//        TableColor TableColor = new TableColor();
+//
+//        tables = TableColor.color(tables, tablePosition, temporaryColor);
+//        tables.refresh();
+//
+//
     }
 
 

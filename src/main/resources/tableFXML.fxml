@@ -20,7 +20,7 @@
                <TableColumn fx:id="froms" onEditCommit="#doChange" prefWidth="87.0" text="Od kogo" />
                <TableColumn fx:id="tos" onEditCommit="#doChange" prefWidth="86.0" text="Do kogo" />
                <TableColumn fx:id="truckNr" prefWidth="69.0" text="ilość aut" />
-               <TableColumn fx:id="order" onEditCommit="#doChange" prefWidth="79.0" text="Zlecenie" />
+               <TableColumn fx:id="TransportOrder" onEditCommit="#doChange" prefWidth="79.0" text="Zlecenie" />
                <TableColumn fx:id="vk" prefWidth="73.0" text="Vk" />
                <TableColumn fx:id="ek" prefWidth="64.0" text="Ek" />
                <TableColumn fx:id="amsDoc" onEditCommit="#doChange" prefWidth="103.0" text="Nr. Dokumentu" />
