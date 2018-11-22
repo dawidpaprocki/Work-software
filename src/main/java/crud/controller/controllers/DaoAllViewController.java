@@ -7,11 +7,11 @@ import entity.AllView;
 
 import java.util.List;
 
-public class AllViewController implements AllViewService, ViewService {
+public class DaoAllViewController implements AllViewService, ViewService {
 
     private final GenericDao dao;
 
-    public AllViewController(GenericDao dao) {
+    public DaoAllViewController(GenericDao dao) {
         this.dao = dao;
     }
 
@@ -45,8 +45,8 @@ public class AllViewController implements AllViewService, ViewService {
     @Override
     public void updateRecord(String idOfColumn, String newValue, int idOfRow) {
 
-        allView = (AllView) dao.findById(idOfRow);
-        dao.query(idOfColumn,newValue,1);
+
+        dao.query(idOfColumn,newValue,idOfRow);
     }
 
 

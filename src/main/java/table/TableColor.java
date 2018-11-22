@@ -1,6 +1,7 @@
 package table;
 
 
+import entity.AllView;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -20,14 +21,14 @@ public class TableColor {
      * @param color passing color which we want to set to specify row.
      */
 
-    public TableView<Table> color(TableView<Table> tables, TablePosition tablePosition , String color ) {
+    public TableView<AllView> color(TableView<AllView> tables, TablePosition tablePosition , String color ) {
 
         tables.setRowFactory(new Callback<>() {
             @Override
-            public TableRow<Table> call(TableView<Table> param) {
-                final TableRow<Table> row = new TableRow<>() {
+            public TableRow<AllView> call(TableView<AllView> param) {
+                final TableRow<AllView> row = new TableRow<>() {
                     @Override
-                    protected void updateItem(Table item, boolean empty) {
+                    protected void updateItem(AllView item, boolean empty) {
                         super.updateItem(item, empty);
 
                         if (empty) {

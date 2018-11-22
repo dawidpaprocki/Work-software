@@ -4,11 +4,24 @@ import combo.ComboCustomers;
 import combo.DataOperationAll;
 import combo.SelectListOfThings;
 import combo.SelectOneThing;
+import crud.controller.controllers.DaoContractsOpenSellController;
+import crud.controller.controllers.DaoCustomerController;
+import crud.controller.controllers.DaoMaterialController;
+import crud.model.GenericDaoImpl;
+import entity.AllView;
+import entity.ContractsOpenSell;
+import entity.Customer;
+import entity.Material;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.hibernate.SessionFactory;
+import utils.HibernateUtils;
+
+import javax.persistence.EntityManager;
+import java.util.List;
 
 
 public class SaleContractController {
@@ -40,17 +53,39 @@ public class SaleContractController {
     @FXML
     private ChoiceBox choiceMaterialSellContract;
 
+    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+    private final EntityManager entityManagerCustomer = sessionFactory.createEntityManager();
+    private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
+    private final EntityManager entityManagerContractSell = sessionFactory.createEntityManager();
+
+    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
+    private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
+    private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
+
+    DaoMaterialController daoMaterialController = new DaoMaterialController(genericDaoMaterial);
+    DaoCustomerController daoCustomerController = new DaoCustomerController(genericDaoCustomer);
+    DaoContractsOpenSellController daoContractController = new DaoContractsOpenSellController(genericDaoContractSell);
+
+
+
 
     private ObservableList materialList = FXCollections.observableArrayList();
+    private ObservableList customersList = FXCollections.observableArrayList();
 
     public void initialize() {
 
         // Receiving company names
-        new ComboCustomers(choiceContractSell, "Select Name From Customers", "Name", "ChoiceBox");
+
+
+        customersList.setAll(daoCustomerController.selectList());
+        choiceContractSell.setItems(customersList);
 
 
         // Receiving material list
-        new SelectListOfThings("SELECT NAME FROM material", "Name", materialList);
+
+        materialList.setAll( daoMaterialController.selectList());
+
+
         // Adding material list to the choicebox
         choiceMaterialSellContract.setItems(materialList);
 
@@ -65,18 +100,14 @@ public class SaleContractController {
     public void addContractButton() {
 
         // Receiving company name.
-        Object companyName = choiceContractSell.getValue();
+        String companyName = choiceContractSell.getValue().toString();
         // Receiving material type.
-        Object material = choiceMaterialSellContract.getValue();
+        String material = choiceMaterialSellContract.getValue().toString();
         // Receiving id from company name.
-        SelectOneThing selectOneThing = new SelectOneThing("SELECT id FROM Customers Where NAME = '" + String.valueOf(companyName) + "'", "id");
-        id = selectOneThing.getId();
+        id =  daoCustomerController.findByName(companyName).get(0).getId();
 
-
-        new DataOperationAll("INSERT INTO ContractsOpenSell (idCustomer,CustomerName,idName,nrTruck,nrTruckContract,contractName,amount,OpenClose) " +
-                "VALUES ('" + id + "','" + (String.valueOf(companyName)) + "','" + (String.valueOf(material)) + "','" + (truckContractSell.getText()) + "' , '0' ,'" +
-                (nrSellContract.getText()) + "','" + (amountContractSell.getText()) + "','0') ;");
-
+        daoContractController.add(0,id,companyName,material,Integer.parseInt(truckContractSell.getText()),
+                0,Integer.parseInt(amountContractSell.getText()),nrSellContract.getText());
 
         // Clearing added and chosen type.
         nrSellContract.clear();

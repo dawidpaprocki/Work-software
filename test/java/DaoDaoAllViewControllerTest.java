@@ -1,4 +1,4 @@
-import crud.controller.controllers.AllViewController;
+import crud.controller.controllers.DaoAllViewController;
 import crud.model.GenericDaoImpl;
 import entity.AllView;
 import org.junit.After;
@@ -9,9 +9,9 @@ import utils.HibernateUtils;
 import javax.persistence.EntityManager;
 
 import static org.junit.Assert.*;
-public class DaoAllViewControllerTest {
+public class DaoDaoAllViewControllerTest {
     EntityManager entityManager;
-    AllViewController allViewController;
+    DaoAllViewController daoAllViewController;
     GenericDaoImpl dao;
     AllView allView;
 
@@ -39,7 +39,7 @@ public class DaoAllViewControllerTest {
 
 
         dao = new GenericDaoImpl(entityManager, AllView.class);
-        allViewController = new AllViewController(dao);
+        daoAllViewController = new DaoAllViewController(dao);
     }
 
     @After
@@ -53,7 +53,7 @@ public class DaoAllViewControllerTest {
     @Test
     public void update(){
 
-        allViewController.updateRecord("Tos","Test1",1);
+        daoAllViewController.updateRecord("Tos","Test1",1);
         AllView byId =(AllView) dao.findById(1);
         assertEquals(byId.getTos(),"Test1");
 

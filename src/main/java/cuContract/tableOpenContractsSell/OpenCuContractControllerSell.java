@@ -1,5 +1,10 @@
 package cuContract.tableOpenContractsSell;
 
+import crud.controller.controllers.DaoAllViewController;
+import crud.controller.controllers.DaoContractsOpenSellController;
+import crud.model.GenericDaoImpl;
+import entity.AllView;
+import entity.ContractsOpenSell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,39 +13,47 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import cuContract.SelectTable;
 import cuContract.tableOpenContracts.Table;
+import org.hibernate.SessionFactory;
+import utils.HibernateUtils;
+
+import javax.persistence.EntityManager;
+import java.util.List;
 
 public class OpenCuContractControllerSell {
 
 
     @FXML
-    private TableView<Table> openCuContactTable;
+    private TableView<ContractsOpenSell> openCuContactTable;
 
     @FXML
-    private TableColumn<Table, String> columnCustomerName;
+    private TableColumn<ContractsOpenSell, String> columnCustomerName;
 
     @FXML
-    private TableColumn<Table, String> columnIdName;
+    private TableColumn<ContractsOpenSell, String> columnIdName;
 
     @FXML
-    private TableColumn<Table, String> columnNrTruckContract;
+    private TableColumn<ContractsOpenSell, String> columnNrTruckContract;
 
     @FXML
-    private TableColumn<Table, String> columnNrTruck;
+    private TableColumn<ContractsOpenSell, String> columnNrTruck;
 
     @FXML
-    private TableColumn<Table, String> columnAmount;
+    private TableColumn<ContractsOpenSell, String> columnAmount;
 
     @FXML
-    private TableColumn<Table, String> columnContractName;
+    private TableColumn<ContractsOpenSell, String> columnContractName;
 
 
-    private ObservableList<Table> data;
+    private ObservableList<ContractsOpenSell> data;
+    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+    private final EntityManager entityManager = sessionFactory.createEntityManager();
+    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenSell.class);
+    private DaoContractsOpenSellController daoAllViewController = new DaoContractsOpenSellController(genericDao);
 
     public void initialize() {
         data = FXCollections.observableArrayList();
-        SelectTable selectTable = new SelectTable();
-        SelectTable.SelectAll("contractsopensell", data, "CustomerName,idName,nrTruckContract,nrTruck,amount,contractName");
-
+        List<ContractsOpenSell> contractsOpenSells = daoAllViewController.selectList();
+        data.setAll(contractsOpenSells);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
         columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
@@ -48,8 +61,9 @@ public class OpenCuContractControllerSell {
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
+
         openCuContactTable.setItems(null);
-        openCuContactTable.setItems(selectTable.getData());
+        openCuContactTable.setItems(data);
 
 
     }

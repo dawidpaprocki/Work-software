@@ -1,7 +1,6 @@
 package table;
 
-import combo.DataOperationAll;
-import crud.controller.controllers.AllViewController;
+import crud.controller.controllers.DaoAllViewController;
 import crud.model.GenericDaoImpl;
 import entity.AllView;
 import javafx.collections.FXCollections;
@@ -86,7 +85,6 @@ public class TableController {
 
     private ObservableList<AllView> getData;
 
-    private SelectTable selectAll = new SelectTable();
 
     /**
      * <h2> initialize Method</h2>
@@ -95,20 +93,23 @@ public class TableController {
      * setting background color based on Value in Data Base.
      *
      */
+    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+    private final EntityManager entityManager = sessionFactory.createEntityManager();
+    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllView.class);
+    private DaoAllViewController daoAllViewController = new DaoAllViewController(genericDao);
 
     public void initialize() {
 
-        final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-        final EntityManager entityManager = sessionFactory.createEntityManager();
 
-        GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllView.class);
-        AllViewController allViewController = new AllViewController(genericDao);
-        List<AllView> list = allViewController.selectList();
+
+
+
+        List<AllView> list = daoAllViewController.selectList();
 
 
         getData = FXCollections.observableArrayList();
 
-//        SelectTable.SelectAll("All_view", getData, "*");
+
         getData.addAll(list);
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -178,21 +179,22 @@ public class TableController {
     //temporary color
     private String temporaryColor = "#fd6c6cff";
 
-    public void doChange(TableColumn.CellEditEvent<Table, String> tableStringCellEditEvent) {
+    public void doChange(TableColumn.CellEditEvent<AllView, String> tableStringCellEditEvent) {
 
         //get new value of cell
         String newMaterial = tableStringCellEditEvent.getNewValue();
         //get id of changing row
-        String idOfRow = tableStringCellEditEvent.getRowValue().getId();
+        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
         //get id of column
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
         //updating changes to getData base
-        new DataOperationAll("UPDATE all_view SET " + idOfColumn + "  =  '" + newMaterial + "' Where ID = '" + idOfRow + "'");
+        daoAllViewController.updateRecord(idOfColumn,newMaterial,idOfRow);
+
 
     }
 
     public void refresh(ActionEvent actionEvent) {
-//        SelectTable.SelectAll("All_view", getData, "*");
+
     }
     /**
      * <h2> color Method </h2>
@@ -202,23 +204,25 @@ public class TableController {
      *
      */
     public void color(ActionEvent actionEvent) {
-//
-//
-//        temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
-//
-//        String colorId = tables.getSelectionModel().getSelectedItem().getId();
-//
-//        TablePosition tablePosition;
-//        tablePosition = tables.getFocusModel().getFocusedCell();
-//
-//
-//        new DataOperationAll("UPDATE all_view SET " + "color" + "  =  '" + temporaryColor + "' Where ID = '" + colorId + "'");
-//        TableColor TableColor = new TableColor();
-//
-//        tables = TableColor.color(tables, tablePosition, temporaryColor);
-//        tables.refresh();
-//
-//
+
+        temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
+
+
+
+        int colorId = tables.getSelectionModel().getSelectedItem().getId();
+
+        TablePosition tablePosition;
+        tablePosition = tables.getFocusModel().getFocusedCell();
+
+
+
+        daoAllViewController.updateRecord("color",temporaryColor,colorId);
+
+        TableColor TableColor = new TableColor();
+
+        tables = TableColor.color(tables, tablePosition, temporaryColor);
+        tables.refresh();
+
     }
 
 
