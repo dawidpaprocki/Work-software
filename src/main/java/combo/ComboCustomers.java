@@ -16,15 +16,18 @@ public class ComboCustomers {
 
     public ComboCustomers(Object object, String toDo, String columnLabel, String typeOfObject) {
 
-        new SelectListOfThings(toDo,columnLabel, comboList);
+
+        ObservableList comboList = new SelectListOfThings(toDo, columnLabel, this.comboList).getComboList();
+        this.comboList.setAll(comboList);
         switch (typeOfObject) {
             case ("ChoiceBox"):
-                ChoiceBox    choiceBox = (ChoiceBox) object;
+
+                    choiceBox = (ChoiceBox) object;
 
                 choiceBox.setItems(getComboList());
                 break;
             case ("ComboBox"):
-                ComboBox    comboBox = (ComboBox) object;
+                comboBox = (ComboBox) object;
 
 
                 comboBox.setItems(getComboList());

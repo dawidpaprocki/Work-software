@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="346.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addCustomer.CustomerController">
+<AnchorPane prefHeight="346.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addCustomer.salecontractController">
 
     <TitledPane alignment="CENTER" animated="false" collapsible="false" layoutY="-1.0" prefHeight="369.0" prefWidth="190.0" text="Nowy firma" textAlignment="CENTER">
         <content>

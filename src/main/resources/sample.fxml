@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <TabPane prefHeight="631.0" prefWidth="1144.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -21,7 +21,7 @@
                   <fx:include source="tableFXML.fxml" />
                </content>
           </Tab>
-            <Tab text="Kontraktu Miedź">
+            <Tab onSelectionChanged="#refresh" text="Kontraktu Miedź">
               <content>
                   <GridPane prefHeight="602.0" prefWidth="1007.0">
                      <columnConstraints>
