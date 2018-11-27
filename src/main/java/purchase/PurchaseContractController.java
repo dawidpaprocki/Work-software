@@ -58,8 +58,10 @@ public class PurchaseContractController {
     private GenericDaoImpl genericDaoContractBuy = new GenericDaoImpl(entityManagerContractBuy, ContractsOpenBuy.class);
 
     DaoMaterialController daoMaterialController = new DaoMaterialController(genericDaoMaterial);
-    DaoCustomerController daoCustomerController = new DaoCustomerController(genericDaoCustomer);
-    DaoContractsOpenBuyController daoContractController = new DaoContractsOpenBuyController(genericDaoContractBuy);
+    DaoCustomerController daoCustomerController = DaoCustomerController.builder()
+            .dao(genericDaoCustomer)
+            .build();
+    DaoContractsOpenBuyController daoContractController;
 
     public void initialize() {
 
@@ -68,13 +70,15 @@ public class PurchaseContractController {
         choiceCustomerNameSell.setItems(customersList);
 
         // Receiving material list
-        materialList.setAll( daoMaterialController.selectList());
+        materialList.setAll(daoMaterialController.selectList());
 
         // Adding material list to the choicebox
         choiceMaterialBuyContract.setItems(materialList);
+
     }
 
     public void addContractButton() {
+
         // Receiving company name.
         String companyName = choiceCustomerNameBuy.getValue().toString();
         // Receiving material type.
@@ -82,12 +86,24 @@ public class PurchaseContractController {
         // Receiving name from company name.
         String nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue().toString();
 
-      int  idBuyer =  daoCustomerController.findByName(companyName).get(0).getId();
+        int idBuyer = daoCustomerController.findByName(companyName).get(0).getId();
 
-       int idSeller =  daoCustomerController.findByName(nameOfCompanyBuyToSell).get(0).getId();
+        int idSeller = daoCustomerController.findByName(nameOfCompanyBuyToSell).get(0).getId();
 
-       daoContractController.add(idSeller,idBuyer,companyName,material,Integer.parseInt(truckContractBuy.getText()),
-               0,Integer.parseInt(nrBuyContract.getText()),amountContractBuy.getText());
+
+        daoContractController = DaoContractsOpenBuyController.builder()
+                .idSell(idSeller)
+                .idCustomer(idBuyer)
+                .customerName(companyName)
+                .idName(material)
+                .nrTruck(Integer.parseInt(truckContractBuy.getText()))
+                .nrTruckContract(0)
+                .amount(Integer.parseInt(nrBuyContract.getText()))
+                .contractName(amountContractBuy.getText())
+                .dao(genericDaoContractBuy)
+                .build();
+
+        daoContractController.add();
 
 
         choiceMaterialBuyContract.setValue(null);
@@ -96,7 +112,6 @@ public class PurchaseContractController {
         nrBuyContract.clear();
         amountContractBuy.clear();
         truckContractBuy.clear();
-
 
 
     }

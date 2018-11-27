@@ -18,6 +18,8 @@ public class DaoDaoAllViewControllerTest {
     @Before
     public void before() {
         entityManager = HibernateUtils.getSessionFactory().createEntityManager();
+
+
         allView = new AllView();
         allView.setData("13-11-2018");
         allView.setMaterial("Cu");
@@ -39,7 +41,9 @@ public class DaoDaoAllViewControllerTest {
 
 
         dao = new GenericDaoImpl(entityManager, AllView.class);
-        daoAllViewController = new DaoAllViewController(dao);
+        daoAllViewController =  DaoAllViewController.builder()
+                .dao(dao).build();
+
     }
 
     @After
@@ -52,7 +56,6 @@ public class DaoDaoAllViewControllerTest {
 
     @Test
     public void update(){
-
         daoAllViewController.updateRecord("Tos","Test1",1);
         AllView byId =(AllView) dao.findById(1);
         assertEquals(byId.getTos(),"Test1");

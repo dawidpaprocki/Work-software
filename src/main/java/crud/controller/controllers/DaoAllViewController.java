@@ -4,39 +4,54 @@ import crud.controller.services.AllViewService;
 import crud.controller.services.ViewService;
 import crud.model.GenericDao;
 import entity.AllView;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
-
+@Data
+@Builder(toBuilder = true)
 public class DaoAllViewController implements AllViewService, ViewService {
+    private String data;
+    private String material;
+    private String truck;
+    private int amount;
+    private int finalAmount;
+    private String froms;
+    private String tos;
+    private String truckNr;
+    private String transportOrder;
+    private String vk;
+    private String ek;
+    private String amsDoc;
+    private String color;
 
     private final GenericDao dao;
 
-    public DaoAllViewController(GenericDao dao) {
-        this.dao = dao;
-    }
+//    public DaoAllViewController(GenericDao dao) {
+//        this.dao = dao;
+//    }
 
     private AllView allView;
 
 
     @Override
-    public void add(String data, String material, String truck, int amount, int finalAmount, String froms,
-                    String tos, String truckNr, String transportOrder, String vk, String ek, String amsDoc, String color) {
+    public void add() {
         allView = new AllView();
 
-        allView.setData(data);
-        allView.setMaterial(material);
-        allView.setTruck(truck);
-        allView.setAmount(amount);
-        allView.setFinalAmount(finalAmount);
-        allView.setFroms(froms);
-        allView.setAmount(amount);
-        allView.setTos(tos);
-        allView.setTruckNr(truckNr);
-        allView.setTransportOrder(transportOrder);
-        allView.setVk(vk);
-        allView.setEk(ek);
-        allView.setAmsDoc(amsDoc);
-        allView.setColor(color);
+        allView.setData(this.data);
+        allView.setMaterial(this.material);
+        allView.setTruck(this.truck);
+        allView.setAmount(this.amount);
+        allView.setFinalAmount(this.finalAmount);
+        allView.setFroms(this.froms);
+        allView.setAmount(this.amount);
+        allView.setTos(this.tos);
+        allView.setTruckNr(this.truckNr);
+        allView.setTransportOrder(this.transportOrder);
+        allView.setVk(this.vk);
+        allView.setEk(this.ek);
+        allView.setAmsDoc(this.amsDoc);
+        allView.setColor(this.color);
         dao.insert(allView);
 
     }

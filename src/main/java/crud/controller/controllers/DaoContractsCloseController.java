@@ -7,31 +7,46 @@ import crud.model.GenericDao;
 import entity.ContractsClose;
 import entity.ContractsOpenBuy;
 import entity.ContractsOpenSell;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
-
+@Data
+@Builder(toBuilder = true)
 public class DaoContractsCloseController implements DaoContactsOpenService, ViewService, ContactsCloseService {
+    private int id;
+    private int idSell;
+    private int idCustomer;
+    private String customerName;
+    private String idName;
+    private int nrTruck;
+    private int nrTruckContract;
+    private int amount;
+    private String contractName;
+    private int openClose;
+    private int idContractBuy;
+    private int idContractSell;
 
     private final GenericDao dao;
 
-    public DaoContractsCloseController(GenericDao dao) {
-        this.dao = dao;
-    }
+//    public DaoContractsCloseController(GenericDao dao) {
+//        this.dao = dao;
+//    }
 
     private ContractsClose contractsClose;
 
     @Override
-    public void add(int idSell, int idCustomer, String customerName, String idName, int nrTruck, int nrTruckContract, int amount, String contractName) {
+    public void add() {
         contractsClose = new ContractsClose();
 
-        contractsClose.setIdSell(idSell);
-        contractsClose.setIdCustomer(idCustomer);
-        contractsClose.setCustomerName(customerName);
-        contractsClose.setIdName(idName);
-        contractsClose.setNrTruck(nrTruck);
-        contractsClose.setNrTruckContract(nrTruckContract);
-        contractsClose.setAmount(amount);
-        contractsClose.setContractName(contractName);
+        contractsClose.setIdSell(this.idSell);
+        contractsClose.setIdCustomer(this.idCustomer);
+        contractsClose.setCustomerName(this.customerName);
+        contractsClose.setIdName(this.idName);
+        contractsClose.setNrTruck(this.nrTruck);
+        contractsClose.setNrTruckContract(this.nrTruckContract);
+        contractsClose.setAmount(this.amount);
+        contractsClose.setContractName(this.contractName);
         dao.insert(contractsClose);
     }
 
@@ -64,6 +79,12 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
     }
 
     @Override
+    public List<ContractsClose> find( String where, String name) {
+
+        return  (List<ContractsClose>)  dao.find(where,name);
+    }
+
+    @Override
     public void updateRecord(String idOfColumn, String newValue, int idOfRow) {
         contractsClose = (ContractsClose) dao.findById(idOfRow);
         dao.query(idOfColumn, newValue, 1);
@@ -76,10 +97,10 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
 
 
     @Override
-    public void CheckStatusTransfer(int id, Object tableFormGet, GenericDao daoFrom) {
+    public void CheckStatusTransfer(int id, Class tableFormGet, GenericDao daoFrom) {
         //Need to make refactor this code to avoid duplicate
 
-        if (tableFormGet.getClass().getSimpleName().equals("ContractsOpenBuy")) {
+        if (tableFormGet.getSimpleName().equals("ContractsOpenBuy")) {
             ContractsOpenBuy contractsOpenBuy = (ContractsOpenBuy) daoFrom.findById(id);
 
             if (contractsOpenBuy.getOpenClose() == 1) {
@@ -97,7 +118,7 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
                 dao.insert(contractsClose);
                 daoFrom.delete(contractsOpenBuy);
             }
-        } else if (tableFormGet.getClass().getSimpleName().equals("ContractsOpenSell")) {
+        } else if (tableFormGet.getSimpleName().equals("ContractsOpenSell")) {
             ContractsOpenSell contractsOpenSell = (ContractsOpenSell) daoFrom.findById(id);
 
             if (contractsOpenSell.getOpenClose() == 1) {

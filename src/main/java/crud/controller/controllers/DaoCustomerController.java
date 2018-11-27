@@ -3,26 +3,32 @@ package crud.controller.controllers;
 import crud.controller.services.DaoCustomerService;
 import crud.model.GenericDao;
 import entity.Customer;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Data
+@Builder(toBuilder = true)
 public class DaoCustomerController implements DaoCustomerService {
+    private int Id;
+    private String Name;
+    private String Country;
 
     private final GenericDao dao;
 
-    public DaoCustomerController(GenericDao dao) {
-        this.dao = dao;
-    }
+//    public DaoCustomerController(GenericDao dao) {
+//        this.dao = dao;
+//    }
     private Customer customer;
 
 
     @Override
-    public void add(String name, String country) {
+    public void add() {
 
         customer = new Customer();
-        customer.setName(name);
-        customer.setCountry(country);
+        customer.setName(this.Name);
+        customer.setCountry(this.Country);
         dao.insert(customer);
 
     }

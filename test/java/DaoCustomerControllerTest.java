@@ -32,7 +32,7 @@ public class DaoCustomerControllerTest {
 
 
         dao = new GenericDaoImpl(entityManager, Customer.class);
-        daoCustomerController = new DaoCustomerController(dao);
+        daoCustomerController = DaoCustomerController.builder().dao(dao).build();
     }
 
     @After
@@ -53,7 +53,14 @@ public class DaoCustomerControllerTest {
 
         // given
         // when
-        daoCustomerController.add("Test2", "Poland");
+
+        daoCustomerController = DaoCustomerController.builder()
+                .Name("Test2")
+                .Country("Poland")
+                .dao(dao)
+                .build();
+        daoCustomerController.add();
+
         List<Customer> select = dao.select();
         List<String> collectName = select.stream().map(Customer::getName).collect(Collectors.toList());
         List<String> collectCountry = select.stream().map(Customer::getCountry).collect(Collectors.toList());
@@ -68,7 +75,12 @@ public class DaoCustomerControllerTest {
 
         // given
         // when
-        daoCustomerController.add("Test2", "Poland");
+        daoCustomerController = DaoCustomerController.builder()
+                .Name("Test2")
+                .Country("Poland")
+                .dao(dao)
+                .build();
+        daoCustomerController.add();
         List<Customer> select = dao.select();
         List<String> collectName = select.stream().map(Customer::getName).collect(Collectors.toList());
         List<String> collectCountry = select.stream().map(Customer::getCountry).collect(Collectors.toList());
@@ -166,7 +178,7 @@ public class DaoCustomerControllerTest {
 //        // given
 //        String name = customer.getName();
 //        // when
-//        List<Customer> customers = daoCustomerController.findByName("Test1");
+//        List<Customer> customers = daoCustomerController.find("Test1");
 //        // then
 //        assertEquals(customers.get(0).getName(), name);
 //
@@ -176,7 +188,7 @@ public class DaoCustomerControllerTest {
 //    public void findByNameTestFalse() {
 //        // given
 //        // when
-//        List<Customer> customers = daoCustomerController.findByName("Test1");
+//        List<Customer> customers = daoCustomerController.find("Test1");
 //        // then
 //        assertNotEquals(customers.get(0).getName(), "Test2");
 //

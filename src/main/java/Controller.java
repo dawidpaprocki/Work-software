@@ -1,8 +1,4 @@
-import cuContract.SelectTable;
 import cuContract.tableOpenContracts.OpenCuContractController;
-import cuContract.tableOpenContracts.Table;
-import cuContract.tableOpenContractsSell.OpenCuContractControllerSell;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 
 public class Controller {

@@ -96,7 +96,7 @@ public class TableController {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllView.class);
-    private DaoAllViewController daoAllViewController = new DaoAllViewController(genericDao);
+    private DaoAllViewController daoAllViewController =  DaoAllViewController.builder().dao(genericDao).build();
 
     public void initialize() {
 

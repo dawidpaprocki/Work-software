@@ -1,9 +1,7 @@
 package cuContract.tableOpenContractsSell;
 
-import crud.controller.controllers.DaoAllViewController;
 import crud.controller.controllers.DaoContractsOpenSellController;
 import crud.model.GenericDaoImpl;
-import entity.AllView;
 import entity.ContractsOpenSell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import cuContract.SelectTable;
-import cuContract.tableOpenContracts.Table;
 import org.hibernate.SessionFactory;
 import utils.HibernateUtils;
 
@@ -48,7 +44,7 @@ public class OpenCuContractControllerSell {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenSell.class);
-    private DaoContractsOpenSellController daoAllViewController = new DaoContractsOpenSellController(genericDao);
+    private DaoContractsOpenSellController daoAllViewController =  DaoContractsOpenSellController.builder().dao(genericDao).build();
 
     public void initialize() {
         data = FXCollections.observableArrayList();

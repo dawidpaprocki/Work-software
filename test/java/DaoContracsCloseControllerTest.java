@@ -31,13 +31,13 @@ public class DaoContracsCloseControllerTest {
         entityManager = HibernateUtils.getSessionFactory().createEntityManager();
 
         dao = new GenericDaoImpl(entityManager, ContractsClose.class);
-        daoContractsCloseController = new DaoContractsCloseController(dao);
+        daoContractsCloseController =  DaoContractsCloseController.builder().dao(dao).build();
 
         daoFromBuy = new GenericDaoImpl(entityManagerBuy, ContractsOpenBuy.class);
-        daoContractsOpenBuyController = new DaoContractsOpenBuyController(daoFromBuy);
+        daoContractsOpenBuyController =  DaoContractsOpenBuyController.builder().dao(daoFromBuy).build();
 
         daoFromSell = new GenericDaoImpl(entityManagerSell, ContractsOpenSell.class);
-        daoContractsOpenSellController = new DaoContractsOpenSellController(daoFromSell);
+        daoContractsOpenSellController =  DaoContractsOpenSellController.builder().dao(daoFromSell).build();
     }
 
     @After
@@ -76,7 +76,7 @@ public class DaoContracsCloseControllerTest {
 
         daoFromBuy = new GenericDaoImpl(entityManagerBuy, ContractsOpenBuy.class);
 
-        daoContractsCloseController.CheckStatusTransfer(1,contractsOpenBuy,daoFromBuy);
+        daoContractsCloseController.CheckStatusTransfer(1,ContractsOpenBuy.class,daoFromBuy);
 
         List<ContractsClose> addedSelect = dao.select();
         String addedName = addedSelect.get(0).getCustomerName();
@@ -108,7 +108,7 @@ public class DaoContracsCloseControllerTest {
         entityManagerSell.getTransaction().commit();
 
         daoFromSell = new GenericDaoImpl(entityManagerSell, ContractsOpenSell.class);
-        daoContractsCloseController.CheckStatusTransfer(1,contractsOpenSell,daoFromSell);
+        daoContractsCloseController.CheckStatusTransfer(1,ContractsOpenSell.class,daoFromSell);
 
         List<ContractsClose> addedSelect = dao.select();
         String addedName = addedSelect.get(0).getCustomerName();

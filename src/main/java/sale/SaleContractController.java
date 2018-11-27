@@ -4,6 +4,7 @@ import combo.ComboCustomers;
 import combo.DataOperationAll;
 import combo.SelectListOfThings;
 import combo.SelectOneThing;
+import crud.controller.controllers.DaoContractsOpenBuyController;
 import crud.controller.controllers.DaoContractsOpenSellController;
 import crud.controller.controllers.DaoCustomerController;
 import crud.controller.controllers.DaoMaterialController;
@@ -63,8 +64,10 @@ public class SaleContractController {
     private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
 
     DaoMaterialController daoMaterialController = new DaoMaterialController(genericDaoMaterial);
-    DaoCustomerController daoCustomerController = new DaoCustomerController(genericDaoCustomer);
-    DaoContractsOpenSellController daoContractController = new DaoContractsOpenSellController(genericDaoContractSell);
+    DaoCustomerController daoCustomerController =  DaoCustomerController.builder()
+            .dao(genericDaoCustomer)
+            .build();
+    private DaoContractsOpenSellController daoContractController ;
 
 
 
@@ -106,9 +109,20 @@ public class SaleContractController {
         // Receiving id from company name.
         id =  daoCustomerController.findByName(companyName).get(0).getId();
 
-        daoContractController.add(0,id,companyName,material,Integer.parseInt(truckContractSell.getText()),
-                0,Integer.parseInt(amountContractSell.getText()),nrSellContract.getText());
 
+
+        daoContractController = DaoContractsOpenSellController.builder()
+                .idSell(0)
+                .idCustomer(id)
+                .customerName(companyName)
+                .idName(material)
+                .nrTruck(Integer.parseInt(truckContractSell.getText()))
+                .nrTruckContract(0)
+                .amount(Integer.parseInt(nrSellContract.getText()))
+                .contractName(amountContractSell.getText())
+                .dao(genericDaoContractSell)
+                .build();
+        daoContractController.add();
         // Clearing added and chosen type.
         nrSellContract.clear();
         amountContractSell.clear();

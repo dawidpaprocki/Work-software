@@ -47,7 +47,7 @@ public class OpenCuContractController {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenBuy.class);
-    private DaoContractsOpenBuyController daoContractsOpenBuyController = new DaoContractsOpenBuyController(genericDao);
+    private DaoContractsOpenBuyController daoContractsOpenBuyController = DaoContractsOpenBuyController.builder().dao(genericDao).build();
 
     public void initialize() {
         data = FXCollections.observableArrayList();

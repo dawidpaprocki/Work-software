@@ -4,30 +4,43 @@ import crud.controller.services.DaoContactsOpenService;
 import crud.controller.services.ViewService;
 import crud.model.GenericDao;
 import entity.ContractsOpenBuy;
+import entity.ContractsOpenSell;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
-
+@Data
+@Builder(toBuilder = true)
 public class DaoContractsOpenBuyController implements DaoContactsOpenService,ViewService {
 
+    private int id;
+    private int idSell;
+    private int idCustomer;
+    private String customerName;
+    private String idName;
+    private int nrTruck;
+    private int nrTruckContract;
+    private int amount;
+    private String contractName;
     private final GenericDao dao;
 
-    public DaoContractsOpenBuyController(GenericDao dao) {
-        this.dao = dao;
-    }
+//    public DaoContractsOpenBuyController(GenericDao dao) {
+//        this.dao = dao;
+//    }
 
     private ContractsOpenBuy contractsOpenBuy;
     @Override
-    public void add(int idSell, int idCustomer, String customerName, String idName, int nrTruck, int nrTruckContract, int amount, String contractName) {
+    public void add() {
         contractsOpenBuy = new ContractsOpenBuy();
 
-        contractsOpenBuy.setIdSell(idSell);
-        contractsOpenBuy.setIdCustomer(idCustomer);
-        contractsOpenBuy.setCustomerName(customerName);
-        contractsOpenBuy.setIdName(idName);
-        contractsOpenBuy.setNrTruck(nrTruck);
-        contractsOpenBuy.setNrTruckContract(nrTruckContract);
-        contractsOpenBuy.setAmount(amount);
-        contractsOpenBuy.setContractName(contractName);
+        contractsOpenBuy.setIdSell(this.idSell);
+        contractsOpenBuy.setIdCustomer(this.idCustomer);
+        contractsOpenBuy.setCustomerName(this.customerName);
+        contractsOpenBuy.setIdName(this.idName);
+        contractsOpenBuy.setNrTruck(this.nrTruck);
+        contractsOpenBuy.setNrTruckContract(this.nrTruckContract);
+        contractsOpenBuy.setAmount(this.amount);
+        contractsOpenBuy.setContractName(this.contractName);
         dao.insert(contractsOpenBuy);
     }
 
@@ -60,9 +73,15 @@ public class DaoContractsOpenBuyController implements DaoContactsOpenService,Vie
     }
 
     @Override
+    public List<ContractsOpenBuy> find(String where, String name) {
+
+        return  (List<ContractsOpenBuy>)  dao.find(where,name);
+    }
+
+    @Override
     public void updateRecord(String idOfColumn, String newValue, int idOfRow) {
         contractsOpenBuy = (ContractsOpenBuy) dao.findById(idOfRow);
-        dao.query(idOfColumn,newValue,1);
+        dao.query(idOfColumn,newValue,idOfRow);
     }
 
     @Override
