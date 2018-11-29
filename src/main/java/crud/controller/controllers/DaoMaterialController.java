@@ -3,19 +3,21 @@ package crud.controller.controllers;
 import crud.controller.services.DaoMaterialService;
 import crud.model.GenericDao;
 import entity.Material;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Data
+@Builder(toBuilder = true)
 public class DaoMaterialController implements DaoMaterialService {
+    private int Id;
+    private String Name;
 
     private final GenericDao dao;
 
-    public DaoMaterialController(GenericDao dao) {
-        this.dao = dao;
-    }
-
     Material material;
+
     @Override
     public void add(String what) {
         material = new Material();

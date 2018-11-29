@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Data
 @Builder(toBuilder = true)
 public class DaoCustomerController implements DaoCustomerService {
@@ -17,9 +18,7 @@ public class DaoCustomerController implements DaoCustomerService {
 
     private final GenericDao dao;
 
-//    public DaoCustomerController(GenericDao dao) {
-//        this.dao = dao;
-//    }
+
     private Customer customer;
 
 

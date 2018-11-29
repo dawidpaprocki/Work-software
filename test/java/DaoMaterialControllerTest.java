@@ -31,7 +31,7 @@ public class DaoMaterialControllerTest {
 
 
         dao = new GenericDaoImpl(entityManager, Material.class);
-        daoMaterialController = new DaoMaterialController(dao);
+        daoMaterialController =  DaoMaterialController.builder().dao(dao).build();
 
 
     }
