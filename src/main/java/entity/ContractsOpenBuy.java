@@ -23,17 +23,6 @@ public class ContractsOpenBuy {
     public ContractsOpenBuy() {
     }
 
-    public ContractsOpenBuy(int idSell, int idCustomer, String customerName, String idName, int nrTruck, int nrTruckContract, int amount, String contractName, int openClose) {
-        this.idSell = idSell;
-        this.idCustomer = idCustomer;
-        CustomerName = customerName;
-        this.idName = idName;
-        NrTruck = nrTruck;
-        NrTruckContract = nrTruckContract;
-        Amount = amount;
-        ContractName = contractName;
-        OpenClose = openClose;
-    }
 
     public int getId() {
         return id;

@@ -27,10 +27,6 @@ public class DaoAllViewController implements AllViewService, ViewService {
 
     private final GenericDao dao;
 
-//    public DaoAllViewController(GenericDao dao) {
-//        this.dao = dao;
-//    }
-
     private AllView allView;
 
 

@@ -28,10 +28,6 @@ public class OpenZnContractControllerBuy {
     @FXML
     private TableView<ContractsOpenBuy> openZnContractTable;
 
-    public TableView<ContractsOpenBuy> getOpenZnContactTable() {
-        return openZnContractTable;
-    }
-
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnCustomerName;
 

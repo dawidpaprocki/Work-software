@@ -58,7 +58,12 @@ public class OpenPbContractControllerSell {
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenSell> contractsOpenSells = daoAllViewController.selectList().stream().filter(e->e.getIdName().equals(daoAllViewControllerMaterial.findById(2).getName())).collect(Collectors.toList());;
+        List<ContractsOpenSell> contractsOpenSells = daoAllViewController
+                .selectList()
+                .stream()
+                .filter(e->e.getIdName()
+                        .equals(daoAllViewControllerMaterial.findById(2)    .getName()))
+                .collect(Collectors.toList());;
 
         data.setAll(contractsOpenSells);
 

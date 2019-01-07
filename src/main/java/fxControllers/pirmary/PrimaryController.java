@@ -38,32 +38,12 @@ public class PrimaryController {
     @FXML
     private ComboBox nrContractSell;
 
-    @FXML
-    private ChoiceBox choiceContractBuy;
-
-    @FXML
-    private TextField nrBuyContract;
-
-    @FXML
-    private TextField amountContractBuy;
-
-    @FXML
-    private Button addBuy;
-
-    @FXML
-    private ChoiceBox choiceMaterialBuyContract;
-
-    @FXML
-    private TextField truckContractBuy;
-
-    @FXML
-    private ChoiceBox choiceContractBuyToSell;
 
     @FXML
     private ComboBox choiceCustomerNameBox;
 
     @FXML
-    private Label materialID;
+    private Label materialId;
 
     @FXML
     private DatePicker datePickerChoice;
@@ -71,8 +51,7 @@ public class PrimaryController {
     @FXML
     private Label dataPickError;
 
-
-    private String contractName;
+    private int materialPrepareType;
 
     ObservableList choiceContractListBuy = FXCollections.observableArrayList();
     ObservableList choiceContractListSell = FXCollections.observableArrayList();
@@ -105,6 +84,7 @@ public class PrimaryController {
     DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
     DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(GenericDaoContractclose).build();
 
+
     public void initialize() {
 
         customersList.setAll(daoCustomerController.selectList());
@@ -126,11 +106,11 @@ public class PrimaryController {
                         try {
                             Integer.parseInt(deliveryAmountText);
 
-                            if (type == 0) {
+                            if (materialPrepareType == 0) {
 
                                 daoAllViewController = DaoAllViewController.builder()
                                         .data(dataPickerString)
-                                        .material(materialID.getText())
+                                        .material(materialId.getText())
                                         .truck(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -153,7 +133,7 @@ public class PrimaryController {
 
                                 daoAllViewController = DaoAllViewController.builder()
                                         .data(dataPickerString)
-                                        .material(materialID.getText())
+                                        .material(materialId.getText())
                                         .truck(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -178,7 +158,7 @@ public class PrimaryController {
                             deliveryPlate.clear();
                             deliveryAmount.clear();
                             deliveryTo.clear();
-                            materialID.setText("");
+                            materialId.setText("");
                             dataPickError.setText("");
 
                             choiceCustomerNameBox.setValue(null);
@@ -207,8 +187,6 @@ public class PrimaryController {
 
 
     }
-
-    private int type;
 
 
     public void deliveryType(Class table, GenericDao dao) {
@@ -260,63 +238,70 @@ public class PrimaryController {
 
     public void materialPrepareBuy() {
 
-        String brak = Optional.ofNullable(nrContractBuy.getValue()).orElse("brak").toString();
+        String NrContractBuy = Optional.ofNullable(nrContractBuy.getValue()).orElse("Empty").toString();
 
 
-        if (!(brak.equals("Wybierz") || brak.equals("brak"))) {
-            type = 0;
-            String s = nrContractBuy.getValue().toString();
-            String s1 = "ContractName";
-            List<ContractsOpenBuy> contractName = daoContractBuyController.find(s1, s);
-            System.out.println("lista " + contractName);
-            String idName = contractName.get(0).getIdName();
+        if (!(NrContractBuy.equals("Wybierz") || NrContractBuy.equals("Empty"))) {
+            materialPrepareType = 0;
+            String contractNumber = nrContractBuy
+                    .getValue()
+                    .toString();
+            List<ContractsOpenBuy> contractName = daoContractBuyController.find("contractName", contractNumber);
+            String contractId = contractName.get(0).getIdName();
 
-            materialID.setText(idName);
+            materialId.setText(contractId);
 
         }
     }
 
 
     public void materialPrepareSell() {
-        type = 1;
+        materialPrepareType = 1;
+        String contractNumber = nrContractSell
+                .getValue()
+                .toString();
+        List<ContractsOpenSell> contractName = daoContractSellController.find("contractName",contractNumber);
 
-        List<ContractsOpenSell> contractName = daoContractSellController.find("contractName", nrContractSell.getValue().toString());
+        String materialName = contractName.get(0).getIdName();
 
-        String idName = contractName.get(0).getIdName();
-
-        materialID.setText(idName);
+        materialId.setText(materialName);
 
     }
 
 
-    public int customerId;
 
     public void selectComboBoxList() {
 
-        String brak = Optional.ofNullable(choiceCustomerNameBox.getValue()).orElse("brak").toString();
-        if (!(brak.equals("Wybierz") ||  brak.equals("brak"))) {
+        String customerIdValue = Optional.ofNullable(choiceCustomerNameBox.getValue()).orElse("Empty").toString();
+        if (!(customerIdValue.equals("Wybierz") ||  customerIdValue.equals("Empty"))) {
 
-            customerId = daoCustomerController.findByName(choiceCustomerNameBox.getValue().toString()).get(0).getId();
+            int customerId = daoCustomerController
+                    .findByName(choiceCustomerNameBox
+                            .getValue()
+                            .toString())
+                    .get(0).getId();
 
-            listOfChoiceCotract();
+            listOfChoiceContract(customerId);
 
         }
 
     }
 
-    List<ContractsOpenBuy> contractsOpenBuy;
-    List<ContractsOpenSell> contractsOpenSell;
+    public void listOfChoiceContract(int customerId) {
 
-    public void listOfChoiceCotract() {
+        List<ContractsOpenBuy>  contractsOpenBuy = daoContractBuyController.selectList();
 
-        contractsOpenBuy = daoContractBuyController.selectList();
+        choiceContractListBuy.setAll(contractsOpenBuy.stream()
+                .filter(e -> e.getIdCustomer() == customerId)
+                .map(ContractsOpenBuy::getContractName)
+                .collect(Collectors.toList()));
 
-        choiceContractListBuy.setAll(contractsOpenBuy.stream().filter(e -> e.getIdCustomer() == customerId).map(ContractsOpenBuy::getContractName).collect(Collectors.toList()));
+        List<ContractsOpenSell>    contractsOpenSell = daoContractSellController.selectList();
 
-
-        contractsOpenSell = daoContractSellController.selectList();
-
-        choiceContractListSell.setAll(contractsOpenSell.stream().filter(e -> e.getIdCustomer() == customerId).map(ContractsOpenSell::getContractName).collect(Collectors.toList()));
+        choiceContractListSell.setAll(contractsOpenSell.stream()
+                .filter(e -> e.getIdCustomer() == customerId)
+                .map(ContractsOpenSell::getContractName)
+                .collect(Collectors.toList()));
 
         nrContractBuy.setItems(choiceContractListBuy);
         nrContractSell.setItems(choiceContractListSell);

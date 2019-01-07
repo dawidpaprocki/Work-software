@@ -15,10 +15,6 @@ public class Material {
     public Material() {
     }
 
-    public Material(int id, String name) {
-        Id = id;
-        Name = name;
-    }
 
     public int getId() {
         return Id;

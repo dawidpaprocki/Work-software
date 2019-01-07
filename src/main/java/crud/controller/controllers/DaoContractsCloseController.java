@@ -29,10 +29,6 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
 
     private final GenericDao dao;
 
-//    public DaoContractsCloseController(GenericDao dao) {
-//        this.dao = dao;
-//    }
-
     private ContractsClose contractsClose;
 
     @Override

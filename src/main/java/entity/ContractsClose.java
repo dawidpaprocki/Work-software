@@ -26,20 +26,6 @@ public class ContractsClose {
     public ContractsClose() {
     }
 
-    public ContractsClose(int idSell, int idCustomer, String customerName, String idName, int nrTruck, int nrTruckContract, int amount, String contractName, int openClose, int idContractBuy, int idContractSell) {
-        this.idSell = idSell;
-        this.idCustomer = idCustomer;
-        CustomerName = customerName;
-        this.idName = idName;
-        NrTruck = nrTruck;
-        NrTruckContract = nrTruckContract;
-        Amount = amount;
-        ContractName = contractName;
-        OpenClose = openClose;
-        this.idContractBuy = idContractBuy;
-        this.idContractSell = idContractSell;
-    }
-
     public int getId() {
         return id;
     }

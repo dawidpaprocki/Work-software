@@ -70,45 +70,34 @@ public class SaleContractController {
 
     public void initialize() {
 
-        // Receiving company names
-
-
         customersList.setAll(daoCustomerController.selectList());
         choiceContractSell.setItems(customersList);
 
-
-        // Receiving material list
-
         materialList.setAll( daoMaterialController.selectList());
 
-
-        // Adding material list to the choicebox
         choiceMaterialSellContract.setItems(materialList);
 
 
     }
 
-    private int id = 0;
 
     /**
      * Method responsible for insert full details of contract to Data Base.
      */
     public void addContractButton() {
+        int idSellCustomer = 0;
 
-        // Receiving company name.
-        String companyName = choiceContractSell.getValue().toString();
-        // Receiving material type.
-        String material = choiceMaterialSellContract.getValue().toString();
-        // Receiving id from company name.
-        id =  daoCustomerController.findByName(companyName).get(0).getId();
+        String contractSellCompanyName = choiceContractSell.getValue().toString();
 
+        String materialType = choiceMaterialSellContract.getValue().toString();
 
+        idSellCustomer =  daoCustomerController.findByName(contractSellCompanyName).get(0).getId();
 
         daoContractController = DaoContractsOpenSellController.builder()
                 .idSell(0)
-                .idCustomer(id)
-                .customerName(companyName)
-                .idName(material)
+                .idCustomer(idSellCustomer)
+                .customerName(contractSellCompanyName)
+                .idName(materialType)
                 .nrTruck(Integer.parseInt(truckContractSell.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(nrSellContract.getText()))
@@ -116,7 +105,7 @@ public class SaleContractController {
                 .dao(genericDaoContractSell)
                 .build();
         daoContractController.add();
-        // Clearing added and chosen type.
+
         nrSellContract.clear();
         amountContractSell.clear();
         truckContractSell.clear();

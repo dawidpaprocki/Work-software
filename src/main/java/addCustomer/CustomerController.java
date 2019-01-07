@@ -18,7 +18,7 @@ public class CustomerController {
     @FXML
     private TextField CompanyName;
     @FXML
-    private TextField Country;
+    private TextField CountryName;
     @FXML
     private Button addCustomer;
 
@@ -32,11 +32,11 @@ public class CustomerController {
         daoCustomerController = DaoCustomerController.builder()
                 .dao(genericDao)
                 .Name(CompanyName.getText())
-                .Country(Country.getText())
+                .Country(CountryName.getText())
                 .build();
 
         daoCustomerController.add();
         CompanyName.clear();
-        Country.clear();
+        CountryName.clear();
     }
 }

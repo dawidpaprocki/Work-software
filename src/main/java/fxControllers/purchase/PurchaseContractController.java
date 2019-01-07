@@ -56,7 +56,9 @@ public class PurchaseContractController {
     private GenericDaoImpl genericDaoContractBuy = new GenericDaoImpl(entityManagerContractBuy, ContractsOpenBuy.class);
 
 
-    DaoMaterialController daoMaterialController = DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    DaoMaterialController daoMaterialController = DaoMaterialController.builder()
+            .dao(genericDaoMaterial)
+            .build();
     DaoCustomerController daoCustomerController = DaoCustomerController.builder()
             .dao(genericDaoCustomer)
             .build();
@@ -68,21 +70,19 @@ public class PurchaseContractController {
         choiceCustomerNameBuy.setItems(customersList);
         choiceCustomerNameSell.setItems(customersList);
 
-        // Receiving material list
         materialList.setAll(daoMaterialController.selectList());
 
-        // Adding material list to the choicebox
         choiceMaterialBuyContract.setItems(materialList);
 
     }
 
     public void addContractButton() {
 
-        // Receiving company name.
+
         String companyName = choiceCustomerNameBuy.getValue().toString();
-        // Receiving material type.
-        String material = choiceMaterialBuyContract.getValue().toString();
-        // Receiving name from company name.
+
+        String materialName = choiceMaterialBuyContract.getValue().toString();
+
         String nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue().toString();
 
         int idBuyer = daoCustomerController.findByName(companyName).get(0).getId();
@@ -94,7 +94,7 @@ public class PurchaseContractController {
                 .idSell(idSeller)
                 .idCustomer(idBuyer)
                 .customerName(companyName)
-                .idName(material)
+                .idName(materialName)
                 .nrTruck(Integer.parseInt(truckContractBuy.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(nrBuyContract.getText()))

@@ -16,10 +16,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String country) {
-        Name = name;
-        Country = country;
-    }
+
 
     public int getId() {
         return Id;
@@ -45,3 +42,5 @@ public class Customer {
         Country = country;
     }
 }
+
+

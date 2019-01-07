@@ -30,24 +30,6 @@ public class AllView {
     public AllView() {
     }
 
-
-    public AllView(String data, String material, String truck, int amount, int finalAmount, String froms, String tos, String truckNr,
-                   String transportOrder, String vk, String ek, String amsDoc, String color) {
-        Data = data;
-        Material = material;
-        Truck = truck;
-        Amount = amount;
-        FinalAmount = finalAmount;
-        Froms = froms;
-        Tos = tos;
-        TruckNr = truckNr;
-        TransportOrder = transportOrder;
-        Vk = vk;
-        Ek = ek;
-        AmsDoc = amsDoc;
-        Color = color;
-    }
-
     public int getId() {
         return id;
     }

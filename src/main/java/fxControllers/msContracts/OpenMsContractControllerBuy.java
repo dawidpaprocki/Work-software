@@ -56,17 +56,26 @@ public class OpenMsContractControllerBuy {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenBuy.class);
-    private DaoContractsOpenBuyController daoContractsOpenBuyController = DaoContractsOpenBuyController.builder().dao(genericDao).build();
-
+    private DaoContractsOpenBuyController daoContractsOpenBuyController = DaoContractsOpenBuyController
+            .builder()
+            .dao(genericDao)
+            .build();
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController.builder()
+            .dao(genericDaoMaterial)
+            .build();
 
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController.selectList().stream().filter(e->e.getIdName().equals(daoAllViewControllerMaterial.findById(3).getName())).collect(Collectors.toList());
+        List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController
+                .selectList()
+                .stream()
+                .filter(e->e.getIdName()
+                        .equals(daoAllViewControllerMaterial.findById(3).getName()))
+                .collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 

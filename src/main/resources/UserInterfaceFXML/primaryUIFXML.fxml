@@ -48,7 +48,7 @@
             </tabs>
         </TabPane>
         <ComboBox fx:id="choiceCustomerNameBox" layoutX="9.0" layoutY="74.0" onAction="#selectComboBoxList" prefWidth="150.0" promptText="Wybierz" />
-        <Label fx:id="materialID" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
+        <Label fx:id="materialId" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
 
         <DatePicker fx:id="datePickerChoice" layoutX="660.0" layoutY="38.0" promptText="Wybierz Datę" />
         <Label fx:id="dataPickError" layoutX="660.0" layoutY="21.0" prefHeight="17.0" prefWidth="150.0" text="Data:" />

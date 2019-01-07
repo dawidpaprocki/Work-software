@@ -176,18 +176,15 @@ public class TableController {
      * Updating Data Base with new value.
      *
      */
-    //temporary color
-    private String temporaryColor = "#fd6c6cff";
 
     public void doChange(TableColumn.CellEditEvent<AllView, String> tableStringCellEditEvent) {
 
-        //get new value of cell
         String newMaterial = tableStringCellEditEvent.getNewValue();
-        //get id of changing row
+
         int idOfRow = tableStringCellEditEvent.getRowValue().getId();
-        //get id of column
+
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-        //updating changes to getData base
+
         daoAllViewController.updateRecord(idOfColumn,newMaterial,idOfRow);
 
 
@@ -205,22 +202,21 @@ public class TableController {
      */
     public void color(ActionEvent actionEvent) {
 
-        temporaryColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
 
+        String newCellColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
 
-
-        int colorId = tables.getSelectionModel().getSelectedItem().getId();
+        int colorRowId = tables.getSelectionModel().getSelectedItem().getId();
 
         TablePosition tablePosition;
         tablePosition = tables.getFocusModel().getFocusedCell();
 
 
 
-        daoAllViewController.updateRecord("color",temporaryColor,colorId);
+        daoAllViewController.updateRecord("color",newCellColor,colorRowId);
 
         TableColor TableColor = new TableColor();
 
-        tables = TableColor.color(tables, tablePosition, temporaryColor);
+        tables = TableColor.color(tables, tablePosition, newCellColor);
         tables.refresh();
 
     }

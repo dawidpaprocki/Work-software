@@ -29,9 +29,6 @@ public class CloseContractController {
     @FXML
     private TableView<ContractsClose> closeContractTable;
 
-    public TableView<ContractsClose> getCloseContractTable() {
-        return closeContractTable;
-    }
 
     @FXML
     private TableColumn<ContractsClose, String> columnCustomerName;
@@ -61,28 +58,37 @@ public class CloseContractController {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsClose.class);
-    private DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(genericDao).build();
+    private DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController
+            .builder()
+            .dao(genericDao)
+            .build();
 
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController
+            .builder()
+            .dao(genericDaoMaterial)
+            .build();
 
-    List<ContractsClose> contractsCloses;
+    List<ContractsClose> contractsClose;
 
     public void initialize() {
-     contractsCloses = daoContractsCloseController.selectList();
+        contractsClose = daoContractsCloseController.selectList();
      selectMaterial(0);
 
     }
 
     public void selectMaterial(int id){
         List<ContractsClose> collect;
-//        int materialIdNumber  = (int) choiceMaterialContract.getValue();
+
         if(id == 1){
-          collect = contractsCloses.stream().filter(e -> e.getIdName().equals(daoAllViewControllerMaterial.findById(3).getName())).collect(Collectors.toList());
+          collect = contractsClose
+                  .stream()
+                  .filter(e -> e.getIdName().equals(daoAllViewControllerMaterial.findById(3).getName()))
+                  .collect(Collectors.toList());
         }else {
-          collect = contractsCloses;
+          collect = contractsClose;
         }
 
         data = FXCollections.observableArrayList();
