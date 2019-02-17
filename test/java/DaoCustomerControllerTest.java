@@ -1,4 +1,4 @@
-import crud.controller.controllers.DaoCustomerController;
+import crud.controller.DaoCustomerController;
 import crud.model.GenericDaoImpl;
 import entity.Customer;
 import org.junit.After;

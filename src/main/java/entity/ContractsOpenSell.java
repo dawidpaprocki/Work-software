@@ -1,109 +1,141 @@
 package entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+@Data
 @Entity
-public class ContractsOpenSell {
-
+public class ContractsOpenSell    {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int idSell;
     private int idCustomer;
-    private String CustomerName;
-    private String idName;
-    private int NrTruck;
-    private int NrTruckContract;
-    private int Amount;
-    private String ContractName;
-    private int OpenClose;
-
+    private String customerName;
+    private String materialName;
+    private int nrTruck;
+    private int nrTruckContract;
+    private int amount;
+    private String contractName;
+    private int openClose;
 
     public ContractsOpenSell() {
     }
 
-
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getIdSell() {
         return idSell;
     }
 
-    public void setIdSell(int idSell) {
-        this.idSell = idSell;
-    }
-
     public int getIdCustomer() {
         return idCustomer;
     }
 
-    public void setIdCustomer(int idCustomer) {
-        this.idCustomer = idCustomer;
-    }
-
     public String getCustomerName() {
-        return CustomerName;
+        return customerName;
     }
 
-    public void setCustomerName(String customerName) {
-        CustomerName = customerName;
-    }
-
-    public String getIdName() {
-        return idName;
-    }
-
-    public void setIdName(String idName) {
-        this.idName = idName;
+    public String getMaterialName() {
+        return materialName;
     }
 
     public int getNrTruck() {
-        return NrTruck;
-    }
-
-    public void setNrTruck(int nrTruck) {
-        NrTruck = nrTruck;
+        return nrTruck;
     }
 
     public int getNrTruckContract() {
-        return NrTruckContract;
-    }
-
-    public void setNrTruckContract(int nrTruckContract) {
-        NrTruckContract = nrTruckContract;
+        return nrTruckContract;
     }
 
     public int getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(int amount) {
-        Amount = amount;
+        return amount;
     }
 
     public String getContractName() {
-        return ContractName;
-    }
-
-    public void setContractName(String contractName) {
-        ContractName = contractName;
+        return contractName;
     }
 
     public int getOpenClose() {
-        return OpenClose;
+        return openClose;
     }
 
-    public void setOpenClose(int openClose) {
-        OpenClose = openClose;
+    private ContractsOpenSell(ContractsOpenSellBuilder builder) {
+        this.idSell = builder.idSell;
+        this.idCustomer = builder.idCustomer;
+        this.customerName = builder.customerName;
+        this.materialName = builder.materialName;
+        this.nrTruck = builder.nrTruck;
+        this.nrTruckContract = builder.nrTruckContract;
+        this.amount = builder.amount;
+        this.contractName = builder.contractName;
+        this.openClose = builder.openClose;
+    }
+
+    public static class ContractsOpenSellBuilder{
+
+        private int idSell;
+        private int idCustomer;
+        private String customerName;
+        private String materialName;
+        private int nrTruck;
+        private int nrTruckContract;
+        private int amount;
+        private String contractName;
+        private int openClose;
+
+        public ContractsOpenSellBuilder idSell(int idSell) {
+            this.idSell = idSell;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder idCustomer(int idCustomer) {
+            this.idCustomer = idCustomer;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder customerName(String customerName) {
+            this.customerName = customerName;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder materialName(String materialName) {
+            this.materialName = materialName;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder nrTruck(int nrTruck) {
+            this.nrTruck = nrTruck;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder nrTruckContract(int nrTruckContract) {
+            this.nrTruckContract = nrTruckContract;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder amount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder contractName(String contractName) {
+            this.contractName = contractName;
+            return this;
+        }
+
+        public ContractsOpenSellBuilder openClose(int openClose) {
+            this.openClose = openClose;
+            return this;
+        }
+
+        public ContractsOpenSell build(){
+            return  new ContractsOpenSell(this);
+        }
     }
 }

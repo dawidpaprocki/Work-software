@@ -1,4 +1,4 @@
-import crud.controller.controllers.DaoContractsOpenSellController;
+import crud.controller.DaoContractsOpenSellController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsOpenSell;
 import org.junit.After;
@@ -18,6 +18,7 @@ public class DaoContractsOpenSellTest {
     GenericDaoImpl dao;
     ContractsOpenSell contractsOpenSell;
 
+
     @Before
     public void before() {
         entityManager = HibernateUtils.getSessionFactory().createEntityManager();
@@ -25,7 +26,7 @@ public class DaoContractsOpenSellTest {
         contractsOpenSell.setIdSell(1);
         contractsOpenSell.setIdCustomer(1);
         contractsOpenSell.setCustomerName("Test Customer");
-        contractsOpenSell.setIdName("Test Material");
+        contractsOpenSell.setMaterialName("Test Material");
         contractsOpenSell.setNrTruck(1);
         contractsOpenSell.setNrTruckContract(1);
         contractsOpenSell.setAmount(10);
@@ -58,7 +59,7 @@ public class DaoContractsOpenSellTest {
                 .idSell(2)
                 .idCustomer(2)
                 .customerName("Test1 Customer")
-                .idName("Test1 Material")
+                .materialName("Test1 Material")
                 .nrTruck(2)
                 .nrTruckContract(2)
                 .amount(20)
@@ -72,7 +73,7 @@ public class DaoContractsOpenSellTest {
 
         assertTrue(addedSelect.size() == 2);
         assertEquals("Test1 Customer", addedSelect.get(1).getCustomerName());
-        assertEquals("Test1 Material", addedSelect.get(1).getIdName());
+        assertEquals("Test1 Material", addedSelect.get(1).getMaterialName());
         assertEquals("Test1 Contract Name", addedSelect.get(1).getContractName());
         assertEquals(2, addedSelect.get(1).getIdSell());
         assertEquals(2, addedSelect.get(1).getIdCustomer());
@@ -92,7 +93,7 @@ public class DaoContractsOpenSellTest {
                 "Changed", 3, 3, 30, "Changed");
         List<ContractsOpenSell> updateSelect = dao.select();
         assertEquals("Changed", updateSelect.get(0).getCustomerName());
-        assertEquals("Changed", updateSelect.get(0).getIdName());
+        assertEquals("Changed", updateSelect.get(0).getMaterialName());
         assertEquals("Changed", updateSelect.get(0).getContractName());
         assertEquals(3, updateSelect.get(0).getIdSell());
         assertEquals(3, updateSelect.get(0).getIdCustomer());
@@ -107,9 +108,9 @@ public class DaoContractsOpenSellTest {
         List<ContractsOpenSell> addedSelect = dao.select();
         int id = addedSelect.get(0).getId();
 
-        daoContractsOpenSellController.updateRecord("IdName", "Test1", id);
+        daoContractsOpenSellController.updateRecord("MaterialName", "Test1", id);
         ContractsOpenSell byId = (ContractsOpenSell) dao.findById(id);
-        assertEquals(byId.getIdName(), "Test1");
+        assertEquals(byId.getMaterialName(), "Test1");
 
     }
     @Test
@@ -118,7 +119,7 @@ public class DaoContractsOpenSellTest {
         List<ContractsOpenSell> addedSelect = dao.select();
         int id = addedSelect.get(0).getId();
 
-        daoContractsOpenSellController.updateRecord("OpenClose", "1", id);
+        daoContractsOpenSellController.updateRecord("ContractName", "u", id);
         ContractsOpenSell byId = (ContractsOpenSell) dao.findById(id);
         assertEquals(byId.getOpenClose(), 1);
 

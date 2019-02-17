@@ -1,8 +1,9 @@
 package fxControllers.pbContracts;
 
-import crud.controller.controllers.DaoContractsOpenSellController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsOpenSellController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
+import entity.ContractsOpenBuy;
 import entity.ContractsOpenSell;
 import entity.Material;
 import javafx.collections.FXCollections;
@@ -12,10 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import org.hibernate.SessionFactory;
 import utils.HibernateUtils;
 
 import javax.persistence.EntityManager;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,16 +34,16 @@ public class OpenPbContractControllerSell {
     private TableColumn<ContractsOpenSell, String> columnCustomerName;
 
     @FXML
-    private TableColumn<ContractsOpenSell, String> columnIdName;
+    private TableColumn<ContractsOpenSell, String> columnMaterialName;
 
     @FXML
     private TableColumn<ContractsOpenSell, String> columnNrTruckContract;
 
     @FXML
-    private TableColumn<ContractsOpenSell, String> columnNrTruck;
+    private TableColumn<ContractsOpenBuy, Integer> columnNrTruck;
 
     @FXML
-    private TableColumn<ContractsOpenSell, String> columnAmount;
+    private TableColumn<ContractsOpenBuy, Integer> columnAmount;
 
     @FXML
     private TableColumn<ContractsOpenSell, String> columnContractName;
@@ -49,26 +53,26 @@ public class OpenPbContractControllerSell {
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenSell.class);
-    private DaoContractsOpenSellController daoAllViewController =  DaoContractsOpenSellController.builder().dao(genericDao).build();
+    private DaoContractsOpenSellController daoContractsOpenSellController =  DaoContractsOpenSellController.builder().dao(genericDao).build();
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    private DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
 
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenSell> contractsOpenSells = daoAllViewController
+        List<ContractsOpenSell> contractsOpenSells = daoContractsOpenSellController
                 .selectList()
                 .stream()
-                .filter(e->e.getIdName()
-                        .equals(daoAllViewControllerMaterial.findById(2)    .getName()))
+                .filter(e->e.getMaterialName()
+                        .equals(daoMaterialController.findById(2)    .getName()))
                 .collect(Collectors.toList());;
 
         data.setAll(contractsOpenSells);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
+        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -77,9 +81,26 @@ public class OpenPbContractControllerSell {
         openPbContractTable.setItems(null);
         openPbContractTable.setItems(data);
 
-
+        columnAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnNrTruck.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnContractName.setCellFactory(TextFieldTableCell.forTableColumn());
+        HashSet hashSet = new HashSet();
     }
 
+
+    public void doChange(TableColumn.CellEditEvent<ContractsOpenSell, String> tableStringCellEditEvent) {
+
+        String newValue = tableStringCellEditEvent.getNewValue();
+
+        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
+
+        String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
+        idOfColumn = idOfColumn.substring(6);
+
+        daoContractsOpenSellController.updateRecord(idOfColumn,newValue,idOfRow);
+
+
+    }
 
 
 }

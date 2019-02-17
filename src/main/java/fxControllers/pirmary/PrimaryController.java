@@ -1,6 +1,6 @@
 package fxControllers.pirmary;
 
-import crud.controller.controllers.*;
+import crud.controller.*;
 import crud.model.GenericDao;
 import crud.model.GenericDaoImpl;
 import entity.*;
@@ -43,7 +43,7 @@ public class PrimaryController {
     private ComboBox choiceCustomerNameBox;
 
     @FXML
-    private Label materialId;
+    private Label materialName;
 
     @FXML
     private DatePicker datePickerChoice;
@@ -59,21 +59,21 @@ public class PrimaryController {
 
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManagerCustomer = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerAllView = sessionFactory.createEntityManager();
+    private final EntityManager entityManagerAllTruck = sessionFactory.createEntityManager();
     private final EntityManager entityManagerContractBuy = sessionFactory.createEntityManager();
     private final EntityManager entityManagerContractSell = sessionFactory.createEntityManager();
     private final EntityManager entityManagerMAterial = sessionFactory.createEntityManager();
     private final EntityManager entityManagerContractClose = sessionFactory.createEntityManager();
 
-    private GenericDaoImpl genericDaoAllView = new GenericDaoImpl(entityManagerAllView, AllView.class);
+    private GenericDaoImpl genericDaoAllTruck = new GenericDaoImpl(entityManagerAllTruck, AllTruck.class);
     private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
     private GenericDaoImpl genericDaoContractBuy = new GenericDaoImpl(entityManagerContractBuy, ContractsOpenBuy.class);
     private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMAterial, Material.class);
-    private GenericDaoImpl GenericDaoContractclose = new GenericDaoImpl(entityManagerContractClose, ContractsClose.class);
+    private GenericDaoImpl genericDaoContractClose = new GenericDaoImpl(entityManagerContractClose, ContractsClose.class);
 
-    DaoAllViewController daoAllViewController = DaoAllViewController.builder()
-            .dao(genericDaoAllView)
+    DaoAllTruckController daoAllTruckController = DaoAllTruckController.builder()
+            .dao(genericDaoAllTruck)
             .build();
 
     DaoCustomerController daoCustomerController = DaoCustomerController.builder()
@@ -82,7 +82,7 @@ public class PrimaryController {
     DaoContractsOpenBuyController daoContractBuyController = DaoContractsOpenBuyController.builder().dao(genericDaoContractBuy).build();
     DaoContractsOpenSellController daoContractSellController = DaoContractsOpenSellController.builder().dao(genericDaoContractSell).build();
     DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
-    DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(GenericDaoContractclose).build();
+    DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(genericDaoContractClose).build();
 
 
     public void initialize() {
@@ -95,12 +95,12 @@ public class PrimaryController {
 
     public void addButton() {
 
-        String dataPickerString = String.valueOf(datePickerChoice.getValue());
+        String datePickerString = String.valueOf(datePickerChoice.getValue());
         String deliveryAmountText = deliveryAmount.getText();
         if (deliveryPlate.getText().length() > 0) {
             if (deliveryTo.getText().length() > 0) {
                 if (deliveryAmount.getText().length() > 0) {
-                    if (((dataPickerString.length()) > 0) && (!dataPickerString.equals("Wybierz Datę"))) {
+                    if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
 
 
                         try {
@@ -108,47 +108,47 @@ public class PrimaryController {
 
                             if (materialPrepareType == 0) {
 
-                                daoAllViewController = DaoAllViewController.builder()
-                                        .data(dataPickerString)
-                                        .material(materialId.getText())
-                                        .truck(deliveryPlate.getText())
+                                daoAllTruckController = DaoAllTruckController.builder()
+                                        .date(datePickerString)
+                                        .material(materialName.getText())
+                                        .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
-                                        .froms(choiceCustomerNameBox.getValue().toString())
-                                        .tos(deliveryTo.getText())
+                                        .seller(choiceCustomerNameBox.getValue().toString())
+                                        .buyer(deliveryTo.getText())
                                         .truckNr("-")
                                         .transportOrder("=")
-                                        .vk("to change")
-                                        .ek(nrContractBuy.getValue().toString())
-                                        .amsDoc("-")
+                                        .salesContractNumber("to change")
+                                        .purchaseContractNumber(nrContractBuy.getValue().toString())
+                                        .documentName("-")
                                         .color("white")
                                         .dao(genericDaoMaterial)
                                         .build();
 
-                                daoAllViewController.add();
+                                daoAllTruckController.add();
 
                                 deliveryType(ContractsOpenBuy.class, genericDaoContractBuy);
 
                             } else {
 
-                                daoAllViewController = DaoAllViewController.builder()
-                                        .data(dataPickerString)
-                                        .material(materialId.getText())
-                                        .truck(deliveryPlate.getText())
+                                daoAllTruckController = DaoAllTruckController.builder()
+                                        .date(datePickerString)
+                                        .material(materialName.getText())
+                                        .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
-                                        .froms(choiceCustomerNameBox.getValue().toString())
-                                        .tos(deliveryTo.getText())
+                                        .seller(choiceCustomerNameBox.getValue().toString())
+                                        .buyer(deliveryTo.getText())
                                         .truckNr("-")
                                         .transportOrder("=")
-                                        .vk("to change")
-                                        .ek(nrContractSell.getValue().toString())
-                                        .amsDoc("-")
+                                        .salesContractNumber("to change")
+                                        .purchaseContractNumber(nrContractSell.getValue().toString())
+                                        .documentName("-")
                                         .color("white")
                                         .dao(genericDaoMaterial)
                                         .build();
 
-                                daoAllViewController.add();
+                                daoAllTruckController.add();
 
                                 deliveryType(ContractsOpenSell.class, genericDaoContractSell);
 
@@ -158,7 +158,7 @@ public class PrimaryController {
                             deliveryPlate.clear();
                             deliveryAmount.clear();
                             deliveryTo.clear();
-                            materialId.setText("");
+                            materialName.setText("");
                             dataPickError.setText("");
 
                             choiceCustomerNameBox.setValue(null);
@@ -170,7 +170,6 @@ public class PrimaryController {
                         } catch (Exception e) {
                             deliveryAmount.setText("Tylko liczby");
                             e.printStackTrace();
-                            System.out.println("nie integer");
                         }
                     } else {
                         dataPickError.setText("Wymagana data");
@@ -247,9 +246,9 @@ public class PrimaryController {
                     .getValue()
                     .toString();
             List<ContractsOpenBuy> contractName = daoContractBuyController.find("contractName", contractNumber);
-            String contractId = contractName.get(0).getIdName();
+            String contractMaterialName = contractName.get(0).getMaterialName();
 
-            materialId.setText(contractId);
+            materialName.setText(contractMaterialName);
 
         }
     }
@@ -262,9 +261,9 @@ public class PrimaryController {
                 .toString();
         List<ContractsOpenSell> contractName = daoContractSellController.find("contractName",contractNumber);
 
-        String materialName = contractName.get(0).getIdName();
+        String contractMaterialName = contractName.get(0).getMaterialName();
 
-        materialId.setText(materialName);
+        materialName.setText(contractMaterialName);
 
     }
 

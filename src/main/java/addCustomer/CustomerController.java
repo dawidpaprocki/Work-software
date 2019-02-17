@@ -1,9 +1,7 @@
 package addCustomer;
 
-import crud.controller.controllers.DaoContractsOpenSellController;
-import crud.controller.controllers.DaoCustomerController;
+import crud.controller.DaoCustomerController;
 import crud.model.GenericDaoImpl;
-import entity.ContractsOpenSell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

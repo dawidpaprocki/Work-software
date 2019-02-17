@@ -1,6 +1,6 @@
-import crud.controller.controllers.DaoContractsCloseController;
-import crud.controller.controllers.DaoContractsOpenBuyController;
-import crud.controller.controllers.DaoContractsOpenSellController;
+import crud.controller.DaoContractsCloseController;
+import crud.controller.DaoContractsOpenBuyController;
+import crud.controller.DaoContractsOpenSellController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsClose;
 import entity.ContractsOpenBuy;
@@ -63,7 +63,7 @@ public class DaoContracsCloseControllerTest {
         contractsOpenBuy.setIdSell(1);
         contractsOpenBuy.setIdCustomer(1);
         contractsOpenBuy.setCustomerName("Test Customer Buy");
-        contractsOpenBuy.setIdName("Test Material");
+        contractsOpenBuy.setMaterialName("Test Material");
         contractsOpenBuy.setNrTruck(1);
         contractsOpenBuy.setNrTruckContract(1);
         contractsOpenBuy.setAmount(10);
@@ -96,7 +96,7 @@ public class DaoContracsCloseControllerTest {
         contractsOpenSell.setIdSell(1);
         contractsOpenSell.setIdCustomer(1);
         contractsOpenSell.setCustomerName("Test Customer Sell");
-        contractsOpenSell.setIdName("Test Material");
+        contractsOpenSell.setMaterialName("Test Material");
         contractsOpenSell.setNrTruck(1);
         contractsOpenSell.setNrTruckContract(1);
         contractsOpenSell.setAmount(10);

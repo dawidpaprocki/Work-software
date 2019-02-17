@@ -21,7 +21,7 @@
          <TableView fx:id="openMsContractTable" prefHeight="481.0" GridPane.rowIndex="1">
              <columns>
                  <TableColumn fx:id="columnCustomerName" prefWidth="85.0" resizable="false" text="Nazwa firmy" />
-                 <TableColumn fx:id="columnIdName" prefWidth="85.0" resizable="false" text="Materiał" />
+                 <TableColumn fx:id="columnMaterialName" prefWidth="85.0" resizable="false" text="Materiał" />
                  <TableColumn fx:id="columnNrTruckContract" prefWidth="60.0" resizable="false" text="ilość aut" />
                  <TableColumn fx:id="columnNrTruck" prefWidth="120.0" resizable="false" text="ilość aut zjechało" />
                  <TableColumn fx:id="columnAmount" resizable="false" text="ilość ton" />

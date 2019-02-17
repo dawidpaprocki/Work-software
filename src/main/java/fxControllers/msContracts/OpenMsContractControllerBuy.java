@@ -1,9 +1,10 @@
 package fxControllers.msContracts;
 
-import crud.controller.controllers.DaoContractsOpenBuyController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsOpenBuyController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsOpenBuy;
+import entity.ContractsOpenSell;
 import entity.Material;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +37,7 @@ public class OpenMsContractControllerBuy {
     private TableColumn<ContractsOpenBuy, String> columnCustomerName;
 
     @FXML
-    private TableColumn<ContractsOpenBuy, String> columnIdName;
+    private TableColumn<ContractsOpenBuy, String> columnMaterialName;
 
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnNrTruckContract;
@@ -63,7 +64,7 @@ public class OpenMsContractControllerBuy {
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController.builder()
+    private DaoMaterialController daoMaterialController =  DaoMaterialController.builder()
             .dao(genericDaoMaterial)
             .build();
 
@@ -73,14 +74,14 @@ public class OpenMsContractControllerBuy {
         List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController
                 .selectList()
                 .stream()
-                .filter(e->e.getIdName()
-                        .equals(daoAllViewControllerMaterial.findById(3).getName()))
+                .filter(e->e.getMaterialName()
+                        .equals(daoMaterialController.findById(3).getName()))
                 .collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
+        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -88,6 +89,22 @@ public class OpenMsContractControllerBuy {
         columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
         openMsContractTable.setItems(null);
         openMsContractTable.setItems(data);
+
+    }
+
+    public void doChange(TableColumn.CellEditEvent<ContractsOpenSell, String> tableStringCellEditEvent) {
+
+        columnNrTruck.getTypeSelector();
+//
+//        String newValue = tableStringCellEditEvent.getNewValue();
+//
+//        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
+//
+//        String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
+//        idOfColumn = idOfColumn.substring(6);
+//
+//        daoContractsOpenSellController.updateRecord(idOfColumn,newValue,idOfRow);
+//
 
     }
 

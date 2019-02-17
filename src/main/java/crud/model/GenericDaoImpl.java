@@ -42,13 +42,13 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public List<T> find(String where , String name) {
+    public List<T> find(String where, String name) {
         System.out.println(clazz.getSimpleName());
 
 
-        String hql = "FROM "+clazz.getSimpleName()+" Where "+where+" = :whereWhat";
+        String hql = "FROM " + clazz.getSimpleName() + " Where " + where + " = :whereWhat";
         Query query = entityManager.createQuery(hql, clazz);
-        query.setParameter("whereWhat",name);
+        query.setParameter("whereWhat", name);
 
         return query.getResultList();
 
@@ -61,26 +61,32 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
 
-
     @Override
-    public void  query(String query, String newValue,int idRow) {
+    public void query(String query, String newValue, int idRow) {
 
         entityManager.getTransaction().begin();
         entityManager.clear();
 
-        String hql = "UPDATE "+clazz.getSimpleName()+" SET " + query + "  = :newValue where id = :idRow ";
+        String hql = "UPDATE " + clazz.getSimpleName() + " SET " + query + "  = :newValue where id = :idRow ";
         Query query1 = entityManager.createQuery(hql);
 
-        try{
-            query1.setParameter("newValue",Integer.parseInt(newValue));
-        }catch (Exception e){
-            query1.setParameter("newValue",newValue);
+        try {
+            query1.setParameter("newValue", Integer.parseInt(newValue));
+        } catch (Exception e) {
+            query1.setParameter("newValue", newValue);
         }
 
 
-        query1.setParameter("idRow",idRow);
-        query1.executeUpdate();
-        entityManager.getTransaction().commit();
+        query1.setParameter("idRow", idRow);
+        try {
+            query1.executeUpdate();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+
+        }
+
+        if (entityManager.getTransaction().getRollbackOnly())
+            entityManager.getTransaction().commit();
 
     }
 

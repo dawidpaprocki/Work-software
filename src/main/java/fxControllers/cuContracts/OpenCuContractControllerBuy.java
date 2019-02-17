@@ -1,7 +1,7 @@
 package fxControllers.cuContracts;
 
-import crud.controller.controllers.DaoContractsOpenBuyController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsOpenBuyController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsOpenBuy;
 import entity.Material;
@@ -36,7 +36,7 @@ public class OpenCuContractControllerBuy {
     private TableColumn<ContractsOpenBuy, String> columnCustomerName;
 
     @FXML
-    private TableColumn<ContractsOpenBuy, String> columnIdName;
+    private TableColumn<ContractsOpenBuy, String> columnMaterialName;
 
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnNrTruckContract;
@@ -64,7 +64,7 @@ public class OpenCuContractControllerBuy {
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController
+    private DaoMaterialController daoControllerMaterial =  DaoMaterialController
             .builder()
             .dao(genericDaoMaterial)
             .build();
@@ -75,20 +75,21 @@ public class OpenCuContractControllerBuy {
         List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController
                 .selectList()
                 .stream()
-                .filter(e->e.getIdName().equals(daoAllViewControllerMaterial.findById(1).getName()))
+                .filter(e->e.getMaterialName().equals(daoControllerMaterial.findById(1).getName()))
                 .collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
+        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
-        columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
         openCuContractTable.setItems(null);
         openCuContractTable.setItems(data);
+
+
 
     }
 

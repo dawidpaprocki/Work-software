@@ -28,7 +28,7 @@
         <mapping class="entity.ContractsOpenSell"/>
         <mapping class="entity.ContractsOpenBuy"/>
         <mapping class="entity.ContractsClose"/>
-        <mapping class="entity.AllView"/>
+        <mapping class="entity.AllTruck"/>
 
 
     </session-factory>

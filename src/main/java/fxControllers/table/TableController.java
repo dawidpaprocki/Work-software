@@ -1,8 +1,8 @@
 package fxControllers.table;
 
-import crud.controller.controllers.DaoAllViewController;
+import crud.controller.DaoAllTruckController;
 import crud.model.GenericDaoImpl;
-import entity.AllView;
+import entity.AllTruck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,51 +39,52 @@ public class TableController {
     public Button refresh;
     @FXML
     public ColorPicker colorChoice;
-    @FXML
-    private TableView<AllView> tables;
 
     @FXML
-    public TableColumn<AllView, Integer> id;
-    @FXML
-    private TableColumn<AllView, String> data;
+    private TableView<AllTruck> tables;
 
     @FXML
-    private TableColumn<AllView, String> material;
+    public TableColumn<AllTruck, Integer> id;
+    @FXML
+    private TableColumn<AllTruck, String> date;
 
     @FXML
-    private TableColumn<AllView, String> truck;
+    private TableColumn<AllTruck, String> material;
 
     @FXML
-    private TableColumn<AllView, Integer> amount;
+    private TableColumn<AllTruck, String> truckNumber;
 
     @FXML
-    private TableColumn<AllView, Integer> finalAmount;
+    private TableColumn<AllTruck, Integer> amount;
 
     @FXML
-    private TableColumn<AllView, String> froms;
+    private TableColumn<AllTruck, Integer> finalAmount;
 
     @FXML
-    private TableColumn<AllView, String> tos;
+    private TableColumn<AllTruck, String> seller;
 
     @FXML
-    private TableColumn<AllView, String> truckNr;
+    private TableColumn<AllTruck, String> buyer;
 
     @FXML
-    private TableColumn<AllView, String> TransportOrder;
+    private TableColumn<AllTruck, String> truckNr;
 
     @FXML
-    private TableColumn<AllView, String> vk;
+    private TableColumn<AllTruck, String> transportOrder;
 
     @FXML
-    private TableColumn<AllView, String> ek;
+    private TableColumn<AllTruck, String> salesContractNumber;
 
     @FXML
-    private TableColumn<AllView, String> amsDoc;
+    private TableColumn<AllTruck, String> purchaseContractNumber;
 
     @FXML
-    private TableColumn<AllView, String> color;
+    private TableColumn<AllTruck, String> documentName;
 
-    private ObservableList<AllView> getData;
+    @FXML
+    private TableColumn<AllTruck, String> color;
+
+    private ObservableList<AllTruck> getData;
 
 
     /**
@@ -91,49 +92,41 @@ public class TableController {
      * Method started with program start.
      * filling crud.fxControllers.table View by Data from Data Base
      * setting background color based on Value in Data Base.
-     *
      */
     private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
     private final EntityManager entityManager = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllView.class);
-    private DaoAllViewController daoAllViewController =  DaoAllViewController.builder().dao(genericDao).build();
+    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllTruck.class);
+    private DaoAllTruckController daoAllTruckController = DaoAllTruckController.builder().dao(genericDao).build();
 
     public void initialize() {
-
-
-
-
-
-        List<AllView> list = daoAllViewController.selectList();
-
+        List<AllTruck> list = daoAllTruckController.selectList();
 
         getData = FXCollections.observableArrayList();
-
 
         getData.addAll(list);
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        data.setCellValueFactory(new PropertyValueFactory<>("data"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
         material.setCellValueFactory(new PropertyValueFactory<>("material"));
-        truck.setCellValueFactory(new PropertyValueFactory<>("truck"));
+        truckNumber.setCellValueFactory(new PropertyValueFactory<>("truckNumber"));
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         finalAmount.setCellValueFactory(new PropertyValueFactory<>("finalAmount"));
-        froms.setCellValueFactory(new PropertyValueFactory<>("froms"));
-        tos.setCellValueFactory(new PropertyValueFactory<>("tos"));
+        seller.setCellValueFactory(new PropertyValueFactory<>("seller"));
+        buyer.setCellValueFactory(new PropertyValueFactory<>("buyer"));
         truckNr.setCellValueFactory(new PropertyValueFactory<>("truckNr"));
-        TransportOrder.setCellValueFactory(new PropertyValueFactory<>("TransportOrder"));
-        vk.setCellValueFactory(new PropertyValueFactory<>("vk"));
-        ek.setCellValueFactory(new PropertyValueFactory<>("ek"));
-        amsDoc.setCellValueFactory(new PropertyValueFactory<>("amsDoc"));
-        color.setCellValueFactory(new PropertyValueFactory<>("amsDoc"));
+        transportOrder.setCellValueFactory(new PropertyValueFactory<>("transportOrder"));
+        salesContractNumber.setCellValueFactory(new PropertyValueFactory<>("salesContractNumber"));
+        purchaseContractNumber.setCellValueFactory(new PropertyValueFactory<>("purchaseContractNumber"));
+        documentName.setCellValueFactory(new PropertyValueFactory<>("documentName"));
+        color.setCellValueFactory(new PropertyValueFactory<>("color"));
 
         tables.setItems(null);
         tables.setItems(getData);
 
-        tables.setRowFactory(row -> new TableRow<AllView>() {
+        tables.setRowFactory(row -> new TableRow<AllTruck>() {
             @Override
-            public void updateItem(AllView item, boolean empty) {
+            public void updateItem(AllTruck item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (empty) {
@@ -143,66 +136,52 @@ public class TableController {
                             "  -fx-inner-border-color:  '" + item.getColor() + "';" +
                             " -fx-table-cell-border-color:'" + item.getColor() + "' ;" +
                             "   -fx-border-width: 0px;");
-
                 }
             }
         });
 
-
-
         material.setCellFactory(TextFieldTableCell.forTableColumn());
-        data.setCellFactory(TextFieldTableCell.forTableColumn());
-        truck.setCellFactory(TextFieldTableCell.forTableColumn());
+        date.setCellFactory(TextFieldTableCell.forTableColumn());
+        truckNumber.setCellFactory(TextFieldTableCell.forTableColumn());
         amount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         finalAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        froms.setCellFactory(TextFieldTableCell.forTableColumn());
-        tos.setCellFactory(TextFieldTableCell.forTableColumn());
+        seller.setCellFactory(TextFieldTableCell.forTableColumn());
+        buyer.setCellFactory(TextFieldTableCell.forTableColumn());
         truckNr.setCellFactory(TextFieldTableCell.forTableColumn());
-        TransportOrder.setCellFactory(TextFieldTableCell.forTableColumn());
-        amsDoc.setCellFactory(TextFieldTableCell.forTableColumn());
+        transportOrder.setCellFactory(TextFieldTableCell.forTableColumn());
+        documentName.setCellFactory(TextFieldTableCell.forTableColumn());
         color.setCellFactory(TextFieldTableCell.forTableColumn());
-
-
     }
-
-
 
 
     /**
      * <h2> doChange Method </h2>
-     *
-     * Getting parameter of wanted cell to edit.
+     * <p>
+     * Getting parameter of wanted cell to Edit.
      * Updating cell by inserting new value
      * Updating Data Base with new value.
-     *
      */
 
-    public void doChange(TableColumn.CellEditEvent<AllView, String> tableStringCellEditEvent) {
+    public void doChange(TableColumn.CellEditEvent<AllTruck, String> tableStringCellEditEvent) {
 
-        String newMaterial = tableStringCellEditEvent.getNewValue();
-
+        String newValue = tableStringCellEditEvent.getNewValue();
         int idOfRow = tableStringCellEditEvent.getRowValue().getId();
-
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-
-        daoAllViewController.updateRecord(idOfColumn,newMaterial,idOfRow);
-
+        daoAllTruckController.updateRecord(idOfColumn, newValue, idOfRow);
 
     }
 
     public void refresh(ActionEvent actionEvent) {
 
     }
+
     /**
      * <h2> color Method </h2>
-     *
+     * <p>
      * Changing value of default color by getting new value form {@link #colorChoice}
      * Updating in Data Base value of new color.
-     *
      */
     public void color(ActionEvent actionEvent) {
-
-
         String newCellColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
 
         int colorRowId = tables.getSelectionModel().getSelectedItem().getId();
@@ -210,15 +189,12 @@ public class TableController {
         TablePosition tablePosition;
         tablePosition = tables.getFocusModel().getFocusedCell();
 
-
-
-        daoAllViewController.updateRecord("color",newCellColor,colorRowId);
+        daoAllTruckController.updateRecord("color", newCellColor, colorRowId);
 
         TableColor TableColor = new TableColor();
 
         tables = TableColor.color(tables, tablePosition, newCellColor);
         tables.refresh();
-
     }
 
 

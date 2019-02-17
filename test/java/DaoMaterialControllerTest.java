@@ -1,4 +1,4 @@
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.Material;
 import org.junit.*;

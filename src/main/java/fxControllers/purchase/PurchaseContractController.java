@@ -1,8 +1,8 @@
 package fxControllers.purchase;
 
-import crud.controller.controllers.DaoContractsOpenBuyController;
-import crud.controller.controllers.DaoCustomerController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsOpenBuyController;
+import crud.controller.DaoCustomerController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsOpenBuy;
 import entity.Customer;
@@ -94,7 +94,7 @@ public class PurchaseContractController {
                 .idSell(idSeller)
                 .idCustomer(idBuyer)
                 .customerName(companyName)
-                .idName(materialName)
+                .MaterialName(materialName)
                 .nrTruck(Integer.parseInt(truckContractBuy.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(nrBuyContract.getText()))

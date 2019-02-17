@@ -1,7 +1,7 @@
 package fxControllers.closeContracts;
 
-import crud.controller.controllers.DaoContractsCloseController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsCloseController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsClose;
 import entity.Material;
@@ -34,7 +34,7 @@ public class CloseContractController {
     private TableColumn<ContractsClose, String> columnCustomerName;
 
     @FXML
-    private TableColumn<ContractsClose, String> columnIdName;
+    private TableColumn<ContractsClose, String> columnMaterialName;
 
     @FXML
     private TableColumn<ContractsClose, String> columnNrTruckContract;
@@ -66,7 +66,7 @@ public class CloseContractController {
 
     private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
     private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoAllViewControllerMaterial =  DaoMaterialController
+    private DaoMaterialController daoMaterialController =  DaoMaterialController
             .builder()
             .dao(genericDaoMaterial)
             .build();
@@ -85,7 +85,7 @@ public class CloseContractController {
         if(id == 1){
           collect = contractsClose
                   .stream()
-                  .filter(e -> e.getIdName().equals(daoAllViewControllerMaterial.findById(3).getName()))
+                  .filter(e -> e.getMaterialName().equals(daoMaterialController.findById(3).getName()))
                   .collect(Collectors.toList());
         }else {
           collect = contractsClose;
@@ -96,7 +96,7 @@ public class CloseContractController {
 
         data.setAll(collect);
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnIdName.setCellValueFactory(new PropertyValueFactory<>("idName"));
+        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));

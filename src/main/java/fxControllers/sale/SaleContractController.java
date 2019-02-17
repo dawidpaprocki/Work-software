@@ -1,8 +1,8 @@
 package fxControllers.sale;
 
-import crud.controller.controllers.DaoContractsOpenSellController;
-import crud.controller.controllers.DaoCustomerController;
-import crud.controller.controllers.DaoMaterialController;
+import crud.controller.DaoContractsOpenSellController;
+import crud.controller.DaoCustomerController;
+import crud.controller.DaoMaterialController;
 import crud.model.GenericDaoImpl;
 import entity.ContractsOpenSell;
 import entity.Customer;
@@ -56,16 +56,15 @@ public class SaleContractController {
     private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
     private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
 
-    DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    DaoMaterialController daoMaterialController =  DaoMaterialController.builder()
+            .dao(genericDaoMaterial)
+            .build();
     DaoCustomerController daoCustomerController =  DaoCustomerController.builder()
             .dao(genericDaoCustomer)
             .build();
     private DaoContractsOpenSellController daoContractController ;
 
-
-
-
-    private ObservableList materialList = FXCollections.observableArrayList();
+ private ObservableList materialList = FXCollections.observableArrayList();
     private ObservableList customersList = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -76,8 +75,6 @@ public class SaleContractController {
         materialList.setAll( daoMaterialController.selectList());
 
         choiceMaterialSellContract.setItems(materialList);
-
-
     }
 
 
@@ -97,7 +94,7 @@ public class SaleContractController {
                 .idSell(0)
                 .idCustomer(idSellCustomer)
                 .customerName(contractSellCompanyName)
-                .idName(materialType)
+                .materialName(materialType)
                 .nrTruck(Integer.parseInt(truckContractSell.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(nrSellContract.getText()))
