@@ -1,8 +1,8 @@
 package crud.controller;
 
 import crud.model.GenericDao;
-import crud.services.ContactsCloseService;
 import crud.services.DaoContactsOpenService;
+import crud.services.DefaultContractsCloseService;
 import crud.services.ViewService;
 import entity.ContractsClose;
 import entity.ContractsOpenBuy;
@@ -11,10 +11,11 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder(toBuilder = true)
-public class DaoContractsCloseController implements DaoContactsOpenService, ViewService, ContactsCloseService {
+public class DaoContractsCloseController implements DaoContactsOpenService, ViewService {
 
     private int id;
     private int idSell;
@@ -30,6 +31,8 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
     private int idContractSell;
 
     private final GenericDao dao;
+    private final DefaultContractsCloseService defaultContractsCloseService;
+
 
     private ContractsClose contractsClose;
 
@@ -47,57 +50,47 @@ public class DaoContractsCloseController implements DaoContactsOpenService, View
                 .amount(this.amount)
                 .contractName(this.contractName)
                 .build();
-        dao.insert(contractsClose);
+        defaultContractsCloseService.addUpdateContract(contractsClose);
     }
 
-    @Override
-    public void update(int id, int idSellAfterChange, int idCustomerAfterChange, String customerNameAfterChange, String materialNameAfterChange, int nrTruckAfterChange, int nrTruckContractAfterChange, int amountAfterChange, String contractNameAfterChange) {
-        contractsClose = (ContractsClose) dao.findById(id);
 
+
+    @Override
+    public void update(int idSellAfterChange, int idCustomerAfterChange, String customerNameAfterChange, String materialNameAfterChange, int nrTruckAfterChange, int nrTruckContractAfterChange, int amountAfterChange, String contractNameAfterChange) {
         contractsClose = new ContractsClose
                 .ContractsCloseBuilder()
                 .idSell(idSellAfterChange)
                 .idCustomer(idCustomerAfterChange)
                 .contractName(customerNameAfterChange)
                 .materialName(materialNameAfterChange)
-                .nrTruckContract(nrTruckContractAfterChange)
+                .nrTruck(nrTruckAfterChange)
                 .nrTruckContract(nrTruckContractAfterChange)
                 .amount(amountAfterChange)
                 .contractName(contractNameAfterChange)
                 .build();
-        dao.update(contractsClose);
-
+        defaultContractsCloseService.addUpdateContract(contractsClose);
     }
 
     @Override
-    public void remove(int id) {
-        contractsClose = (ContractsClose) dao.findById(id);
-        dao.delete(contractsClose);
+    public void remove(Long id) {
+        defaultContractsCloseService.deleteContract(id);
     }
 
     @Override
-    public Object findById(int id) {
-        contractsClose = (ContractsClose) dao.findById(id);
-        return contractsClose;
+    public Object findById(Long id) {
+        Optional<ContractsClose> foundContractClose = defaultContractsCloseService.findById(id);
+        return foundContractClose.get();
     }
 
     @Override
-    public List<ContractsClose> find(String where, String name) {
-
-        return (List<ContractsClose>) dao.find(where, name);
+    public List<ContractsClose> findAll() {
+        return defaultContractsCloseService.findAll();
     }
-
     @Override
-    public void updateRecord(String idOfColumn, String newValue, int idOfRow) {
-        contractsClose = (ContractsClose) dao.findById(idOfRow);
-        dao.query(idOfColumn, newValue, 1);
+    public void updateRecord(Object object) {
+        ContractsClose contractsClosed =(ContractsClose) object;
+        defaultContractsCloseService.addUpdateContract(contractsClosed);
     }
-
-    @Override
-    public List<ContractsClose> selectList() {
-        return (List<ContractsClose>) dao.select();
-    }
-
 
     @Override
     public void CheckStatusTransfer(int id, Class tableFormGet, GenericDao daoFrom) {
