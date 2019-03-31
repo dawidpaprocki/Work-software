@@ -2,21 +2,21 @@ package fxControllers.pirmary;
 
 import crud.controller.*;
 import crud.model.GenericDao;
-import crud.model.GenericDaoImpl;
+import crud.services.ContractsCloseService;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Controller
 public class PrimaryController {
 
 
@@ -57,33 +57,13 @@ public class PrimaryController {
     ObservableList choiceContractListSell = FXCollections.observableArrayList();
     ObservableList customersList = FXCollections.observableArrayList();
 
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManagerCustomer = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerAllTruck = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractBuy = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractSell = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerMAterial = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractClose = sessionFactory.createEntityManager();
+    private final ContractsCloseService contractsCloseService;
 
-    private GenericDaoImpl genericDaoAllTruck = new GenericDaoImpl(entityManagerAllTruck, AllTruck.class);
-    private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
-    private GenericDaoImpl genericDaoContractBuy = new GenericDaoImpl(entityManagerContractBuy, ContractsOpenBuy.class);
-    private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMAterial, Material.class);
-    private GenericDaoImpl genericDaoContractClose = new GenericDaoImpl(entityManagerContractClose, ContractsClose.class);
+    public PrimaryController(ContractsCloseService contractsCloseService) {
+        this.contractsCloseService = contractsCloseService;
+    }
 
-    DaoAllTruckController daoAllTruckController = DaoAllTruckController.builder()
-            .dao(genericDaoAllTruck)
-            .build();
-
-    DaoCustomerController daoCustomerController = DaoCustomerController.builder()
-            .dao(genericDaoCustomer)
-            .build();
-    DaoContractsOpenBuyController daoContractBuyController = DaoContractsOpenBuyController.builder().dao(genericDaoContractBuy).build();
-    DaoContractsOpenSellController daoContractSellController = DaoContractsOpenSellController.builder().dao(genericDaoContractSell).build();
-    DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
-    DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(genericDaoContractClose).build();
-
+    private ContractsClose contractsClose;
 
     public void initialize() {
 
@@ -188,7 +168,7 @@ public class PrimaryController {
     }
 
 
-    public void deliveryType(Class table, GenericDao dao) {
+    public void deliveryType(Class table, GenericDao dao) throws InvocationTargetException, IllegalAccessException {
         //need to make refactor!!! - sick.
         ContractsOpenBuy contractsOpenBuy;
         ContractsOpenSell contractsOpenSell;
@@ -204,11 +184,10 @@ public class PrimaryController {
             contractsOpenBuy = daoContractBuyController.find("ContractName", nrContractBuy.getValue().toString()).get(0);
 
             if (contractsOpenBuy.getNrTruckContract() == contractsOpenBuy.getNrTruck()) {
-                daoContractBuyController.updateRecord("OpenClose",
-                        "1",
-                        contractsOpenBuy.getId());
+                contractsOpenBuy.setOpenClose(1);
+                BeanUtils.copyProperties(contractsClose,contractsOpenBuy);
+                contractsCloseService.addUpdateContract(contractsClose);
 
-                daoContractsCloseController.CheckStatusTransfer(contractsOpenBuy.getId(), table, dao);
             }
 
 
