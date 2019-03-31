@@ -1,9 +1,11 @@
 package crud.services;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public interface ViewService<T> {
 
-    void updateRecord(String idOfColumn, String newValue, int idOfRow);
-    List<T> selectList();
+    void updateRecord(T t);
+    List<T> findAll();
 }
