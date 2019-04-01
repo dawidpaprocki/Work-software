@@ -18,7 +18,7 @@ This application created for better planning, organize deliveries, contracts rea
 Main view for adding Truck, Customer, Contracts
 ![Main view](./img/Main.JPG)
 Every field has validation, preventing sent null to DB
-![validation](./img/validation.JPG)
+![validation](./img/Validation.JPG)
 Schedule of deliveries and shipments
 ![Schedule](./img/Schedule.JPG)
 Every table has editable cells
@@ -26,7 +26,7 @@ Every table has editable cells
 Material tab with contracts for better control of open contracts
 ![Material tab](./img/Contract.JPG)
 Final close tab with every Contracts
-![Close tab](./img/Contract.JPG)
+![Close tab](./img/Close contracts.JPG)
 
 ## Technologies
 * Java - version 2.0.5
