@@ -1,5 +1,6 @@
 package entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -10,10 +11,11 @@ import javax.persistence.Id;
 @Data
 @Entity
 @DynamicUpdate
+@Builder(toBuilder = true)
 public class AllTruck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String date;
     private String material;
     private String truckNumber;
@@ -27,8 +29,4 @@ public class AllTruck {
     private String purchaseContractNumber;
     private String documentName;
     private String color;
-
-    public AllTruck() {
-    }
-
 }

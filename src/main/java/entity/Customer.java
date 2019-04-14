@@ -1,5 +1,6 @@
 package entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -8,16 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Data
 @Entity
+@Builder(toBuilder = true)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String country;
-
-    public Customer() {
-    }
-
 }
 
 
