@@ -26,7 +26,6 @@ Thumbs.db
 
 .gradle/
 build/
-target/
 bin/
 dependency-reduced-pom.xml
 
@@ -47,3 +46,4 @@ README.html
 
 *.jar
 .mvn
+target/

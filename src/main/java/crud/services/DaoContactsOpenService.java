@@ -1,13 +1,12 @@
 package crud.services;
 
-import org.springframework.stereotype.Service;
+import entity.ContractsOpenSell;
 
-@Service
 public interface DaoContactsOpenService<T>   {
 
-    void add();
+    void add(ContractsOpenSell contractsOpenSell);
 
-    void update(int idSellAfterChange, int idCustomerAfterChange, String customerNameAfterChange, String materialNameAfterChange,
+    void update(Long idSellAfterChange, Long idCustomerAfterChange, String customerNameAfterChange, String materialNameAfterChange,
                 int nrTruckAfterChange, int nrTruckContractAfterChange, int amountAfterChange,
                 String contractNameAfterChange);
     void remove(Long id);

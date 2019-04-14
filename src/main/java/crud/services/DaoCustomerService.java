@@ -1,13 +1,12 @@
 package crud.services;
 
-import org.springframework.stereotype.Service;
+import entity.Customer;
 
-@Service
 public interface DaoCustomerService<T> extends DaoService {
 
-    void add();
+    void add(Customer customer);
 
-    void update(int id, String afterChangeName, String afterChangeCountry);
+    void update(Long id, String afterChangeName, String afterChangeCountry);
 
 }
 

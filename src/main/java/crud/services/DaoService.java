@@ -1,14 +1,12 @@
 package crud.services;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-@Service
+
 public interface DaoService<T> {
 
-    void remove(int id);
+    void remove(Long id);
 
-    T findById(int id);
+    T findById(Long id);
 
     List<T> findByName(String name);
 
