@@ -40,7 +40,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="38.0" prefWidth="212.0">
                             <children>
                                 <Label layoutY="6.0" prefHeight="17.0" prefWidth="149.0" text="Numer kontraktu" />
-                                <ComboBox fx:id="nrContractSell" layoutY="23.0" onAction="#materialPrepareSell" prefWidth="150.0" />
+                                <ComboBox fx:id="nrContractSell" layoutY="23.0" onAction="#materialPrepareSell" prefWidth="150.0" promptText="Wybierz" />
                             </children>
                         </AnchorPane>
                     </content>
