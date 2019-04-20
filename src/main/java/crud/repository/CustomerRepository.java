@@ -1,6 +1,6 @@
 package crud.repository;
 
-import entity.Customer;
+import crud.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
