@@ -1,8 +1,7 @@
 package fxControllers.table;
 
-import crud.controller.DaoAllTruckController;
-import crud.model.GenericDaoImpl;
-import entity.AllTruck;
+import crud.services.AllTruckService;
+import crud.model.AllTruck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,13 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
 
-import javax.persistence.EntityManager;
 import java.util.List;
-
+@Controller
 public class TableController {
 
 
@@ -93,13 +90,15 @@ public class TableController {
      * filling crud.fxControllers.table View by Data from Data Base
      * setting background color based on Value in Data Base.
      */
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManager = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, AllTruck.class);
-    private DaoAllTruckController daoAllTruckController = DaoAllTruckController.builder().dao(genericDao).build();
+    private AllTruckService allTruckService;
+
+    public TableController(AllTruckService allTruckService) {
+        this.allTruckService = allTruckService;
+    }
 
     public void initialize() {
-        List<AllTruck> list = daoAllTruckController.selectList();
+
+        List<AllTruck> list = allTruckService.selectList();
 
         getData = FXCollections.observableArrayList();
 
@@ -163,12 +162,10 @@ public class TableController {
      */
 
     public void doChange(TableColumn.CellEditEvent<AllTruck, String> tableStringCellEditEvent) {
-
         String newValue = tableStringCellEditEvent.getNewValue();
-        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
+        Long idOfRow = tableStringCellEditEvent.getRowValue().getId();
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-        daoAllTruckController.updateRecord(idOfColumn, newValue, idOfRow);
-
+        allTruckService.updateRecord(idOfColumn,newValue,idOfRow);
     }
 
     public void refresh(ActionEvent actionEvent) {
@@ -183,13 +180,12 @@ public class TableController {
      */
     public void color(ActionEvent actionEvent) {
         String newCellColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
-
-        int colorRowId = tables.getSelectionModel().getSelectedItem().getId();
+        Long colorRowId = tables.getSelectionModel().getSelectedItem().getId();
 
         TablePosition tablePosition;
         tablePosition = tables.getFocusModel().getFocusedCell();
 
-        daoAllTruckController.updateRecord("color", newCellColor, colorRowId);
+        allTruckService.updateRecord("color", newCellColor, colorRowId);
 
         TableColor TableColor = new TableColor();
 

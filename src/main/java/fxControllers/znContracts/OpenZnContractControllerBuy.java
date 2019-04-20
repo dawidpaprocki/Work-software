@@ -1,10 +1,8 @@
 package fxControllers.znContracts;
 
-import crud.controller.DaoContractsOpenBuyController;
-import crud.controller.DaoMaterialController;
-import crud.model.GenericDaoImpl;
-import entity.ContractsOpenBuy;
-import entity.Material;
+import crud.services.ContractsOpenService;
+import crud.services.MaterialService;
+import crud.model.ContractsOpenBuy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,14 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Controller
 public class OpenZnContractControllerBuy {
 
     @FXML
@@ -48,21 +44,18 @@ public class OpenZnContractControllerBuy {
 
 
     private ObservableList<ContractsOpenBuy> data;
+    private ContractsOpenService<ContractsOpenBuy> contractsOpenService;
+    private MaterialService materialService;
 
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManager = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenBuy.class);
-    private DaoContractsOpenBuyController daoContractsOpenBuyController = DaoContractsOpenBuyController.builder().dao(genericDao).build();
-
-
-    private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    public OpenZnContractControllerBuy(ContractsOpenService<ContractsOpenBuy> contractsOpenService, MaterialService materialService) {
+        this.contractsOpenService = contractsOpenService;
+        this.materialService = materialService;
+    }
 
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController.selectList().stream().filter(e->e.getMaterialName().equals(daoMaterialController.findById(4).getName())).collect(Collectors.toList());
+        List<ContractsOpenBuy> contractsOpenBuys = contractsOpenService.selectList().stream().filter(e->e.getMaterialName().equals(materialService.findById(4L).getName())).collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 

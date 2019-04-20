@@ -1,7 +1,7 @@
 package fxControllers.table;
 
 
-import entity.AllTruck;
+import crud.model.AllTruck;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;

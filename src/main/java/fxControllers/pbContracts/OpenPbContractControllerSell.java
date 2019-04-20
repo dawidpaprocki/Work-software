@@ -1,11 +1,9 @@
 package fxControllers.pbContracts;
 
-import crud.controller.DaoContractsOpenSellController;
-import crud.controller.DaoMaterialController;
-import crud.model.GenericDaoImpl;
-import entity.ContractsOpenBuy;
-import entity.ContractsOpenSell;
-import entity.Material;
+import crud.services.ContractsOpenService;
+import crud.services.MaterialService;
+import crud.model.ContractsOpenBuy;
+import crud.model.ContractsOpenSell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,14 +13,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Controller
 public class OpenPbContractControllerSell {
 
     @FXML
@@ -50,23 +45,21 @@ public class OpenPbContractControllerSell {
 
 
     private ObservableList<ContractsOpenSell> data;
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManager = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenSell.class);
-    private DaoContractsOpenSellController daoContractsOpenSellController =  DaoContractsOpenSellController.builder().dao(genericDao).build();
+    private ContractsOpenService<ContractsOpenSell> contractsOpenService;
+    private MaterialService materialService;
 
-    private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
-
+    public OpenPbContractControllerSell(ContractsOpenService<ContractsOpenSell> contractsOpenService, MaterialService materialService) {
+        this.contractsOpenService = contractsOpenService;
+        this.materialService = materialService;
+    }
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenSell> contractsOpenSells = daoContractsOpenSellController
+        List<ContractsOpenSell> contractsOpenSells = contractsOpenService
                 .selectList()
                 .stream()
                 .filter(e->e.getMaterialName()
-                        .equals(daoMaterialController.findById(2)    .getName()))
+                        .equals(materialService.findById(2L).getName()))
                 .collect(Collectors.toList());;
 
         data.setAll(contractsOpenSells);
@@ -84,20 +77,19 @@ public class OpenPbContractControllerSell {
         columnAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         columnNrTruck.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         columnContractName.setCellFactory(TextFieldTableCell.forTableColumn());
-        HashSet hashSet = new HashSet();
     }
 
 
     public void doChange(TableColumn.CellEditEvent<ContractsOpenSell, String> tableStringCellEditEvent) {
-
-        String newValue = tableStringCellEditEvent.getNewValue();
-
-        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
-
-        String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-        idOfColumn = idOfColumn.substring(6);
-
-        daoContractsOpenSellController.updateRecord(idOfColumn,newValue,idOfRow);
+//
+//        String newValue = tableStringCellEditEvent.getNewValue();
+//
+//        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
+//
+//        String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
+//        idOfColumn = idOfColumn.substring(6);
+//
+//        contractsOpenService.updateRecord(idOfColumn,newValue,idOfRow);
 
 
     }
