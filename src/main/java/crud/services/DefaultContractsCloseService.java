@@ -1,7 +1,7 @@
 package crud.services;
 
 import crud.repository.ContractCloseRepository;
-import entity.ContractsClose;
+import crud.model.ContractsClose;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,22 +16,10 @@ public class DefaultContractsCloseService implements ContractsCloseService {
         this.contractCloseRepository = contractCloseRepository;
     }
 
-    private Boolean checkIfPresent(ContractsClose contractsClose) {
-
-        if (contractsClose.getContractName() != null) {
-            Optional<ContractsClose> foundCar = contractCloseRepository.findByContractName(contractsClose.getContractName());
-            return !foundCar.isPresent();
-        } else {
-            return true;
-        }
-    }
-
-
     @Override
-    public void addUpdateContract(ContractsClose contractsClose) {
-        if (checkIfPresent(contractsClose)) {
-            contractCloseRepository.save(contractsClose);
-        }
+    public void addUpdate(ContractsClose contractsClose) {
+        contractCloseRepository.save(contractsClose);
+
     }
 
     @Override
