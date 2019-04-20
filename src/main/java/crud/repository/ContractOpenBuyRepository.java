@@ -1,10 +1,17 @@
 package crud.repository;
 
-import entity.ContractsOpenSell;
+import crud.model.ContractsOpenBuy;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ContractOpenBuyRepository extends JpaRepository<ContractsOpenSell, Long> {
+import java.util.Optional;
 
+@Repository
+@EntityScan
+public interface ContractOpenBuyRepository extends JpaRepository<ContractsOpenBuy, Long> {
+    Optional<ContractsOpenBuy> findByContractName(String contractName);
+//    String hql = "UPDATE " + clazz.getSimpleName() + " SET " + query + "  = :newValue where id = :idRow ";
+//    @Query("UPDATE contractsOpenBuy SET ")
+//    void updateRecord();
 }

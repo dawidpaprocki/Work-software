@@ -10,8 +10,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @Builder(toBuilder = true)
-public class ContractsOpenBuy    {
-
+public class ContractsOpenBuy  extends ContractsOpenAbstract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +18,10 @@ public class ContractsOpenBuy    {
     private Long idCustomer;
     private String customerName;
     private String materialName;
-    private int nrTruck;
-    private int nrTruckContract;
     private int amount;
     private String contractName;
+    private int nrTruck;
+    private int nrTruckContract;
     private int openClose;
 
 }
