@@ -1,7 +1,7 @@
 package crud.services;
 
 import crud.repository.AllTruckRepository;
-import entity.AllTruck;
+import crud.model.AllTruck;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,14 +9,13 @@ import java.util.Optional;
 
 @Service
 public class DefaultAllTruckService implements AllTruckService {
-
     private AllTruckRepository allTruckRepository;
 
     public DefaultAllTruckService(AllTruckRepository allTruckRepository) {
         this.allTruckRepository = allTruckRepository;
     }
     @Override
-    public void add(AllTruck truckToAdd) {
+    public void addOrUpdate(AllTruck truckToAdd) {
         allTruckRepository.save(truckToAdd);
     }
 
@@ -37,7 +36,8 @@ public class DefaultAllTruckService implements AllTruckService {
     }
 
     @Override
-    public void updateRecord(AllTruck allTruck) {
-        allTruckRepository.save(allTruck);
+    public void updateRecord(String columnName, String newValue, Long idRow) {
+//            allTruckRepository.updateRecord(columnName,newValue,idRow);
     }
+
 }
