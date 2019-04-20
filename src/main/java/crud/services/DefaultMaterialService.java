@@ -1,14 +1,14 @@
 package crud.services;
 
 import crud.repository.MaterialRepository;
-import entity.Material;
+import crud.model.Material;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class DefaultMaterialService implements DaoMaterialService {
+public class DefaultMaterialService implements MaterialService {
 
     private MaterialRepository materialRepository;
 
