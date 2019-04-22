@@ -47,3 +47,5 @@ README.html
 *.jar
 .mvn
 target/
+target
+target/*
