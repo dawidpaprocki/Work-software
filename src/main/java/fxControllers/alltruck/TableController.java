@@ -1,5 +1,6 @@
-package fxControllers.table;
+package fxControllers.alltruck;
 
+import crud.services.AllTablesUpdateRecordService;
 import crud.services.AllTruckService;
 import crud.model.AllTruck;
 import javafx.collections.FXCollections;
@@ -22,11 +23,11 @@ public class TableController {
 //     * <h1> Table Controller Class</h1>
 //     *
 //     * Class with multiple responsibilities:
-//     * - Filling crud.fxControllers.table in JavaFX by {@link Table}
+//     * - Filling crud.fxControllers.alltruck in JavaFX by {@link Table}
 //     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
 //     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
 //     * - Contain Method for making background color on row by {@link #color(ActionEvent)}
-//     * refresh - crud.fxControllers.table refreshing button
+//     * refresh - crud.fxControllers.alltruck refreshing button
 //     * colorChoice - Simple color picker to get color value
 //     *
 //     *
@@ -87,13 +88,15 @@ public class TableController {
     /**
      * <h2> initialize Method</h2>
      * Method started with program start.
-     * filling crud.fxControllers.table View by Data from Data Base
+     * filling crud.fxControllers.alltruck View by Data from Data Base
      * setting background color based on Value in Data Base.
      */
     private AllTruckService allTruckService;
+    private AllTablesUpdateRecordService allTablesUpdateRecordService;
 
-    public TableController(AllTruckService allTruckService) {
+    public TableController(AllTruckService allTruckService, AllTablesUpdateRecordService allTablesUpdateRecordService) {
         this.allTruckService = allTruckService;
+        this.allTablesUpdateRecordService = allTablesUpdateRecordService;
     }
 
     public void initialize() {
@@ -165,7 +168,7 @@ public class TableController {
         String newValue = tableStringCellEditEvent.getNewValue();
         Long idOfRow = tableStringCellEditEvent.getRowValue().getId();
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
-        allTruckService.updateRecord(idOfColumn,newValue,idOfRow);
+        allTablesUpdateRecordService.updateRecord(AllTruck.class,idOfColumn,newValue,idOfRow);
     }
 
     public void refresh(ActionEvent actionEvent) {
@@ -185,7 +188,7 @@ public class TableController {
         TablePosition tablePosition;
         tablePosition = tables.getFocusModel().getFocusedCell();
 
-        allTruckService.updateRecord("color", newCellColor, colorRowId);
+        allTablesUpdateRecordService.updateRecord(AllTruck.class,"color", newCellColor, colorRowId);
 
         TableColor TableColor = new TableColor();
 

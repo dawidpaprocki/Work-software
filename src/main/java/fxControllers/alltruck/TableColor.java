@@ -1,4 +1,4 @@
-package fxControllers.table;
+package fxControllers.alltruck;
 
 
 import crud.model.AllTruck;
