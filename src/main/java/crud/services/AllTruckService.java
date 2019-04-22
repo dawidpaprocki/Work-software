@@ -10,5 +10,4 @@ public interface AllTruckService{
     void remove(AllTruck objectToDeleteFormDB);
     AllTruck findById(Long id);
     List<AllTruck> selectList();
-    void updateRecord(String columnName, String newValue, Long idRow);
 }

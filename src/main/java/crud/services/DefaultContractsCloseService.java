@@ -37,4 +37,5 @@ public class DefaultContractsCloseService implements ContractsCloseService {
     public List<ContractsClose> findAll() {
         return contractCloseRepository.findAll();
     }
+
 }
