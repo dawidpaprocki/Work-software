@@ -28,5 +28,7 @@ public class ContractsOpenSell extends ContractsOpenAbstract   {
     private int nrTruckContract;
     private int openClose;
 
-
+    public Long getMaterialId(){
+        return material.getId();
+    }
 }

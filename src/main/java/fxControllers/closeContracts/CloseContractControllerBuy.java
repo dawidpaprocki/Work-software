@@ -1,5 +1,6 @@
 package fxControllers.closeContracts;
 
+import crud.model.Material;
 import crud.services.ContractsCloseService;
 import crud.services.MaterialService;
 import crud.model.ContractsClose;
@@ -7,6 +8,7 @@ import crud.model.ContractsOpenBuy;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -48,6 +50,8 @@ public class CloseContractControllerBuy {
 
     @FXML
     private ChoiceBox choiceMaterialContract;
+
+    private ObservableList materialList = FXCollections.observableArrayList();
     private ObservableList<ContractsOpenBuy> data;
     private ContractsCloseService contractsCloseService;
     private MaterialService materialService;
@@ -61,11 +65,15 @@ public class CloseContractControllerBuy {
 
     public void initialize() {
         allClosedContracts = contractsCloseService.findAll();
-        populateTable();
+        materialList.setAll(materialService.selectList());
+        choiceMaterialContract.setItems(materialList);
     }
 
-    private void populateTable() {
-        List<ContractsOpenBuy> closedBuyContracts = allClosedContracts.stream().map(ContractsClose::getContractsOpenBuy).collect(Collectors.toList());
+    private void selectMaterial(Long materialId) {
+        List<ContractsOpenBuy> closedBuyContracts = allClosedContracts.stream()
+                .map(ContractsClose::getContractsOpenBuy)
+                .filter(contractsOpenBuy -> contractsOpenBuy.getMaterialId().equals(materialId))
+                .collect(Collectors.toList());
         data = FXCollections.observableArrayList();
         data.setAll(closedBuyContracts);
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
@@ -76,6 +84,11 @@ public class CloseContractControllerBuy {
         columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
         closeContractTable.setItems(null);
         closeContractTable.setItems(data);
+    }
+
+    public void MaterialContractList(ActionEvent actionEvent) {
+        Material chosenMaterial =(Material) choiceMaterialContract.getValue();
+        selectMaterial(chosenMaterial.getId());
     }
 
 

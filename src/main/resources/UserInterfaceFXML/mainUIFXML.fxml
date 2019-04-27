@@ -7,105 +7,113 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SampleController">
-   <children>
-      <TabPane prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Główna Strona">
-               <content>
-                  <fx:include source="primaryUIFXML.fxml" />
-               </content>
-          </Tab>
-          <Tab text="Harmonogram Aut">
-               <content>
-                  <fx:include source="../truckSchedule/truckScheduleFXML.fxml" />
-               </content>
-          </Tab>
-            <Tab text="Kontrakty Miedź">
-              <content>
-                  <GridPane prefHeight="602.0" prefWidth="1007.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <fx:include source="../cuContractFXML/openCuContractSellFXML.fxml" GridPane.columnIndex="1" />
-                        <fx:include source="../cuContractFXML/openCuContractBuyFXML.fxml" />
-                     </children>
-                  </GridPane>
-              </content>
-            </Tab>
-            <Tab text="Kontrakty Mosiądz">
-               <content>
-                  <GridPane prefHeight="602.0" prefWidth="1007.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <fx:include source="../msContractFXML/openMsContractBuyFXML.fxml" />
-                        <fx:include source="../msContractFXML/openMsContractSellFXML.fxml" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
-               </content>
-            </Tab>
-            <Tab text="Kontrakty Ołów">
-               <content>
-                  <GridPane prefHeight="602.0" prefWidth="1007.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <fx:include source="../pbContractFXML/openPbContractBuyFXML.fxml" />
-                        <fx:include source="../pbContractFXML/openPbContractSellFXML.fxml" GridPane.columnIndex="1" />
-                     </children>
-                  </GridPane>
-               </content>
-            </Tab>
-            <Tab text="Kontrakty Cynk">
-                <content>
-                    <GridPane prefHeight="602.0" prefWidth="1007.0">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        </rowConstraints>
-                        <children>
-                            <fx:include source="../znContractFXML/openZnContractBuyFXML.fxml" />
-                            <fx:include source="../znContractFXML/openZnContractSellFXML.fxml" GridPane.columnIndex="1" />
-                        </children>
-                    </GridPane>
-                </content>
-            </Tab>
-            <Tab text="Kontrakty Zamknięte">
-                <content>
-                    <GridPane prefHeight="602.0" prefWidth="1007.0">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0" />
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        </rowConstraints>
-                        <children>
-                            <fx:include source="../closeContractsFXML/closeContractsBuyFXML.fxml" GridPane.columnIndex="0" />
-                        </children>
-                    </GridPane>
-                </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="main.SampleController">
+    <children>
+        <TabPane prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Główna Strona">
+                    <content>
+                        <fx:include source="primaryUIFXML.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Harmonogram Aut">
+                    <content>
+                        <fx:include source="../truckSchedule/truckScheduleFXML.fxml"/>
+                    </content>
+                </Tab>
+                <Tab text="Kontrakty Miedź">
+                    <content>
+                        <GridPane prefHeight="602.0" prefWidth="1007.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <fx:include source="../cuContractFXML/openCuContractSellFXML.fxml"
+                                            GridPane.columnIndex="1"/>
+                                <fx:include source="../cuContractFXML/openCuContractBuyFXML.fxml"/>
+                            </children>
+                        </GridPane>
+                    </content>
+                </Tab>
+                <Tab text="Kontrakty Mosiądz">
+                    <content>
+                        <GridPane prefHeight="602.0" prefWidth="1007.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <fx:include source="../msContractFXML/openMsContractBuyFXML.fxml"/>
+                                <fx:include source="../msContractFXML/openMsContractSellFXML.fxml"
+                                            GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </content>
+                </Tab>
+                <Tab text="Kontrakty Ołów">
+                    <content>
+                        <GridPane prefHeight="602.0" prefWidth="1007.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <fx:include source="../pbContractFXML/openPbContractBuyFXML.fxml"/>
+                                <fx:include source="../pbContractFXML/openPbContractSellFXML.fxml"
+                                            GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </content>
+                </Tab>
+                <Tab text="Kontrakty Cynk">
+                    <content>
+                        <GridPane prefHeight="602.0" prefWidth="1007.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <fx:include source="../znContractFXML/openZnContractBuyFXML.fxml"/>
+                                <fx:include source="../znContractFXML/openZnContractSellFXML.fxml"
+                                            GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </content>
+                </Tab>
+                <Tab text="Kontrakty Zamknięte">
+                    <content>
+                        <GridPane prefHeight="602.0" prefWidth="1007.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="550.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <fx:include source="../closeContractsFXML/closeContractsBuyFXML.fxml"
+                                            GridPane.columnIndex="0"/>
+                                <fx:include source="../closeContractsFXML/closeContractsSellFXML.fxml"
+                                            GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
 </VBox>

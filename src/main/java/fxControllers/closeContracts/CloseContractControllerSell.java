@@ -73,7 +73,10 @@ public class CloseContractControllerSell {
     }
 
     private void selectMaterial(Long materialId) {
-        List<ContractsOpenSell> closedSellContracts = allClosedContracts.stream().map(ContractsClose::getContractsOpenSell).collect(Collectors.toList());
+        List<ContractsOpenSell> closedSellContracts = allClosedContracts.stream()
+                .map(ContractsClose::getContractsOpenSell)
+                .filter(contractsOpenSell -> contractsOpenSell.getMaterialId().equals(materialId))
+                .collect(Collectors.toList());
         data = FXCollections.observableArrayList();
         data.setAll(closedSellContracts);
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));

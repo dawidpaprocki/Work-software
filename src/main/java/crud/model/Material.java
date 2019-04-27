@@ -24,7 +24,4 @@ public class Material {
     public String toString() {
         return name;
     }
-    public String getMaterialName() {
-        return name;
-    }
 }
