@@ -1,22 +1,18 @@
 package fxControllers.pirmary;
 
-import crud.controller.*;
-import crud.model.GenericDao;
-import crud.model.GenericDaoImpl;
-import entity.*;
+import crud.services.*;
+import crud.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Controller
 public class PrimaryController {
 
 
@@ -57,60 +53,46 @@ public class PrimaryController {
     ObservableList choiceContractListSell = FXCollections.observableArrayList();
     ObservableList customersList = FXCollections.observableArrayList();
 
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManagerCustomer = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerAllTruck = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractBuy = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractSell = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerMAterial = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractClose = sessionFactory.createEntityManager();
+    private CustomerService customerService;
+    private AllTruckService allTruckService;
+    private MaterialService materialService;
+    private ContractsOpenService<ContractsOpenSell> contractsOpenSellService;
+    private ContractsOpenService<ContractsOpenBuy> contractsOpenBuyService;
+    private ContractsCloseService contractsCloseService;
+    private ContractsOpenAbstract contractsOpenAbstract;
+    private ContractsClose contractsClose;
+    private Material materialChosen;
 
-    private GenericDaoImpl genericDaoAllTruck = new GenericDaoImpl(entityManagerAllTruck, AllTruck.class);
-    private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
-    private GenericDaoImpl genericDaoContractBuy = new GenericDaoImpl(entityManagerContractBuy, ContractsOpenBuy.class);
-    private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMAterial, Material.class);
-    private GenericDaoImpl genericDaoContractClose = new GenericDaoImpl(entityManagerContractClose, ContractsClose.class);
-
-    DaoAllTruckController daoAllTruckController = DaoAllTruckController.builder()
-            .dao(genericDaoAllTruck)
-            .build();
-
-    DaoCustomerController daoCustomerController = DaoCustomerController.builder()
-            .dao(genericDaoCustomer)
-            .build();
-    DaoContractsOpenBuyController daoContractBuyController = DaoContractsOpenBuyController.builder().dao(genericDaoContractBuy).build();
-    DaoContractsOpenSellController daoContractSellController = DaoContractsOpenSellController.builder().dao(genericDaoContractSell).build();
-    DaoMaterialController daoMaterialController =  DaoMaterialController.builder().dao(genericDaoMaterial).build();
-    DaoContractsCloseController daoContractsCloseController = DaoContractsCloseController.builder().dao(genericDaoContractClose).build();
-
-
-    public void initialize() {
-
-        customersList.setAll(daoCustomerController.selectList());
-        choiceCustomerNameBox.setItems(customersList);
-
+    public PrimaryController(CustomerService customerService, AllTruckService allTruckService, MaterialService materialService,
+                             ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
+                             ContractsCloseService contractsCloseService) {
+        this.customerService = customerService;
+        this.allTruckService = allTruckService;
+        this.materialService = materialService;
+        this.contractsOpenSellService = contractsOpenSell;
+        this.contractsOpenBuyService = contractsOpenBuy;
+        this.contractsCloseService = contractsCloseService;
 
     }
 
-    public void addButton() {
+    public void initialize() {
+        customersList.setAll(customerService.selectList());
+        choiceCustomerNameBox.setItems(customersList);
+    }
 
+    public void addButton() {
         String datePickerString = String.valueOf(datePickerChoice.getValue());
         String deliveryAmountText = deliveryAmount.getText();
         if (deliveryPlate.getText().length() > 0) {
             if (deliveryTo.getText().length() > 0) {
                 if (deliveryAmount.getText().length() > 0) {
                     if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
-
-
                         try {
                             Integer.parseInt(deliveryAmountText);
-
                             if (materialPrepareType == 0) {
-
-                                daoAllTruckController = DaoAllTruckController.builder()
+                                AllTruck addedTruck = AllTruck.builder()
                                         .date(datePickerString)
-                                        .material(materialName.getText())
+                                        .material(materialChosen)
                                         .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -122,18 +104,13 @@ public class PrimaryController {
                                         .purchaseContractNumber(nrContractBuy.getValue().toString())
                                         .documentName("-")
                                         .color("white")
-                                        .dao(genericDaoMaterial)
                                         .build();
-
-                                daoAllTruckController.add();
-
-                                deliveryType(ContractsOpenBuy.class, genericDaoContractBuy);
-
+                                allTruckService.addOrUpdate(addedTruck);
+                                updateOpenCloseStatus(ContractsOpenBuy.class, nrContractBuy.getValue().toString());
                             } else {
-
-                                daoAllTruckController = DaoAllTruckController.builder()
+                                AllTruck addedTruck = AllTruck.builder()
                                         .date(datePickerString)
-                                        .material(materialName.getText())
+                                        .material(materialChosen)
                                         .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -145,28 +122,19 @@ public class PrimaryController {
                                         .purchaseContractNumber(nrContractSell.getValue().toString())
                                         .documentName("-")
                                         .color("white")
-                                        .dao(genericDaoMaterial)
                                         .build();
-
-                                daoAllTruckController.add();
-
-                                deliveryType(ContractsOpenSell.class, genericDaoContractSell);
-
+                                allTruckService.addOrUpdate(addedTruck);
+                                updateOpenCloseStatus(ContractsOpenSell.class, nrContractSell.getValue().toString());
                             }
-
-
                             deliveryPlate.clear();
                             deliveryAmount.clear();
                             deliveryTo.clear();
                             materialName.setText("");
                             dataPickError.setText("");
-
                             choiceCustomerNameBox.setValue(null);
                             nrContractBuy.setValue(null);
                             datePickerChoice.setValue(null);
                             datePickerChoice.setPromptText("Wybierz date");
-
-
                         } catch (Exception e) {
                             deliveryAmount.setText("Tylko liczby");
                             e.printStackTrace();
@@ -188,68 +156,34 @@ public class PrimaryController {
     }
 
 
-    public void deliveryType(Class table, GenericDao dao) {
-        //need to make refactor!!! - sick.
-        ContractsOpenBuy contractsOpenBuy;
-        ContractsOpenSell contractsOpenSell;
+    public void updateOpenCloseStatus(Class clazz, String contractNumberReceivedFromFXML) {
 
-        if (table.getSimpleName().equals("ContractsOpenBuy")) {
-
-            contractsOpenBuy = daoContractBuyController.find("ContractName", nrContractBuy.getValue().toString()).get(0);
-
-            daoContractBuyController.updateRecord("nrTruckContract",
-                    String.valueOf(contractsOpenBuy.getNrTruckContract() + 1),
-                    contractsOpenBuy.getId());
-
-            contractsOpenBuy = daoContractBuyController.find("ContractName", nrContractBuy.getValue().toString()).get(0);
-
-            if (contractsOpenBuy.getNrTruckContract() == contractsOpenBuy.getNrTruck()) {
-                daoContractBuyController.updateRecord("OpenClose",
-                        "1",
-                        contractsOpenBuy.getId());
-
-                daoContractsCloseController.CheckStatusTransfer(contractsOpenBuy.getId(), table, dao);
-            }
-
-
-        } else if (table.getClass().getSimpleName().equals("ContractsOpenSell")) {
-            contractsOpenSell = daoContractSellController.find("ContractName", nrContractSell.getValue().toString()).get(0);
-
-            daoContractSellController.updateRecord("nrTruckContract",
-                    String.valueOf(contractsOpenSell.getNrTruckContract() + 1),
-                    contractsOpenSell.getId());
-
-            contractsOpenSell = daoContractSellController.find("ContractName", nrContractSell.getValue().toString()).get(0);
-
-
-            if (contractsOpenSell.getNrTruckContract() == contractsOpenSell.getNrTruck()) {
-                daoContractSellController.updateRecord("OpenClose",
-                        "1",
-                        contractsOpenSell.getId());
-
-                daoContractsCloseController.CheckStatusTransfer(contractsOpenSell.getId(), table, dao);
-
-            }
-
+        String nameOfEntity = clazz.getSimpleName();
+        contractsOpenAbstract = contractsOpenBuyService.findByName(contractNumberReceivedFromFXML);
+        contractsOpenAbstract.setNrTruck(contractsOpenAbstract.getNrTruck() + 1);
+        if (contractsOpenAbstract.getNrTruckContract() == contractsOpenAbstract.getNrTruck()) {
+            contractsOpenAbstract.setOpenClose(0);
+        }
+        if (nameOfEntity.equals("ContractsOpenBuy")) {
+            contractsOpenBuyService.addOrUpdate((ContractsOpenBuy) contractsOpenAbstract);
+            contractsClose.setContractsOpenBuy((ContractsOpenBuy) contractsOpenAbstract);
+        } else {
+            contractsOpenSellService.addOrUpdate((ContractsOpenSell) contractsOpenAbstract);
+            contractsClose.setContractsOpenSell((ContractsOpenSell) contractsOpenAbstract);
         }
 
     }
 
     public void materialPrepareBuy() {
-
         String NrContractBuy = Optional.ofNullable(nrContractBuy.getValue()).orElse("Empty").toString();
-
-
         if (!(NrContractBuy.equals("Wybierz") || NrContractBuy.equals("Empty"))) {
             materialPrepareType = 0;
             String contractNumber = nrContractBuy
                     .getValue()
                     .toString();
-            List<ContractsOpenBuy> contractName = daoContractBuyController.find("contractName", contractNumber);
-            String contractMaterialName = contractName.get(0).getMaterialName();
-
-            materialName.setText(contractMaterialName);
-
+            ContractsOpenBuy contractName = contractsOpenBuyService.findByName(contractNumber);
+            materialChosen = materialService.findById(contractName.getMaterial().getId());
+            materialName.setText(materialChosen.toString());
         }
     }
 
@@ -259,52 +193,38 @@ public class PrimaryController {
         String contractNumber = nrContractSell
                 .getValue()
                 .toString();
-        List<ContractsOpenSell> contractName = daoContractSellController.find("contractName",contractNumber);
-
-        String contractMaterialName = contractName.get(0).getMaterialName();
-
-        materialName.setText(contractMaterialName);
-
+        ContractsOpenSell contractName = contractsOpenSellService.findByName(contractNumber);
+        materialChosen = materialService.findById(contractName.getMaterial().getId());
+        materialName.setText(materialChosen.toString());
     }
-
 
 
     public void selectComboBoxList() {
 
         String customerIdValue = Optional.ofNullable(choiceCustomerNameBox.getValue()).orElse("Empty").toString();
-        if (!(customerIdValue.equals("Wybierz") ||  customerIdValue.equals("Empty"))) {
+        if (!(customerIdValue.equals("Wybierz") || customerIdValue.equals("Empty"))) {
 
-            int customerId = daoCustomerController
+            Long customerId = customerService
                     .findByName(choiceCustomerNameBox
                             .getValue()
                             .toString())
                     .get(0).getId();
-
             listOfChoiceContract(customerId);
-
         }
-
     }
 
-    public void listOfChoiceContract(int customerId) {
-
-        List<ContractsOpenBuy>  contractsOpenBuy = daoContractBuyController.selectList();
-
+    public void listOfChoiceContract(Long customerId) {
+        List<ContractsOpenBuy> contractsOpenBuy = contractsOpenBuyService.selectList();
         choiceContractListBuy.setAll(contractsOpenBuy.stream()
-                .filter(e -> e.getIdCustomer() == customerId)
+                .filter(e -> e.getIdCustomer().equals(customerId))
                 .map(ContractsOpenBuy::getContractName)
                 .collect(Collectors.toList()));
-
-        List<ContractsOpenSell>    contractsOpenSell = daoContractSellController.selectList();
-
+        List<ContractsOpenSell> contractsOpenSell = contractsOpenSellService.selectList();
         choiceContractListSell.setAll(contractsOpenSell.stream()
-                .filter(e -> e.getIdCustomer() == customerId)
+                .filter(e -> e.getIdCustomer().equals(customerId))
                 .map(ContractsOpenSell::getContractName)
                 .collect(Collectors.toList()));
-
         nrContractBuy.setItems(choiceContractListBuy);
         nrContractSell.setItems(choiceContractListSell);
-
     }
-
 }

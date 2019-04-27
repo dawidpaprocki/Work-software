@@ -1,23 +1,18 @@
 package fxControllers.sale;
 
-import crud.controller.DaoContractsOpenSellController;
-import crud.controller.DaoCustomerController;
-import crud.controller.DaoMaterialController;
-import crud.model.GenericDaoImpl;
-import entity.ContractsOpenSell;
-import entity.Customer;
-import entity.Material;
+import crud.model.ContractsOpenSell;
+import crud.model.Material;
+import crud.services.ContractsOpenService;
+import crud.services.CustomerService;
+import crud.services.MaterialService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
-
-
+@Controller
 public class SaleContractController {
     /**
      *  <h1>The SaleContractController Class.</h1>
@@ -47,32 +42,25 @@ public class SaleContractController {
     @FXML
     private ChoiceBox choiceMaterialSellContract;
 
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManagerCustomer = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
-    private final EntityManager entityManagerContractSell = sessionFactory.createEntityManager();
 
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private GenericDaoImpl genericDaoCustomer = new GenericDaoImpl(entityManagerCustomer, Customer.class);
-    private GenericDaoImpl genericDaoContractSell = new GenericDaoImpl(entityManagerContractSell, ContractsOpenSell.class);
+    private ContractsOpenService<ContractsOpenSell> contractsOpenService;
+    private MaterialService materialService;
+    private CustomerService customerService;
 
-    DaoMaterialController daoMaterialController =  DaoMaterialController.builder()
-            .dao(genericDaoMaterial)
-            .build();
-    DaoCustomerController daoCustomerController =  DaoCustomerController.builder()
-            .dao(genericDaoCustomer)
-            .build();
-    private DaoContractsOpenSellController daoContractController ;
-
+    public SaleContractController(ContractsOpenService<ContractsOpenSell> contractsOpenService, MaterialService materialService, CustomerService customerService) {
+        this.contractsOpenService = contractsOpenService;
+        this.materialService = materialService;
+        this.customerService = customerService;
+    }
  private ObservableList materialList = FXCollections.observableArrayList();
     private ObservableList customersList = FXCollections.observableArrayList();
 
     public void initialize() {
 
-        customersList.setAll(daoCustomerController.selectList());
+        customersList.setAll(customerService.selectList());
         choiceContractSell.setItems(customersList);
 
-        materialList.setAll( daoMaterialController.selectList());
+        materialList.setAll( materialService.selectList());
 
         choiceMaterialSellContract.setItems(materialList);
     }
@@ -82,32 +70,23 @@ public class SaleContractController {
      * Method responsible for insert full details of contract to Data Base.
      */
     public void addContractButton() {
-        int idSellCustomer = 0;
 
         String contractSellCompanyName = choiceContractSell.getValue().toString();
-
-        String materialType = choiceMaterialSellContract.getValue().toString();
-
-        idSellCustomer =  daoCustomerController.findByName(contractSellCompanyName).get(0).getId();
-
-        daoContractController = DaoContractsOpenSellController.builder()
-                .idSell(0)
+        Material chosenMaterial =(Material) choiceMaterialSellContract.getValue();
+        Long idSellCustomer =  customerService.findByName(contractSellCompanyName).get(0).getId();
+        ContractsOpenSell contractsOpenSell= ContractsOpenSell.builder()
                 .idCustomer(idSellCustomer)
                 .customerName(contractSellCompanyName)
-                .materialName(materialType)
+                .material(chosenMaterial)
                 .nrTruck(Integer.parseInt(truckContractSell.getText()))
                 .nrTruckContract(0)
-                .amount(Integer.parseInt(nrSellContract.getText()))
-                .contractName(amountContractSell.getText())
-                .dao(genericDaoContractSell)
+                .amount(Integer.parseInt(amountContractSell.getText()))
+                .contractName(nrSellContract.getText())
                 .build();
-        daoContractController.add();
-
+        contractsOpenService.addOrUpdate(contractsOpenSell);
         nrSellContract.clear();
         amountContractSell.clear();
         truckContractSell.clear();
-
-
     }
 
 

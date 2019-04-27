@@ -1,11 +1,13 @@
 package crud.services;
 
+import crud.model.AllTruck;
+
 import java.util.List;
 
-public interface AllTruckService<T>{
+public interface AllTruckService{
 
-    void add();
-    void remove(int id);
-    T findById(int id);
-    List<String> selectList();
+    void addOrUpdate(AllTruck allTruck);
+    void remove(AllTruck objectToDeleteFormDB);
+    AllTruck findById(Long id);
+    List<AllTruck> selectList();
 }

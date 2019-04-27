@@ -1,10 +1,9 @@
 package fxControllers.pbContracts;
 
-import crud.controller.DaoContractsOpenBuyController;
-import crud.controller.DaoMaterialController;
-import crud.model.GenericDaoImpl;
-import entity.ContractsOpenBuy;
-import entity.Material;
+import crud.model.ContractsOpenBuy;
+import crud.services.ContractsOpenService;
+import enums.MaterialTypes;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,14 +13,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import org.hibernate.SessionFactory;
-import utils.HibernateUtils;
+import org.springframework.stereotype.Controller;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Controller
 public class OpenPbContractControllerBuy {
 
     @FXML
@@ -50,31 +47,25 @@ public class OpenPbContractControllerBuy {
 
 
     private ObservableList<ContractsOpenBuy> data;
+    private ContractsOpenService<ContractsOpenBuy> contractsOpenService;
 
-    private final SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-    private final EntityManager entityManager = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDao = new GenericDaoImpl(entityManager, ContractsOpenBuy.class);
-    private DaoContractsOpenBuyController daoContractsOpenBuyController = DaoContractsOpenBuyController.builder().dao(genericDao).build();
-
-
-    private final EntityManager entityManagerMaterial = sessionFactory.createEntityManager();
-    private GenericDaoImpl genericDaoMaterial = new GenericDaoImpl(entityManagerMaterial, Material.class);
-    private DaoMaterialController daoMaterialController = DaoMaterialController.builder().dao(genericDaoMaterial).build();
+    public OpenPbContractControllerBuy(ContractsOpenService<ContractsOpenBuy> contractsOpenService) {
+        this.contractsOpenService = contractsOpenService;
+    }
 
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenBuy> contractsOpenBuys = daoContractsOpenBuyController
-                .selectList()
+        List<ContractsOpenBuy> contractsOpenBuys = contractsOpenService.selectList()
                 .stream()
-                .filter(e -> e.getMaterialName()
-                        .equals(daoMaterialController.findById(2).getName()))
+                .filter(e -> e.getMaterial().getId()
+                        .equals(MaterialTypes.LEAD.getId()))
                 .collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
+        columnMaterialName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -92,11 +83,11 @@ public class OpenPbContractControllerBuy {
     public void doChange(TableColumn.CellEditEvent<ContractsOpenBuy, String> tableStringCellEditEvent) {
 
         String newValue = tableStringCellEditEvent.getNewValue();
-        int idOfRow = tableStringCellEditEvent.getRowValue().getId();
+        Long idOfRow = tableStringCellEditEvent.getRowValue().getId();
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
         idOfColumn = idOfColumn.substring(6);
 
-        daoContractsOpenBuyController.updateRecord(idOfColumn, newValue, idOfRow);
+//        contractsOpenService.updateRecord(idOfColumn, newValue, idOfRow);
 
     }
 
