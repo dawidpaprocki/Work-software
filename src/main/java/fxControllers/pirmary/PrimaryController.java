@@ -52,14 +52,16 @@ public class PrimaryController {
     ObservableList choiceContractListBuy = FXCollections.observableArrayList();
     ObservableList choiceContractListSell = FXCollections.observableArrayList();
     ObservableList customersList = FXCollections.observableArrayList();
+
     private CustomerService customerService;
     private AllTruckService allTruckService;
     private MaterialService materialService;
     private ContractsOpenService<ContractsOpenSell> contractsOpenSellService;
     private ContractsOpenService<ContractsOpenBuy> contractsOpenBuyService;
     private ContractsCloseService contractsCloseService;
-    private  ContractsOpenAbstract contractsOpenAbstract;
+    private ContractsOpenAbstract contractsOpenAbstract;
     private ContractsClose contractsClose;
+    private Material materialChosen;
 
     public PrimaryController(CustomerService customerService, AllTruckService allTruckService, MaterialService materialService,
                              ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
@@ -90,7 +92,7 @@ public class PrimaryController {
                             if (materialPrepareType == 0) {
                                 AllTruck addedTruck = AllTruck.builder()
                                         .date(datePickerString)
-                                        .material(materialName.getText())
+                                        .material(materialChosen)
                                         .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -104,11 +106,11 @@ public class PrimaryController {
                                         .color("white")
                                         .build();
                                 allTruckService.addOrUpdate(addedTruck);
-                                updateOpenCloseStatus(ContractsOpenBuy.class,nrContractBuy.getValue().toString());
+                                updateOpenCloseStatus(ContractsOpenBuy.class, nrContractBuy.getValue().toString());
                             } else {
                                 AllTruck addedTruck = AllTruck.builder()
                                         .date(datePickerString)
-                                        .material(materialName.getText())
+                                        .material(materialChosen)
                                         .truckNumber(deliveryPlate.getText())
                                         .amount(Integer.parseInt(deliveryAmountText))
                                         .finalAmount(0)
@@ -122,7 +124,7 @@ public class PrimaryController {
                                         .color("white")
                                         .build();
                                 allTruckService.addOrUpdate(addedTruck);
-                                updateOpenCloseStatus(ContractsOpenSell.class,nrContractSell.getValue().toString());
+                                updateOpenCloseStatus(ContractsOpenSell.class, nrContractSell.getValue().toString());
                             }
                             deliveryPlate.clear();
                             deliveryAmount.clear();
@@ -136,7 +138,7 @@ public class PrimaryController {
                         } catch (Exception e) {
                             deliveryAmount.setText("Tylko liczby");
                             e.printStackTrace();
-                            }
+                        }
                     } else {
                         dataPickError.setText("Wymagana data");
                     }
@@ -154,18 +156,20 @@ public class PrimaryController {
     }
 
 
-    public void updateOpenCloseStatus(Class clazz,String contractNumberReceivedFromFXML) {
+    public void updateOpenCloseStatus(Class clazz, String contractNumberReceivedFromFXML) {
 
         String nameOfEntity = clazz.getSimpleName();
         contractsOpenAbstract = contractsOpenBuyService.findByName(contractNumberReceivedFromFXML);
-        contractsOpenAbstract.setNrTruck(contractsOpenAbstract.getNrTruck() +1);
-        if (contractsOpenAbstract.getNrTruckContract() == contractsOpenAbstract.getNrTruck()) {contractsOpenAbstract.setOpenClose(0);}
-        if(nameOfEntity.equals("ContractsOpenBuy")){
-            contractsOpenBuyService.addOrUpdate((ContractsOpenBuy)contractsOpenAbstract);
-            contractsClose.setContractsOpenBuy((ContractsOpenBuy)contractsOpenAbstract);
-        }else {
-            contractsOpenSellService.addOrUpdate((ContractsOpenSell)contractsOpenAbstract);
-            contractsClose.setContractsOpenSell((ContractsOpenSell)contractsOpenAbstract);
+        contractsOpenAbstract.setNrTruck(contractsOpenAbstract.getNrTruck() + 1);
+        if (contractsOpenAbstract.getNrTruckContract() == contractsOpenAbstract.getNrTruck()) {
+            contractsOpenAbstract.setOpenClose(0);
+        }
+        if (nameOfEntity.equals("ContractsOpenBuy")) {
+            contractsOpenBuyService.addOrUpdate((ContractsOpenBuy) contractsOpenAbstract);
+            contractsClose.setContractsOpenBuy((ContractsOpenBuy) contractsOpenAbstract);
+        } else {
+            contractsOpenSellService.addOrUpdate((ContractsOpenSell) contractsOpenAbstract);
+            contractsClose.setContractsOpenSell((ContractsOpenSell) contractsOpenAbstract);
         }
 
     }
@@ -178,8 +182,8 @@ public class PrimaryController {
                     .getValue()
                     .toString();
             ContractsOpenBuy contractName = contractsOpenBuyService.findByName(contractNumber);
-            String contractMaterialName = contractName.getMaterialName();
-            materialName.setText(contractMaterialName);
+            materialChosen = materialService.findById(contractName.getMaterial().getId());
+            materialName.setText(materialChosen.toString());
         }
     }
 
@@ -190,17 +194,15 @@ public class PrimaryController {
                 .getValue()
                 .toString();
         ContractsOpenSell contractName = contractsOpenSellService.findByName(contractNumber);
-        String contractMaterialName = contractName.getMaterialName();
-        materialName.setText(contractMaterialName);
-
+        materialChosen = materialService.findById(contractName.getMaterial().getId());
+        materialName.setText(materialChosen.toString());
     }
-
 
 
     public void selectComboBoxList() {
 
         String customerIdValue = Optional.ofNullable(choiceCustomerNameBox.getValue()).orElse("Empty").toString();
-        if (!(customerIdValue.equals("Wybierz") ||  customerIdValue.equals("Empty"))) {
+        if (!(customerIdValue.equals("Wybierz") || customerIdValue.equals("Empty"))) {
 
             Long customerId = customerService
                     .findByName(choiceCustomerNameBox
@@ -212,12 +214,12 @@ public class PrimaryController {
     }
 
     public void listOfChoiceContract(Long customerId) {
-        List<ContractsOpenBuy>  contractsOpenBuy = contractsOpenBuyService.selectList();
+        List<ContractsOpenBuy> contractsOpenBuy = contractsOpenBuyService.selectList();
         choiceContractListBuy.setAll(contractsOpenBuy.stream()
                 .filter(e -> e.getIdCustomer().equals(customerId))
                 .map(ContractsOpenBuy::getContractName)
                 .collect(Collectors.toList()));
-        List<ContractsOpenSell>    contractsOpenSell = contractsOpenSellService.selectList();
+        List<ContractsOpenSell> contractsOpenSell = contractsOpenSellService.selectList();
         choiceContractListSell.setAll(contractsOpenSell.stream()
                 .filter(e -> e.getIdCustomer().equals(customerId))
                 .map(ContractsOpenSell::getContractName)

@@ -1,9 +1,10 @@
 package fxControllers.msContracts;
 
-import crud.services.ContractsOpenService;
-import crud.services.MaterialService;
 import crud.model.ContractsOpenBuy;
 import crud.model.ContractsOpenSell;
+import crud.services.ContractsOpenService;
+import enums.MaterialTypes;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,10 +25,6 @@ public class OpenMsContractControllerBuy {
 
     @FXML
     private TableView<ContractsOpenBuy> openMsContractTable;
-
-    public TableView<ContractsOpenBuy> getOpenMsContactTable() {
-        return openMsContractTable;
-    }
 
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnCustomerName;
@@ -50,27 +47,24 @@ public class OpenMsContractControllerBuy {
 
     private ObservableList<ContractsOpenBuy> data;
     private ContractsOpenService<ContractsOpenBuy> contractsOpenService;
-    private MaterialService materialService;
 
-    public OpenMsContractControllerBuy(ContractsOpenService<ContractsOpenBuy> contractsOpenService, MaterialService materialService) {
+    public OpenMsContractControllerBuy(ContractsOpenService<ContractsOpenBuy> contractsOpenService) {
         this.contractsOpenService = contractsOpenService;
-        this.materialService = materialService;
     }
 
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenBuy> contractsOpenBuys = contractsOpenService
-                .selectList()
+        List<ContractsOpenBuy> contractsOpenBuys = contractsOpenService.selectList()
                 .stream()
-                .filter(e -> e.getMaterialName()
-                        .equals(materialService.findById(3L).getName()))
+                .filter(e -> e.getMaterial().getId()
+                        .equals(MaterialTypes.BRASS.getId()))
                 .collect(Collectors.toList());
 
         data.setAll(contractsOpenBuys);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
+        columnMaterialName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));

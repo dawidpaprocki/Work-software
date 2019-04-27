@@ -1,9 +1,10 @@
 package fxControllers.sale;
 
+import crud.model.ContractsOpenSell;
+import crud.model.Material;
 import crud.services.ContractsOpenService;
 import crud.services.CustomerService;
 import crud.services.MaterialService;
-import crud.model.ContractsOpenSell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -71,12 +72,12 @@ public class SaleContractController {
     public void addContractButton() {
 
         String contractSellCompanyName = choiceContractSell.getValue().toString();
-        String materialType = choiceMaterialSellContract.getValue().toString();
+        Material chosenMaterial =(Material) choiceMaterialSellContract.getValue();
         Long idSellCustomer =  customerService.findByName(contractSellCompanyName).get(0).getId();
         ContractsOpenSell contractsOpenSell= ContractsOpenSell.builder()
                 .idCustomer(idSellCustomer)
                 .customerName(contractSellCompanyName)
-                .materialName(materialType)
+                .material(chosenMaterial)
                 .nrTruck(Integer.parseInt(truckContractSell.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(amountContractSell.getText()))

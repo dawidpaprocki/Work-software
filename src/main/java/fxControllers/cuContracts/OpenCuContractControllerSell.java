@@ -1,8 +1,9 @@
 package fxControllers.cuContracts;
 
-import crud.services.ContractsOpenService;
-import crud.services.MaterialService;
 import crud.model.ContractsOpenSell;
+import crud.services.ContractsOpenService;
+import enums.MaterialTypes;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,32 +44,31 @@ public class OpenCuContractControllerSell {
 
     private ObservableList<ContractsOpenSell> data;
     private ContractsOpenService<ContractsOpenSell> contractsOpenService;
-    private MaterialService materialService;
 
-    public OpenCuContractControllerSell(ContractsOpenService<ContractsOpenSell> contractsOpenService, MaterialService materialService) {
+
+
+    public OpenCuContractControllerSell(ContractsOpenService<ContractsOpenSell> contractsOpenService) {
         this.contractsOpenService = contractsOpenService;
-        this.materialService = materialService;
+
     }
 
 
     public void initialize() {
         data = FXCollections.observableArrayList();
-
-        List<ContractsOpenSell> contractsOpenSellsList = contractsOpenService.selectList().stream().filter(e->e.getMaterialName().equals(materialService.findById(1L).getName())).collect(Collectors.toList());;
-
+        List<ContractsOpenSell> contractsOpenSellsList = contractsOpenService.selectList()
+                .stream()
+                .filter(e->e.getMaterial().getId()
+                        .equals(MaterialTypes.COPPER.getId()))
+                .collect(Collectors.toList());
         data.setAll(contractsOpenSellsList);
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
+        columnMaterialName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         columnContractName.setCellValueFactory(new PropertyValueFactory<>("contractName"));
-
         openCuContractTable.setItems(null);
         openCuContractTable.setItems(data);
-
-
-        
     }
 
 

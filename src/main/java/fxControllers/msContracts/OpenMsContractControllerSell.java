@@ -3,6 +3,8 @@ package fxControllers.msContracts;
 import crud.services.ContractsOpenService;
 import crud.services.MaterialService;
 import crud.model.ContractsOpenSell;
+import enums.MaterialTypes;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -52,17 +54,16 @@ public class OpenMsContractControllerSell {
     public void initialize() {
         data = FXCollections.observableArrayList();
 
-        List<ContractsOpenSell> contractsOpenSells = contractsOpenService
-                .selectList()
+        List<ContractsOpenSell> contractsOpenSells = contractsOpenService.selectList()
                 .stream()
-                .filter(e->e.getMaterialName()
-                        .equals(materialService.findById(3L).getName()))
+                .filter(e->e.getMaterial().getId()
+                        .equals(MaterialTypes.BRASS.getId()))
                 .collect(Collectors.toList());
 
         data.setAll(contractsOpenSells);
 
         columnCustomerName.setCellValueFactory(new PropertyValueFactory<>("CustomerName"));
-        columnMaterialName.setCellValueFactory(new PropertyValueFactory<>("MaterialName"));
+        columnMaterialName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
         columnNrTruck.setCellValueFactory(new PropertyValueFactory<>("nrTruck"));
         columnNrTruckContract.setCellValueFactory(new PropertyValueFactory<>("nrTruckContract"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));

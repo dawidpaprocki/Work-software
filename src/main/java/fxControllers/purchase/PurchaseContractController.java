@@ -1,5 +1,6 @@
 package fxControllers.purchase;
 
+import crud.model.Material;
 import crud.services.ContractsOpenService;
 import crud.services.CustomerService;
 import crud.services.MaterialService;
@@ -61,7 +62,7 @@ public class PurchaseContractController {
 
     public void addContractButton() {
         String companyName = choiceCustomerNameBuy.getValue().toString();
-        String materialName = choiceMaterialBuyContract.getValue().toString();
+        Material chosenMaterial =(Material) choiceMaterialBuyContract.getValue();
         String nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue().toString();
         Long idBuyer = contractsOpenService.findByName(companyName).getId();
         Long idSeller = customerService.findByName(nameOfCompanyBuyToSell).get(0).getId();
@@ -69,7 +70,7 @@ public class PurchaseContractController {
                 .idSell(idSeller)
                 .idCustomer(idBuyer)
                 .customerName(companyName)
-                .materialName(materialName)
+                .material(chosenMaterial)
                 .nrTruck(Integer.parseInt(truckContractBuy.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(amountContractBuy.getText()))
