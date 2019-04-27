@@ -19,4 +19,12 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    public String getMaterialName() {
+        return name;
+    }
 }

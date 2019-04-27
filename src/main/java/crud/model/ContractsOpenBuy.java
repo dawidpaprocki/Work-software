@@ -5,10 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Data
 @Entity
 @Builder(toBuilder = true)
@@ -21,7 +19,9 @@ public class ContractsOpenBuy  extends ContractsOpenAbstract {
     private Long idSell;
     private Long idCustomer;
     private String customerName;
-    private String materialName;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "MaterialId", nullable = false, columnDefinition = "int default 0")
+    private Material material;
     private int amount;
     private String contractName;
     private int nrTruck;

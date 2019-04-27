@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Data
 @Entity
 @DynamicUpdate
@@ -21,7 +19,9 @@ public class AllTruck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String date;
-    private String material;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "MaterialId", nullable = false, columnDefinition = "int default 0")
+    private Material material;
     private String truckNumber;
     private int amount;
     private int finalAmount;
