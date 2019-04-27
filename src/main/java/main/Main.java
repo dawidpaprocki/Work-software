@@ -12,7 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan({"crud", "fxControllers", "main", "crud.model"})
+@ComponentScan({"crud", "fxControllers", "main", "crud.model","enums"})
 @EntityScan("crud/model")
 @EnableJpaRepositories("crud.repository")
 @SpringBootApplication

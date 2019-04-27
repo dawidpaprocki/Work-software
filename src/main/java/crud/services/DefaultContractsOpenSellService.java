@@ -42,4 +42,9 @@ public class DefaultContractsOpenSellService implements ContractsOpenService<Con
     public ContractsOpenSell findByName(String name) {
         return contractOpenSellRepository.findByContractName(name).get();
     }
+
+    @Override
+    public String getMaterialName(Long contractId) {
+        return "";
+    }
 }

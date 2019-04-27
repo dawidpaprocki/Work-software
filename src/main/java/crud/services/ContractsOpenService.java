@@ -9,4 +9,5 @@ public interface ContractsOpenService<T>   {
     void remove(Long id);
     T findById(Long id);
     T findByName(String name);
+    String getMaterialName(Long contractId);
 }

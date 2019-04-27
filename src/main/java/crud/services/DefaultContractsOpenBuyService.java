@@ -11,9 +11,11 @@ import java.util.Optional;
 public class DefaultContractsOpenBuyService implements ContractsOpenService<ContractsOpenBuy> {
 
     private ContractOpenBuyRepository contractOpenBuyRepository;
+    private MaterialService materialService;
 
-    public DefaultContractsOpenBuyService(ContractOpenBuyRepository contractOpenBuyRepository) {
+    public DefaultContractsOpenBuyService(ContractOpenBuyRepository contractOpenBuyRepository, MaterialService materialService) {
         this.contractOpenBuyRepository = contractOpenBuyRepository;
+        this.materialService = materialService;
     }
 
     @Override
@@ -41,6 +43,12 @@ public class DefaultContractsOpenBuyService implements ContractsOpenService<Cont
     @Override
     public ContractsOpenBuy findByName(String name) {
         return contractOpenBuyRepository.findByContractName(name).get();
+    }
+
+    @Override
+    public String getMaterialName(Long contractId) {
+//        materialService.findById(findById(contractId).getMaterialName())
+        return "";
     }
 
 }
