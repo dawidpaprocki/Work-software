@@ -12,12 +12,17 @@
     <children>
         <TabPane prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
+                <Tab text="Login Page">
+                    <content>
+                        <fx:include source="Login.fxml"/>
+                    </content>
+                </Tab>
                 <Tab text="Główna Strona">
                     <content>
                         <fx:include source="primaryUIFXML.fxml"/>
                     </content>
                 </Tab>
-                <Tab text="Harmonogram Aut">
+                <Tab fx:id="cars" text="Harmonogram Aut" >
                     <content>
                         <fx:include source="../truckSchedule/truckScheduleFXML.fxml"/>
                     </content>
