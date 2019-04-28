@@ -5,22 +5,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ComponentScan({"crud", "fxControllers", "main", "crud.model","enums"})
 @EntityScan("crud/model")
 @EnableJpaRepositories("crud.repository")
 @SpringBootApplication
 public class Main extends Application {
-
+    Logger log = LoggerFactory.getLogger(Main.class);
     private ConfigurableApplicationContext springContext;
     private Parent rootNode;
     private FXMLLoader fxmlLoader;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -29,6 +35,7 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(Main.class);
+        initSecurity();
         fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
     }
@@ -41,8 +48,25 @@ public class Main extends Application {
         Scene scene = new Scene(rootNode);
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
+
+    public static void initSecurity() {
+        SecurityContextHolder.setStrategyName("MODE_GLOBAL");
+        initAnonymous();
+    }
+
+    public static void initAnonymous() {
+        AnonymousAuthenticationToken auth = new AnonymousAuthenticationToken(
+                "anonymous", "anonymous",
+                AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+    public static void logout(){
+        SecurityContextHolder.clearContext();
+        initAnonymous();
+    }
+
 
     @Override
     public void stop() {
