@@ -1,9 +1,9 @@
 package fxControllers.purchase;
 
 import crud.model.Material;
-import crud.services.ContractsOpenService;
-import crud.services.CustomerService;
-import crud.services.MaterialService;
+import crud.services.interfaces.ContractsOpenService;
+import crud.services.interfaces.CustomerService;
+import crud.services.interfaces.MaterialService;
 import crud.model.ContractsOpenBuy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

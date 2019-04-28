@@ -1,8 +1,8 @@
 package fxControllers.closeContracts;
 
 import crud.model.Material;
-import crud.services.ContractsCloseService;
-import crud.services.MaterialService;
+import crud.services.interfaces.ContractsCloseService;
+import crud.services.interfaces.MaterialService;
 import crud.model.ContractsClose;
 import crud.model.ContractsOpenBuy;
 import javafx.beans.property.SimpleStringProperty;

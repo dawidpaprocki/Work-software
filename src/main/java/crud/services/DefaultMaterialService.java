@@ -2,6 +2,7 @@ package crud.services;
 
 import crud.repository.MaterialRepository;
 import crud.model.Material;
+import crud.services.interfaces.MaterialService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

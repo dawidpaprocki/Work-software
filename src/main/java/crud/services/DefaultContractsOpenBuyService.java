@@ -2,6 +2,8 @@ package crud.services;
 
 import crud.repository.ContractOpenBuyRepository;
 import crud.model.ContractsOpenBuy;
+import crud.services.interfaces.ContractsOpenService;
+import crud.services.interfaces.MaterialService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

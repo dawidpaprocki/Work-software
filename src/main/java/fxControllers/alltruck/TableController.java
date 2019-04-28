@@ -1,9 +1,9 @@
 package fxControllers.alltruck;
 
 import crud.model.AllTruck;
-import crud.services.AllTablesUpdateRecordService;
-import crud.services.AllTruckService;
-import crud.services.MaterialService;
+import crud.services.interfaces.AllTablesUpdateRecordService;
+import crud.services.interfaces.AllTruckService;
+import crud.services.interfaces.MaterialService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

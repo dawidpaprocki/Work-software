@@ -1,7 +1,7 @@
 package fxControllers.msContracts;
 
-import crud.services.ContractsOpenService;
-import crud.services.MaterialService;
+import crud.services.interfaces.ContractsOpenService;
+import crud.services.interfaces.MaterialService;
 import crud.model.ContractsOpenSell;
 import enums.MaterialTypes;
 import javafx.beans.property.SimpleStringProperty;

@@ -1,7 +1,7 @@
 package fxControllers.pirmary;
 
-import crud.services.*;
 import crud.model.*;
+import crud.services.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

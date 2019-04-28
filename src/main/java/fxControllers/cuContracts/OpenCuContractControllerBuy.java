@@ -1,7 +1,7 @@
 package fxControllers.cuContracts;
 
 import crud.model.ContractsOpenBuy;
-import crud.services.ContractsOpenService;
+import crud.services.interfaces.ContractsOpenService;
 import enums.MaterialTypes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

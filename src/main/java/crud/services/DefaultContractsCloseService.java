@@ -2,6 +2,7 @@ package crud.services;
 
 import crud.repository.ContractCloseRepository;
 import crud.model.ContractsClose;
+import crud.services.interfaces.ContractsCloseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

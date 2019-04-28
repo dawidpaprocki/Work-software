@@ -2,6 +2,7 @@ package crud.services;
 
 import crud.model.AllTruck;
 import crud.repository.AllTruckRepository;
+import crud.services.interfaces.AllTruckService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

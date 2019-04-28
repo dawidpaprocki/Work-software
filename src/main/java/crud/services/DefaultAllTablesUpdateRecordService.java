@@ -1,5 +1,6 @@
 package crud.services;
 
+import crud.services.interfaces.AllTablesUpdateRecordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

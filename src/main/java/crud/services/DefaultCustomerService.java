@@ -2,6 +2,7 @@ package crud.services;
 
 import crud.repository.CustomerRepository;
 import crud.model.Customer;
+import crud.services.interfaces.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

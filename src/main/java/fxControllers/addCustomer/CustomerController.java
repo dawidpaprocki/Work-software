@@ -1,6 +1,6 @@
 package fxControllers.addCustomer;
 
-import crud.services.CustomerService;
+import crud.services.interfaces.CustomerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -2,9 +2,9 @@ package fxControllers.sale;
 
 import crud.model.ContractsOpenSell;
 import crud.model.Material;
-import crud.services.ContractsOpenService;
-import crud.services.CustomerService;
-import crud.services.MaterialService;
+import crud.services.interfaces.ContractsOpenService;
+import crud.services.interfaces.CustomerService;
+import crud.services.interfaces.MaterialService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
