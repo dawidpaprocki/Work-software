@@ -29,9 +29,10 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<AccessLevel> all = accessLevelRepository.findAll();
         List<AccessLevel> foundAccessLevelForUser = accessLevelRepository.findAllByUser(user);
-        List<Role> foundRolesForUser = foundAccessLevelForUser.stream().map(AccessLevel::getRole).collect(Collectors.toList());
+        List<Role> foundRolesForUser = foundAccessLevelForUser.stream()
+                .map(AccessLevel::getRole)
+                .collect(Collectors.toList());
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         foundRolesForUser.forEach((foundRole ->
                 grantedAuthorities.add(new SimpleGrantedAuthority(foundRole.getName()))));
