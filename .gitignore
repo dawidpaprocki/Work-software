@@ -50,3 +50,4 @@ target/
 target
 target/*
 *.log
+*.gz
