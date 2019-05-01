@@ -10,7 +10,7 @@
 <VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="main.SampleController">
     <children>
-        <TabPane prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="loginTab" text="Login Page">
                     <content>

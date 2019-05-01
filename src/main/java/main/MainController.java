@@ -1,10 +1,8 @@
 package main;
 
-import crud.model.AccessPoint;
-import crud.model.Role;
 import crud.model.User;
 import crud.services.DefaultAccessPointService;
-import crud.services.DefaultRoleService;
+import fxControllers.SecurityPrivilegesSetup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,18 +22,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Component
 public class MainController implements Initializable {
 
     private DefaultAccessPointService accessPointService;
-    private DefaultRoleService defaultRoleService;
     private AuthenticationManager authManager;
-    private  SampleController sampleController;
+    private SecurityPrivilegesSetup securityPrivilegesSetup;
     private ObservableList<User> users = FXCollections.observableArrayList();
     
     private ObservableList<String> userRoles = FXCollections.observableArrayList();
@@ -108,36 +105,30 @@ public class MainController implements Initializable {
     @FXML
     private ListView<String> roles;
 
-    public MainController(DefaultAccessPointService accessPointService, DefaultRoleService defaultRoleService, AuthenticationManager authManager, SampleController sampleController) {
+    public MainController(DefaultAccessPointService accessPointService, AuthenticationManager authManager, SecurityPrivilegesSetup securityPrivilegesSetup) {
         this.accessPointService = accessPointService;
-        this.defaultRoleService = defaultRoleService;
         this.authManager = authManager;
-        this.sampleController = sampleController;
+        this.securityPrivilegesSetup = securityPrivilegesSetup;
     }
 
     @FXML
     void handleLogin(ActionEvent event) {
-        
         final String userName = txtFldUser.getText().trim();
         final String userPassword = pswdFldPassword.getText().trim();
-        
         try {
             Authentication request = new UsernamePasswordAuthenticationToken(userName, userPassword);
             Authentication result = authManager.authenticate(request);
-            SecurityContextHolder.getContext().setAuthentication(result);            
-            
+            SecurityContextHolder.getContext().setAuthentication(result);
             updateUserInfoRoles();
             updateUserInfoAccessPoints();
-        
         } catch (AuthenticationException e) {
-            
             Alert alertWrongCredentials = new Alert(AlertType.INFORMATION);
             alertWrongCredentials.setHeaderText("Ops!");
             
         }
         txtFldUser.clear();
         pswdFldPassword.clear();
-        sampleController.roleChecker();
+        securityPrivilegesSetup.roleChecker();
     }
 
     
@@ -165,14 +156,7 @@ public class MainController implements Initializable {
 
     private void updateUserInfoAccessPoints(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Role> roleList = new ArrayList<>();
-        List<String> accessPoints = new ArrayList<>();
-                auth.getAuthorities().forEach(element
-                        -> roleList.add( defaultRoleService.findRoleByName(element.toString())));
-                roleList.forEach(role -> accessPoints.addAll(
-                        accessPointService.findByRole(role).stream()
-                                .map(AccessPoint::getPointName)
-                                .collect(Collectors.toList())));
+        List<String> accessPoints = accessPointService.getAccessPointsForLoggedUser(auth);
         userAccessPoints.clear();
         userAccessPoints.addAll(accessPoints);
     }

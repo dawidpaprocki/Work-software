@@ -19,7 +19,7 @@ public class SecurityConfiguration extends GlobalMethodSecurityConfiguration {
     private DefaultUserService defaultUserService;
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    public void configure(AuthenticationManagerBuilder auth) {
             auth.authenticationProvider(authenticationProvider());
     }
 

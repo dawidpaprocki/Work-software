@@ -1,12 +1,12 @@
 package main;
 
+import fxControllers.SecurityPrivilegesSetup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -22,10 +22,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableJpaRepositories("crud.repository")
 @SpringBootApplication
 public class Main extends Application {
-    Logger log = LoggerFactory.getLogger(Main.class);
     private ConfigurableApplicationContext springContext;
     private Parent rootNode;
     private FXMLLoader fxmlLoader;
+    @Autowired
+    private SecurityPrivilegesSetup securityPrivilegesSetup;
 
 
     public static void main(String[] args) {
@@ -33,7 +34,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         springContext = SpringApplication.run(Main.class);
         initSecurity();
         fxmlLoader = new FXMLLoader();
