@@ -1,6 +1,6 @@
 package fxControllers;
 
-import crud.services.ViewService;
+import crud.services.interfaces.ViewService;
 import crud.model.ContractsOpenBuy;
 import javafx.scene.control.TableColumn;
 
