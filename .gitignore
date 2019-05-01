@@ -49,3 +49,4 @@ README.html
 target/
 target
 target/*
+*.log

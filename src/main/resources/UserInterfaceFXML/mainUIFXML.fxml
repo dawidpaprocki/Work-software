@@ -12,22 +12,22 @@
     <children>
         <TabPane prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Login Page">
+                <Tab fx:id="loginTab" text="Login Page">
                     <content>
                         <fx:include source="Login.fxml"/>
                     </content>
                 </Tab>
-                <Tab text="Główna Strona">
+                <Tab fx:id="mainPageTab" text="Główna Strona">
                     <content>
                         <fx:include source="primaryUIFXML.fxml"/>
                     </content>
                 </Tab>
-                <Tab fx:id="cars" text="Harmonogram Aut" >
+                <Tab fx:id="carsScheduleTab" text="Harmonogram Aut" >
                     <content>
                         <fx:include source="../truckSchedule/truckScheduleFXML.fxml"/>
                     </content>
                 </Tab>
-                <Tab text="Kontrakty Miedź">
+                <Tab fx:id="copperTab" text="Kontrakty Miedź">
                     <content>
                         <GridPane prefHeight="602.0" prefWidth="1007.0">
                             <columnConstraints>
@@ -45,7 +45,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Kontrakty Mosiądz">
+                <Tab fx:id="copperMessingTab" text="Kontrakty Mosiądz">
                     <content>
                         <GridPane prefHeight="602.0" prefWidth="1007.0">
                             <columnConstraints>
@@ -63,7 +63,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Kontrakty Ołów">
+                <Tab fx:id="copperLeadTab" text="Kontrakty Ołów">
                     <content>
                         <GridPane prefHeight="602.0" prefWidth="1007.0">
                             <columnConstraints>
@@ -81,7 +81,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Kontrakty Cynk">
+                <Tab fx:id="copperZincTab" text="Kontrakty Cynk">
                     <content>
                         <GridPane prefHeight="602.0" prefWidth="1007.0">
                             <columnConstraints>
@@ -99,7 +99,7 @@
                         </GridPane>
                     </content>
                 </Tab>
-                <Tab text="Kontrakty Zamknięte">
+                <Tab fx:id="contractCloseTab" text="Kontrakty Zamknięte">
                     <content>
                         <GridPane prefHeight="602.0" prefWidth="1007.0">
                             <columnConstraints>
