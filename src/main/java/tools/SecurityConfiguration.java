@@ -1,4 +1,4 @@
-package main;
+package tools;
 
 import crud.services.DefaultUserService;
 import org.springframework.beans.factory.annotation.Autowired;

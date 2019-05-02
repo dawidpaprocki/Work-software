@@ -26,15 +26,15 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem fx:id="mnItmLogout" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-            <MenuItem fx:id="mnItmExit" mnemonicParsing="false" onAction="#handleExit" text="Quit" />
+            <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+            <MenuItem fx:id="menuItemQuit" mnemonicParsing="false" onAction="#handleExit" text="Quit" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
     <SplitPane dividerPositions="0.25501113585746105" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane fx:id="ancPnMaster">
+        <AnchorPane>
           <children>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Access" textAlignment="CENTER" wrapText="false">
               <font>
@@ -57,14 +57,14 @@
                      <children>
                         <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="User" />
                         <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Password" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtFldUser" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
-                        <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <PasswordField fx:id="pswdFldPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="userField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                        <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#handleLogin" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
           </children>
         </AnchorPane>
-        <AnchorPane fx:id="ancPnDetails">
+        <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                   <Label layoutX="14.0" layoutY="49.0" text="User:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="49.0" />

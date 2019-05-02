@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+
 @Slf4j
 @Controller
 public class SampleController  {
@@ -31,8 +32,6 @@ public class SampleController  {
     private AccessPointRepository accessPointRepository;
     @Autowired
     private RoleRepository roleRepository;
-
-
     @FXML
     private void initialize () {
         Role foundRole = roleRepository.findByName(Roles.ADMIN.toString()).get();

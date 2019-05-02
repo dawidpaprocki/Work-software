@@ -21,19 +21,18 @@ import java.util.List;
 public class TableController {
 
 
-//    /**
-//     * <h1> Table Controller Class</h1>
-//     *
-//     * Class with multiple responsibilities:
-//     * - Filling crud.fxControllers.alltruck in JavaFX by {@link Table}
-//     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
-//     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
-//     * - Contain Method for making background columnColor on row by {@link #columnColor(ActionEvent)}
-//     * refresh - crud.fxControllers.alltruck refreshing button
-//     * colorChoice - Simple columnColor picker to get columnColor value
-//     *
-//     *
-//     */
+    /**
+     * <h1> Table Controller Class</h1>
+     *
+     * Class with multiple responsibilities:
+     * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
+     * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
+     * - Contain Method for making background columnColor on row by {@link #color(ActionEvent)}}
+     * refresh - crud.fxControllers.alltruck refreshing button
+     * colorChoice - Simple columnColor picker to get columnColor value
+     *
+     *
+     */
 
     @FXML
     public Button refresh;
@@ -185,9 +184,7 @@ public class TableController {
         String newCellColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
         Long colorRowId = tables.getSelectionModel().getSelectedItem().getId();
 
-        TablePosition tablePosition;
-        tablePosition = tables.getFocusModel().getFocusedCell();
-
+        TablePosition tablePosition = tables.getFocusModel().getFocusedCell();
         allTablesUpdateRecordService.updateRecord(AllTruck.class,"columnColor", newCellColor, colorRowId);
 
         TableColor TableColor = new TableColor();

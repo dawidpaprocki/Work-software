@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Component
 public class SecurityPrivilegesSetup {
@@ -31,19 +33,23 @@ public class SecurityPrivilegesSetup {
                 .forEach(tab -> tab.setDisable(true));
     }
 
-    public void roleChecker(){
+    public void accessProviderForTabs(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<String> accessPointsForLoggedUser = accessPointService.getAccessPointsForLoggedUser(authentication);
         List<Tab> enterAllowTabs = new ArrayList<>();
-        accessPointsForLoggedUser.forEach(element -> {
-            sampleController.getListOfTabs().forEach(tab -> {
-                        if (tab.getId().equals(element)){
-                            enterAllowTabs.add(tab);
-                        }
+        List<Tab> listOfTabs = sampleController.getListOfTabs();
+        accessPointsForLoggedUser.forEach(element ->
+                sampleController.getListOfTabs().forEach(tab -> {
+                    if (tab.getId().equals(element)){
+                        enterAllowTabs.add(tab);
                     }
-            );
-        });
-        notAllowEnterTabs(sampleController.getListOfTabs());
+                }
+        ));
+        listOfTabs = listOfTabs.stream()
+                .filter(tab ->
+                        !tab.getId().equals("loginTab"))
+                .collect(Collectors.toList());
+        notAllowEnterTabs(listOfTabs);
         allowEnterTabs(enterAllowTabs);
     }
 
