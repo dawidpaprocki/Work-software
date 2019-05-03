@@ -5,7 +5,7 @@ import crud.model.Material;
 import java.util.List;
 
 public interface MaterialService {
-    void remove(Long id);
+    void remove(Material materialForDelete);
     Material findById(Long id);
     List<Material> findByName(String name);
     List<Material> selectList();

@@ -1,25 +1,35 @@
 package crud.services;
 
-import crud.repository.MaterialRepository;
 import crud.model.Material;
+import crud.repository.MaterialRepository;
 import crud.services.interfaces.MaterialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
+@PropertySource(value = "classpath:config.properties", encoding="UTF-8")
 public class DefaultMaterialService implements MaterialService {
 
     private MaterialRepository materialRepository;
 
-    public DefaultMaterialService(MaterialRepository materialRepository) {
+    private Environment propertiesFile;
+
+    @Autowired
+    public DefaultMaterialService(MaterialRepository materialRepository, Environment propertiesFile) {
         this.materialRepository = materialRepository;
+        this.propertiesFile = propertiesFile;
     }
 
     @Override
     public void add(String nameOfMaterial) {
-        Material newMaterial = Material.builder().name(nameOfMaterial).build();
+        Material newMaterial = Material.builder()
+                .name(nameOfMaterial)
+                .build();
         materialRepository.save(newMaterial);
     }
 
@@ -31,17 +41,17 @@ public class DefaultMaterialService implements MaterialService {
     }
 
     @Override
-    public void remove(Long id) {
-        materialRepository.delete(materialRepository.findById(id).get());
+    public void remove(Material materialForDelete) {
+        materialRepository.delete(materialForDelete);
     }
 
     @Override
     public Material findById(Long id) {
         Optional<Material> foundMaterial = materialRepository.findById(id);
-        if (materialRepository.findById(id).isPresent()) {
+        if (foundMaterial.isPresent()) {
             return foundMaterial.get();
         } else {
-            return Material.builder().build();
+            return Material.builder().name(propertiesFile.getProperty("lackOfMaterial")).build();
         }
     }
 

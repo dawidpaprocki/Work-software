@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
 @Component
-@PropertySource(value = "classpath:config.properties", encoding="UTF-8")
 public class MainController {
 
     @Autowired
@@ -33,8 +30,6 @@ public class MainController {
     private SecurityPrivilegesSetup securityPrivilegesSetup;
     private ObservableList<String> userRoles = FXCollections.observableArrayList();
     private ObservableList<String> userAccessPoints = FXCollections.observableArrayList();
-    @Autowired
-    private Environment propertiesFile;
     @FXML
     private MenuItem menuItemLogout;
     @FXML
@@ -65,7 +60,7 @@ public class MainController {
             SecurityContextHolder.getContext().setAuthentication(result);
             afterLogAction();
         } catch (AuthenticationException e) {
-            Alerts.alertShowAndWait(propertiesFile);
+            Alerts.alertShowAndWait();
         }
         userField.clear();
         passwordField.clear();
