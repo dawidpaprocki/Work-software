@@ -1,5 +1,7 @@
 package crud.services;
 
+import crud.model.ContractsOpenBuy;
+import crud.model.ContractsOpenSell;
 import crud.repository.ContractCloseRepository;
 import crud.model.ContractsClose;
 import crud.services.interfaces.ContractsCloseService;
@@ -33,6 +35,18 @@ public class DefaultContractsCloseService implements ContractsCloseService {
     public Optional<ContractsClose> findById(Long id) {
         return contractCloseRepository.findById(id);
     }
+
+    @Override
+    public Optional<ContractsClose> findByContractBuy(ContractsOpenBuy contractsOpenBuy) {
+        return contractCloseRepository.findByContractsOpenBuy(contractsOpenBuy);
+    }
+
+    @Override
+    public Optional<ContractsClose> findByContractSell(ContractsOpenSell contractsOpenSell) {
+        return contractCloseRepository.findByContractsOpenSell(contractsOpenSell);
+    }
+
+
 
     @Override
     public List<ContractsClose> findAll() {

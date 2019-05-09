@@ -4,6 +4,7 @@ import crud.model.Role;
 import crud.repository.RoleRepository;
 import crud.services.interfaces.RoleService;
 import org.springframework.stereotype.Service;
+import tools.PropertiesReader;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +14,12 @@ public class DefaultRoleService implements RoleService {
 
     private RoleRepository roleRepository;
 
-    private Role role;
+    private PropertiesReader propertiesReader;
 
-    public DefaultRoleService(RoleRepository roleRepository) {
+
+    public DefaultRoleService(RoleRepository roleRepository, PropertiesReader propertiesReader) {
         this.roleRepository = roleRepository;
+        this.propertiesReader = propertiesReader;
     }
 
     @Override
@@ -26,18 +29,27 @@ public class DefaultRoleService implements RoleService {
 
     @Override
     public void addToRole(String roleName) {
-        role = Role.builder().name(roleName).build();
+        Role role = Role.builder().name(roleName).build();
         roleRepository.save(role);
     }
 
     @Override
-    public void removeFromRole(Long roleId) {
-        Optional<Role> foundRole = roleRepository.findById(roleId);
-        roleRepository.delete(foundRole.get());
+    public void removeFromRole(Role roleForDelete) {
+        roleRepository.delete(roleForDelete);
+    }
+
+    @Override
+    public Role findById(Long id) {
+        Optional<Role> foundRole = roleRepository.findById(id);
+        return foundRole.orElseGet(() -> Role.builder()
+                .name(propertiesReader.getPropertiesFile().getProperty("lackOfRole"))
+                .build());
     }
 
     @Override
     public Role findRoleByName(String roleName) {
-        return roleRepository.findByName(roleName).orElse(Role.builder().name("Lack of Roles").build());
+        return roleRepository.findByName(roleName).orElse(Role.builder()
+                .name(propertiesReader.getPropertiesFile().getProperty("LackOfRole"))
+                .build());
     }
 }

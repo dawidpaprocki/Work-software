@@ -4,25 +4,23 @@ import crud.model.Material;
 import crud.repository.MaterialRepository;
 import crud.services.interfaces.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import tools.PropertiesReader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
-@PropertySource(value = "classpath:config.properties", encoding="UTF-8")
 public class DefaultMaterialService implements MaterialService {
 
     private MaterialRepository materialRepository;
 
-    private Environment propertiesFile;
+    private PropertiesReader propertiesReader;
 
     @Autowired
-    public DefaultMaterialService(MaterialRepository materialRepository, Environment propertiesFile) {
+    public DefaultMaterialService(MaterialRepository materialRepository, PropertiesReader propertiesReader) {
         this.materialRepository = materialRepository;
-        this.propertiesFile = propertiesFile;
+        this.propertiesReader = propertiesReader;
     }
 
     @Override
@@ -34,10 +32,9 @@ public class DefaultMaterialService implements MaterialService {
     }
 
     @Override
-    public void update(Long id, String afterChange) {
-        Material foundMaterial = materialRepository.findById(id).get();
-        foundMaterial.setName(afterChange);
-        materialRepository.save(foundMaterial);
+    public void update(Material material, String afterChange) {
+        material.setName(afterChange);
+        materialRepository.save(material);
     }
 
     @Override
@@ -48,20 +45,18 @@ public class DefaultMaterialService implements MaterialService {
     @Override
     public Material findById(Long id) {
         Optional<Material> foundMaterial = materialRepository.findById(id);
-        if (foundMaterial.isPresent()) {
-            return foundMaterial.get();
-        } else {
-            return Material.builder().name(propertiesFile.getProperty("lackOfMaterial")).build();
-        }
+        return foundMaterial.orElseGet(() -> Material.builder()
+                .name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial"))
+                .build());
     }
 
     @Override
-    public List findByName(String name) {
-        if (!materialRepository.findByName(name).isEmpty()) {
-            return materialRepository.findByName(name);
-        }else {
-            return new ArrayList();
-        }
+    public Material findByName(String name) {
+     return  materialRepository.findByName(name).orElse(
+                 Material.builder()
+                         .name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial"))
+                         .build()
+         );
     }
 
     @Override

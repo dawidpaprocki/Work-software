@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import tools.PropertiesReader;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +19,18 @@ public class DefaultUserService implements UserDetailsService, UserService {
     private UserRepository userRepository;
     private AccessLevelRepository accessLevelRepository;
 
+    private PropertiesReader propertiesReader;
+
+
     public DefaultUserService(UserRepository userRepository, AccessLevelRepository accessLevelRepository) {
         this.userRepository = userRepository;
         this.accessLevelRepository = accessLevelRepository;
+    }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> foundUser = userRepository.findById(id);
+        return foundUser.orElseGet(() -> User.builder().name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial")).build());
     }
 
     @Override
@@ -40,7 +50,10 @@ public class DefaultUserService implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> byName = userRepository.findByLogin(username);
-        return new MyUserDetails(byName.get(),accessLevelRepository);
+        Optional<User> foundUser = userRepository.findByLogin(username);
+        return new MyUserDetails(foundUser.orElseGet(() -> User.builder()
+                .name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial"))
+                .build())
+                ,accessLevelRepository);
     }
 }

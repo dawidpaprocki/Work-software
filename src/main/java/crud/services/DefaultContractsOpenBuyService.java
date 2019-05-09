@@ -1,23 +1,23 @@
 package crud.services;
 
-import crud.repository.ContractOpenBuyRepository;
 import crud.model.ContractsOpenBuy;
+import crud.repository.ContractOpenBuyRepository;
 import crud.services.interfaces.ContractsOpenService;
-import crud.services.interfaces.MaterialService;
 import org.springframework.stereotype.Service;
+import tools.PropertiesReader;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DefaultContractsOpenBuyService implements ContractsOpenService<ContractsOpenBuy> {
 
     private ContractOpenBuyRepository contractOpenBuyRepository;
-    private MaterialService materialService;
+    private PropertiesReader propertiesReader;
 
-    public DefaultContractsOpenBuyService(ContractOpenBuyRepository contractOpenBuyRepository, MaterialService materialService) {
+
+    public DefaultContractsOpenBuyService(ContractOpenBuyRepository contractOpenBuyRepository, PropertiesReader propertiesReader) {
         this.contractOpenBuyRepository = contractOpenBuyRepository;
-        this.materialService = materialService;
+        this.propertiesReader = propertiesReader;
     }
 
     @Override
@@ -32,9 +32,8 @@ public class DefaultContractsOpenBuyService implements ContractsOpenService<Cont
 
 
     @Override
-    public void remove(Long id) {
-        Optional<ContractsOpenBuy> byId = contractOpenBuyRepository.findById(id);
-        byId.ifPresent(contractsOpenSell -> contractOpenBuyRepository.delete(contractsOpenSell));
+    public void remove(ContractsOpenBuy ContractOpen) {
+       contractOpenBuyRepository.delete(ContractOpen);
     }
 
     @Override
@@ -43,14 +42,13 @@ public class DefaultContractsOpenBuyService implements ContractsOpenService<Cont
     }
 
     @Override
-    public ContractsOpenBuy findByName(String name) {
-        return contractOpenBuyRepository.findByContractName(name).get();
+    public ContractsOpenBuy findByContractNumber(String name) {
+        return contractOpenBuyRepository.findByContractName(name).orElse(
+                ContractsOpenBuy.builder()
+                        .contractName(propertiesReader.getPropertiesFile()
+                                .getProperty("lackOfOpenContract"))
+                        .build());
     }
 
-    @Override
-    public String getMaterialName(Long contractId) {
-//        materialService.findById(findById(contractId).getMaterialName())
-        return "";
-    }
 
 }
