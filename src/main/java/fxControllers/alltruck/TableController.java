@@ -115,12 +115,12 @@ public class TableController {
         columnTruckNumber.setCellValueFactory(new PropertyValueFactory<>("TruckNumber"));
         columnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
         columnFinalAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        columnSeller.setCellValueFactory(new PropertyValueFactory<>("Seller"));
-        columnBuyer.setCellValueFactory(new PropertyValueFactory<>("Buyer"));
+        columnSeller.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSeller().getName()));
+        columnBuyer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBuyer().getName()));
         columnTruckNr.setCellValueFactory(new PropertyValueFactory<>("TruckNr"));
         columnTransportOrder.setCellValueFactory(new PropertyValueFactory<>("TransportOrder"));
-        columnSalesContractNumber.setCellValueFactory(new PropertyValueFactory<>("SalesContractNumber"));
-        columnPurchaseContractNumber.setCellValueFactory(new PropertyValueFactory<>("PurchaseContractNumber"));
+        columnSalesContractNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenSell().getContractName()));
+        columnPurchaseContractNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenBuy().getContractName()));
         columnDocumentName.setCellValueFactory(new PropertyValueFactory<>("DocumentName"));
         columnColor.setCellValueFactory(new PropertyValueFactory<>("Color"));
         tables.setItems(null);
