@@ -19,18 +19,25 @@ public class AllTruck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String date;
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "MaterialId", nullable = false, columnDefinition = "int default 0")
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "MaterialId", nullable = true, columnDefinition = "int default 0")
     private Material material;
     private String truckNumber;
     private int amount;
     private int finalAmount;
-    private String seller;
-    private String buyer;
-    private String truckNr;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "SellerId", nullable = true)
+    private Customer seller;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "BuyerId", nullable = true)
+    private Customer buyer;
     private String transportOrder;
-    private String salesContractNumber;
-    private String purchaseContractNumber;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "SalesContractId", nullable = true)
+    private ContractsOpenSell contractsOpenSell;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "PurchaseContractId", nullable = true)
+    private ContractsOpenBuy contractsOpenBuy;
     private String documentName;
     private String color;
 }
