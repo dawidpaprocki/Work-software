@@ -20,7 +20,10 @@ public class Customer {
     private Long id;
     private String name;
     private String country;
-
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 
 

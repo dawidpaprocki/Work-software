@@ -64,8 +64,8 @@ public class PurchaseContractController {
         String companyName = choiceCustomerNameBuy.getValue().toString();
         Material chosenMaterial =(Material) choiceMaterialBuyContract.getValue();
         String nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue().toString();
-        Long idBuyer = contractsOpenService.findByName(companyName).getId();
-        Long idSeller = customerService.findByName(nameOfCompanyBuyToSell).get(0).getId();
+        Long idBuyer = contractsOpenService.findByContractNumber(companyName).getId();
+        Long idSeller = customerService.findByName(nameOfCompanyBuyToSell).getId();
          ContractsOpenBuy contractsOpenBuy = ContractsOpenBuy.builder()
                 .idSell(idSeller)
                 .idCustomer(idBuyer)

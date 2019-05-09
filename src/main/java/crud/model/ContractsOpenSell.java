@@ -31,4 +31,8 @@ public class ContractsOpenSell extends ContractsOpenAbstract   {
     public Long getMaterialId(){
         return material.getId();
     }
+    @Override
+    public String toString() {
+        return contractName;
+    }
 }

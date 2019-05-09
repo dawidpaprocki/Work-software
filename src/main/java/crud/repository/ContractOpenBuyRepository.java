@@ -11,7 +11,4 @@ import java.util.Optional;
 @EntityScan
 public interface ContractOpenBuyRepository extends JpaRepository<ContractsOpenBuy, Long> {
     Optional<ContractsOpenBuy> findByContractName(String contractName);
-//    String hql = "UPDATE " + clazz.getSimpleName() + " SET " + query + "  = :newValue where columnId = :idRow ";
-//    @Query("UPDATE contractsOpenBuy SET ")
-//    void updateRecord();
 }

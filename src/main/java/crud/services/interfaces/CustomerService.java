@@ -5,17 +5,17 @@ import crud.model.Customer;
 import java.util.List;
 
 public interface CustomerService  {
-    void remove(Long id);
+    void remove(Customer customer);
 
     Customer findById(Long id);
 
-    List<Customer> findByName(String name);
+    Customer findByName(String name);
 
     List<Customer> selectList();
 
     void add(Customer customer);
 
-    void update(Long id, String afterChangeName, String afterChangeCountry);
+    void update(Customer customer);
 
 }
 

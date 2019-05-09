@@ -10,16 +10,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.pirmary.PrimaryController">
+<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.pirmary.PrimaryController">
 
 
     <children>
         <Label layoutX="15.0" layoutY="13.0" prefHeight="17.0" prefWidth="149.0" text="Material" />
+        <Label fx:id="materialName" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
         <Label layoutX="172.0" layoutY="57.0" prefHeight="17.0" prefWidth="149.0" text="Sprzedaż do" />
-        <TextField fx:id="deliveryAmount" layoutX="331.0" layoutY="74.0" prefHeight="25.0" prefWidth="89.0" AnchorPane.topAnchor="74.0" />
+        <ComboBox fx:id="sender" layoutX="172.0" layoutY="74.0" promptText="Wybierz" />
         <Label layoutX="331.0" layoutY="57.0" prefHeight="17.0" prefWidth="54.0" text="Ilość ton" />
-        <TextField fx:id="deliveryTo" layoutX="172.0" layoutY="74.0" />
-        <Label layoutX="14.0" layoutY="57.0" prefHeight="17.0" prefWidth="149.0" text="Nazwa firmy" />
+        <TextField fx:id="deliveryAmount" layoutX="331.0" layoutY="74.0" prefHeight="25.0" prefWidth="89.0" AnchorPane.topAnchor="74.0" />
+        <Label layoutX="14.0" layoutY="57.0" prefHeight="17.0" prefWidth="149.0" text="Zakup od" />
+        <ComboBox fx:id="receiver" layoutX="9.0" layoutY="74.0" onAction="#selectComboBoxList" prefWidth="150.0" promptText="Wybierz" />
         <Button fx:id="deliveryAdd" layoutX="14.0" layoutY="132.0" mnemonicParsing="false" onAction="#addButton" prefHeight="25.0" prefWidth="92.0" text="Dodaj" />
         <Label layoutX="172.0" layoutY="13.0" prefHeight="17.0" prefWidth="149.0" text="Numer rejestracyjny" AnchorPane.topAnchor="13.0" />
         <TextField fx:id="deliveryPlate" layoutX="172.0" layoutY="31.0" AnchorPane.topAnchor="30.0" />
@@ -47,9 +49,6 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ComboBox fx:id="choiceCustomerNameBox" layoutX="9.0" layoutY="74.0" onAction="#selectComboBoxList" prefWidth="150.0" promptText="Wybierz" />
-        <Label fx:id="materialName" layoutX="15.0" layoutY="34.0" prefHeight="17.0" prefWidth="138.0" underline="true" />
-
         <DatePicker fx:id="datePickerChoice" layoutX="660.0" layoutY="38.0" promptText="Wybierz Datę" />
         <Label fx:id="dataPickError" layoutX="660.0" layoutY="21.0" prefHeight="17.0" prefWidth="150.0" text="Data:" />
       <Pane layoutX="226.0" layoutY="183.0" prefHeight="369.0" prefWidth="191.0">

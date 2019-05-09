@@ -73,7 +73,7 @@ public class SaleContractController {
 
         String contractSellCompanyName = choiceContractSell.getValue().toString();
         Material chosenMaterial =(Material) choiceMaterialSellContract.getValue();
-        Long idSellCustomer =  customerService.findByName(contractSellCompanyName).get(0).getId();
+        Long idSellCustomer =  customerService.findByName(contractSellCompanyName).getId();
         ContractsOpenSell contractsOpenSell= ContractsOpenSell.builder()
                 .idCustomer(idSellCustomer)
                 .customerName(contractSellCompanyName)

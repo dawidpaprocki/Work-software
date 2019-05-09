@@ -6,8 +6,7 @@ public interface ContractsOpenService<T>   {
 
     void addOrUpdate(T t);
     List<T> selectList();
-    void remove(Long id);
+    void remove(T ContractOpen);
     T findById(Long id);
-    T findByName(String name);
-    String getMaterialName(Long contractId);
+    T findByContractNumber(String name);
 }
