@@ -20,7 +20,7 @@ public class PrimaryController {
     private TextField deliveryAmount;
 
     @FXML
-    private TextField deliveryTo;
+    private ComboBox sender;
 
     @FXML
     private Button deliveryAdd;
@@ -34,9 +34,8 @@ public class PrimaryController {
     @FXML
     private ComboBox nrContractSell;
 
-
     @FXML
-    private ComboBox choiceCustomerNameBox;
+    private ComboBox receiver;
 
     @FXML
     private Label materialName;
@@ -47,10 +46,10 @@ public class PrimaryController {
     @FXML
     private Label dataPickError;
 
-    private int materialPrepareType;
+    private int typeOfTransaction;
 
-    ObservableList choiceContractListBuy = FXCollections.observableArrayList();
-    ObservableList choiceContractListSell = FXCollections.observableArrayList();
+    ObservableList<ContractsOpenBuy> choiceContractListBuy = FXCollections.observableArrayList();
+    ObservableList<ContractsOpenSell> choiceContractListSell = FXCollections.observableArrayList();
     ObservableList customersList = FXCollections.observableArrayList();
 
     private CustomerService customerService;
@@ -62,6 +61,9 @@ public class PrimaryController {
     private ContractsOpenAbstract contractsOpenAbstract;
     private ContractsClose contractsClose;
     private Material materialChosen;
+
+    ContractsOpenBuy contractsOpenBuy;
+    ContractsOpenSell contractsOpenSell;
 
     public PrimaryController(CustomerService customerService, AllTruckService allTruckService, MaterialService materialService,
                              ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
@@ -77,154 +79,127 @@ public class PrimaryController {
 
     public void initialize() {
         customersList.setAll(customerService.selectList());
-        choiceCustomerNameBox.setItems(customersList);
+        receiver.setItems(customersList);
+        sender.setItems(customersList);
     }
 
     public void addButton() {
         String datePickerString = String.valueOf(datePickerChoice.getValue());
         String deliveryAmountText = deliveryAmount.getText();
+        Customer chosenReceiver = (Customer) receiver.getValue();
+        Customer chosenSender = (Customer) sender.getValue();
         if (deliveryPlate.getText().length() > 0) {
-            if (deliveryTo.getText().length() > 0) {
-                if (deliveryAmount.getText().length() > 0) {
-                    if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
-                        try {
-                            Integer.parseInt(deliveryAmountText);
-                            if (materialPrepareType == 0) {
-                                AllTruck addedTruck = AllTruck.builder()
-                                        .date(datePickerString)
-                                        .material(materialChosen)
-                                        .truckNumber(deliveryPlate.getText())
-                                        .amount(Integer.parseInt(deliveryAmountText))
-                                        .finalAmount(0)
-                                        .seller(choiceCustomerNameBox.getValue().toString())
-                                        .buyer(deliveryTo.getText())
-                                        .truckNr("-")
-                                        .transportOrder("=")
-                                        .salesContractNumber("to change")
-                                        .purchaseContractNumber(nrContractBuy.getValue().toString())
-                                        .documentName("-")
-                                        .color("white")
-                                        .build();
-                                allTruckService.addOrUpdate(addedTruck);
-                                updateOpenCloseStatus(ContractsOpenBuy.class, nrContractBuy.getValue().toString());
-                            } else {
-                                AllTruck addedTruck = AllTruck.builder()
-                                        .date(datePickerString)
-                                        .material(materialChosen)
-                                        .truckNumber(deliveryPlate.getText())
-                                        .amount(Integer.parseInt(deliveryAmountText))
-                                        .finalAmount(0)
-                                        .seller(choiceCustomerNameBox.getValue().toString())
-                                        .buyer(deliveryTo.getText())
-                                        .truckNr("-")
-                                        .transportOrder("=")
-                                        .salesContractNumber("to change")
-                                        .purchaseContractNumber(nrContractSell.getValue().toString())
-                                        .documentName("-")
-                                        .color("white")
-                                        .build();
-                                allTruckService.addOrUpdate(addedTruck);
-                                updateOpenCloseStatus(ContractsOpenSell.class, nrContractSell.getValue().toString());
-                            }
-                            deliveryPlate.clear();
-                            deliveryAmount.clear();
-                            deliveryTo.clear();
-                            materialName.setText("");
-                            dataPickError.setText("");
-                            choiceCustomerNameBox.setValue(null);
-                            nrContractBuy.setValue(null);
-                            datePickerChoice.setValue(null);
-                            datePickerChoice.setPromptText("Wybierz date");
-                        } catch (Exception e) {
-                            deliveryAmount.setText("Tylko liczby");
-                            e.printStackTrace();
+            if (deliveryAmount.getText().length() > 0) {
+                if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
+                    try {
+                        Integer.parseInt(deliveryAmountText);
+                        AllTruck addedTruck = AllTruck.builder()
+                                .date(datePickerString)
+                                .material(materialChosen)
+                                .truckNumber(deliveryPlate.getText())
+                                .amount(Integer.parseInt(deliveryAmountText))
+                                .contractsOpenBuy(contractsOpenBuy)
+                                .contractsOpenSell(contractsOpenSell)
+                                .finalAmount(0)
+                                .transportOrder("Do uzupełnienia")
+                                .documentName("-")
+                                .color("white")
+                                .build();
+                        if (typeOfTransaction == 0) {
+                            addedTruck.setSeller(chosenSender);
+                            addedTruck.setBuyer(chosenReceiver);
+                            allTruckService.addOrUpdate(addedTruck);
+                            contractsOpenBuyService.addOrUpdate(contractsOpenBuy);
+                            updateOpenCloseStatus(ContractsOpenBuy.class, contractsOpenBuy);
+                            updateTruckAmountCompleted(contractsOpenBuy);
+                        } else {
+                            addedTruck.setSeller(chosenSender);
+                            addedTruck.setBuyer(chosenReceiver);
+                            allTruckService.addOrUpdate(addedTruck);
+                            contractsOpenSellService.addOrUpdate(contractsOpenSell);
+                            updateOpenCloseStatus(ContractsOpenSell.class, contractsOpenSell);
+                            updateTruckAmountCompleted(contractsOpenSell);
                         }
-                    } else {
-                        dataPickError.setText("Wymagana data");
+                        deliveryPlate.clear();
+                        deliveryAmount.clear();
+                        materialName.setText("");
+                        dataPickError.setText("");
+                        receiver.setValue(null);
+                        receiver.setValue(null);
+                        nrContractBuy.setValue(null);
+                        nrContractSell.setValue(null);
+                        datePickerChoice.setValue(null);
+                        datePickerChoice.setPromptText("Wybierz date");
+                    } catch (Exception e) {
+                        deliveryAmount.setText("Tylko liczby");
+                        e.printStackTrace();
                     }
                 } else {
-                    deliveryAmount.setText("Wpisz ilość");
+                    dataPickError.setText("Wymagana data");
                 }
             } else {
-                deliveryTo.setText("Wpisz Odbiorce");
+                deliveryAmount.setText("Wpisz ilość");
             }
         } else {
             deliveryPlate.setText("Wpisz numer rejestracyjny");
         }
-
-
     }
 
-
-    public void updateOpenCloseStatus(Class clazz, String contractNumberReceivedFromFXML) {
-
-        String nameOfEntity = clazz.getSimpleName();
-        contractsOpenAbstract = contractsOpenBuyService.findByName(contractNumberReceivedFromFXML);
-        contractsOpenAbstract.setNrTruck(contractsOpenAbstract.getNrTruck() + 1);
-        if (contractsOpenAbstract.getNrTruckContract() == contractsOpenAbstract.getNrTruck()) {
-            contractsOpenAbstract.setOpenClose(0);
+    private void updateTruckAmountCompleted (ContractsOpenAbstract chosenContract){
+        chosenContract.setNrTruck(chosenContract.getNrTruck() + 1);
+        if (chosenContract.getNrTruckContract() == chosenContract.getNrTruck()) {
+            chosenContract.setOpenClose(1);
         }
-        if (nameOfEntity.equals("ContractsOpenBuy")) {
-            contractsOpenBuyService.addOrUpdate((ContractsOpenBuy) contractsOpenAbstract);
-            contractsClose.setContractsOpenBuy((ContractsOpenBuy) contractsOpenAbstract);
+    }
+
+    private void updateOpenCloseStatus(Class clazz, ContractsOpenAbstract chosenContract) {
+        String nameOfEntity = clazz.getSimpleName();
+        if (nameOfEntity.equals(ContractsOpenBuy.class.getSimpleName())) {
+            contractsClose = contractsCloseService.findByContractBuy((ContractsOpenBuy) chosenContract).orElse(new ContractsClose());
+            contractsClose.setContractsOpenBuy((ContractsOpenBuy) chosenContract);
         } else {
-            contractsOpenSellService.addOrUpdate((ContractsOpenSell) contractsOpenAbstract);
-            contractsClose.setContractsOpenSell((ContractsOpenSell) contractsOpenAbstract);
+            contractsClose = contractsCloseService.findByContractSell((ContractsOpenSell) chosenContract).orElse(new ContractsClose());
+            contractsClose.setContractsOpenSell((ContractsOpenSell) chosenContract);
         }
 
     }
 
     public void materialPrepareBuy() {
-        String NrContractBuy = Optional.ofNullable(nrContractBuy.getValue()).orElse("Empty").toString();
-        if (!(NrContractBuy.equals("Wybierz") || NrContractBuy.equals("Empty"))) {
-            materialPrepareType = 0;
-            String contractNumber = nrContractBuy
-                    .getValue()
-                    .toString();
-            ContractsOpenBuy contractName = contractsOpenBuyService.findByName(contractNumber);
-            materialChosen = materialService.findById(contractName.getMaterial().getId());
-            materialName.setText(materialChosen.toString());
-        }
+        typeOfTransaction = 0;
+        contractsOpenBuy = (ContractsOpenBuy) nrContractBuy.getValue();
+        materialChosen = contractsOpenBuy.getMaterial();
+        materialName.setText(contractsOpenBuy.getMaterial().toString());
     }
-
-
+    
     public void materialPrepareSell() {
-        materialPrepareType = 1;
-        String contractNumber = nrContractSell
-                .getValue()
-                .toString();
-        ContractsOpenSell contractName = contractsOpenSellService.findByName(contractNumber);
-        materialChosen = materialService.findById(contractName.getMaterial().getId());
-        materialName.setText(materialChosen.toString());
+        typeOfTransaction = 1;
+        contractsOpenSell = (ContractsOpenSell) nrContractSell.getValue();
+        materialChosen = contractsOpenSell.getMaterial();
+        materialName.setText(contractsOpenSell.getMaterial().toString());
     }
 
 
     public void selectComboBoxList() {
-
-        String customerIdValue = Optional.ofNullable(choiceCustomerNameBox.getValue()).orElse("Empty").toString();
+        String customerIdValue = Optional.ofNullable(receiver.getValue()).orElse("Empty").toString();
         if (!(customerIdValue.equals("Wybierz") || customerIdValue.equals("Empty"))) {
-
             Long customerId = customerService
-                    .findByName(choiceCustomerNameBox
-                            .getValue()
-                            .toString())
-                    .get(0).getId();
-            listOfChoiceContract(customerId);
+                    .findByName(receiver.getValue().toString())
+                    .getId();
+            listOfContractsBaseOnCustomer(customerId);
         }
     }
 
-    public void listOfChoiceContract(Long customerId) {
+    private void listOfContractsBaseOnCustomer(Long customerId) {
         List<ContractsOpenBuy> contractsOpenBuy = contractsOpenBuyService.selectList();
         choiceContractListBuy.setAll(contractsOpenBuy.stream()
                 .filter(e -> e.getIdCustomer().equals(customerId))
-                .map(ContractsOpenBuy::getContractName)
                 .collect(Collectors.toList()));
+         nrContractBuy.setItems(choiceContractListBuy);
+
         List<ContractsOpenSell> contractsOpenSell = contractsOpenSellService.selectList();
         choiceContractListSell.setAll(contractsOpenSell.stream()
                 .filter(e -> e.getIdCustomer().equals(customerId))
-                .map(ContractsOpenSell::getContractName)
                 .collect(Collectors.toList()));
-        nrContractBuy.setItems(choiceContractListBuy);
         nrContractSell.setItems(choiceContractListSell);
     }
 }
