@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import tools.PropertiesReader;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DefaultCustomerService implements CustomerService {
@@ -38,8 +37,7 @@ public class DefaultCustomerService implements CustomerService {
 
     @Override
     public Customer findById(Long id) {
-        Optional<Customer> foundCustomer = customerRepository.findById(id);
-        return foundCustomer.orElseGet(() -> Customer.builder()
+        return customerRepository.findById(id).orElse(Customer.builder()
                 .name(propertiesReader.getPropertiesFile().getProperty("lackOfCustomer"))
                 .build());
     }

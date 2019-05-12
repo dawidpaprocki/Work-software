@@ -20,24 +20,21 @@ public class AllTruck {
     private Long id;
     private String date;
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "MaterialId", nullable = true, columnDefinition = "int default 0")
+    @JoinColumn(name = "MaterialId", nullable = false, columnDefinition = "int default 0")
     private Material material;
     private String truckNumber;
     private int amount;
     private int finalAmount;
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "SellerId", nullable = true)
-    private Customer seller;
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "BuyerId", nullable = true)
-    private Customer buyer;
+    @JoinColumn(name = "CustomerId", nullable = false)
+    private Customer customer;
     private String transportOrder;
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "SalesContractId", nullable = true)
-    private ContractsOpenSell contractsOpenSell;
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "PurchaseContractId", nullable = true)
+    @JoinColumn(name = "BuyContractId", nullable = false, columnDefinition = "int default 0")
     private ContractsOpenBuy contractsOpenBuy;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "SellContractId", nullable = false, columnDefinition = "int default 0")
+    private ContractsOpenSell contractsOpenSell;
     private String documentName;
     private String color;
 }

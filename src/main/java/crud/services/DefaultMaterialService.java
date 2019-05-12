@@ -15,12 +15,12 @@ public class DefaultMaterialService implements MaterialService {
 
     private MaterialRepository materialRepository;
 
-    private PropertiesReader propertiesReader;
+    private PropertiesReader propertiesFile;
 
     @Autowired
-    public DefaultMaterialService(MaterialRepository materialRepository, PropertiesReader propertiesReader) {
+    public DefaultMaterialService(MaterialRepository materialRepository, PropertiesReader propertiesFile) {
         this.materialRepository = materialRepository;
-        this.propertiesReader = propertiesReader;
+        this.propertiesFile = propertiesFile;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DefaultMaterialService implements MaterialService {
     public Material findById(Long id) {
         Optional<Material> foundMaterial = materialRepository.findById(id);
         return foundMaterial.orElseGet(() -> Material.builder()
-                .name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial"))
+                .name(propertiesFile.getPropertiesFile().getProperty("lackOfMaterial"))
                 .build());
     }
 
@@ -54,7 +54,7 @@ public class DefaultMaterialService implements MaterialService {
     public Material findByName(String name) {
      return  materialRepository.findByName(name).orElse(
                  Material.builder()
-                         .name(propertiesReader.getPropertiesFile().getProperty("lackOfMaterial"))
+                         .name(propertiesFile.getPropertiesFile().getProperty("lackOfMaterial"))
                          .build()
          );
     }

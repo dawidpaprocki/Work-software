@@ -1,6 +1,7 @@
 package fxControllers.sale;
 
 import crud.model.ContractsOpenSell;
+import crud.model.Customer;
 import crud.model.Material;
 import crud.services.interfaces.ContractsOpenService;
 import crud.services.interfaces.CustomerService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class SaleContractController {
+
     /**
      *  <h1>The SaleContractController Class.</h1>
      *
@@ -28,7 +30,7 @@ public class SaleContractController {
      *
      */
     @FXML
-    private ChoiceBox choiceContractSell;
+    private ChoiceBox choiceCustomer;
 
     @FXML
     private TextField nrSellContract;
@@ -58,7 +60,7 @@ public class SaleContractController {
     public void initialize() {
 
         customersList.setAll(customerService.selectList());
-        choiceContractSell.setItems(customersList);
+        choiceCustomer.setItems(customersList);
 
         materialList.setAll( materialService.selectList());
 
@@ -71,13 +73,10 @@ public class SaleContractController {
      */
     public void addContractButton() {
 
-        String contractSellCompanyName = choiceContractSell.getValue().toString();
-        Material chosenMaterial =(Material) choiceMaterialSellContract.getValue();
-        Long idSellCustomer =  customerService.findByName(contractSellCompanyName).getId();
-        ContractsOpenSell contractsOpenSell= ContractsOpenSell.builder()
-                .idCustomer(idSellCustomer)
-                .customerName(contractSellCompanyName)
-                .material(chosenMaterial)
+        ContractsOpenSell contractsOpenSell=  ContractsOpenSell.builder()
+                .customer((Customer)choiceCustomer.getValue())
+                .contractName(nrSellContract.getText())
+                .material((Material)choiceMaterialSellContract.getValue())
                 .nrTruck(Integer.parseInt(truckContractSell.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(amountContractSell.getText()))

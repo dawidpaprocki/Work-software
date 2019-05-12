@@ -1,10 +1,11 @@
 package fxControllers.purchase;
 
+import crud.model.ContractsOpenBuy;
+import crud.model.Customer;
 import crud.model.Material;
 import crud.services.interfaces.ContractsOpenService;
 import crud.services.interfaces.CustomerService;
 import crud.services.interfaces.MaterialService;
-import crud.model.ContractsOpenBuy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class PurchaseContractController {
 
     public void initialize() {
 
-        customersList.setAll(contractsOpenService.selectList());
+        customersList.setAll(customerService.selectList());
         choiceCustomerNameBuy.setItems(customersList);
         choiceCustomerNameSell.setItems(customersList);
         materialList.setAll(materialService.selectList());
@@ -61,16 +62,10 @@ public class PurchaseContractController {
     }
 
     public void addContractButton() {
-        String companyName = choiceCustomerNameBuy.getValue().toString();
-        Material chosenMaterial =(Material) choiceMaterialBuyContract.getValue();
-        String nameOfCompanyBuyToSell = choiceCustomerNameSell.getValue().toString();
-        Long idBuyer = contractsOpenService.findByContractNumber(companyName).getId();
-        Long idSeller = customerService.findByName(nameOfCompanyBuyToSell).getId();
-         ContractsOpenBuy contractsOpenBuy = ContractsOpenBuy.builder()
-                .idSell(idSeller)
-                .idCustomer(idBuyer)
-                .customerName(companyName)
-                .material(chosenMaterial)
+         ContractsOpenBuy contractsOpenBuy = (ContractsOpenBuy) ContractsOpenBuy.builder()
+                .customer((Customer)choiceCustomerNameBuy.getValue())
+                .contractName(nrBuyContract.getText())
+                .material((Material)choiceMaterialBuyContract.getValue())
                 .nrTruck(Integer.parseInt(truckContractBuy.getText()))
                 .nrTruckContract(0)
                 .amount(Integer.parseInt(amountContractBuy.getText()))

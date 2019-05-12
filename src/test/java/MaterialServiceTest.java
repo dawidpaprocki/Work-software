@@ -8,30 +8,23 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import tools.PropertiesReader;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-@TestPropertySource(locations ="classpath:config.properties")
 @SpringBootTest(classes = Main.class)
 public class MaterialServiceTest {
     @Autowired
-    private Environment propertiesFile;
+    private PropertiesReader propertiesFile;
     @Autowired
     private DefaultMaterialService defaultMaterialService;
-
+    @Autowired
     private MaterialRepository materialRepository;
     private  Optional<Material>  testMaterial;
 
@@ -45,49 +38,26 @@ public class MaterialServiceTest {
     }
 
     @Test
-    public void findByIdTestTrue() {
-        //given
-        when(materialRepository.findById(Mockito.any()))
-                .thenReturn(testMaterial);
-        //when
-        String foundMaterial = defaultMaterialService.findById(1L).getName();
-        //then
-        assertEquals("TestMaterial",foundMaterial);
-    }
-
-    @Test
-    public void findByIdTestFalse() {
-        //given
-        when(materialRepository.findById(Mockito.any()))
-                .thenReturn(Optional.empty());
-        //when
-        String foundMaterial = defaultMaterialService.findById(2L).getName();
-        //then
-        assertEquals(propertiesFile.getProperty("lackOfMaterial"),foundMaterial);
-
-    }
-
-    @Test
     public void findByNameTestTrue() {
         //given
         when(materialRepository.findByName(Mockito.any()))
-                .thenReturn( Arrays.asList(testMaterial.get()));
+                .thenReturn( testMaterial);
         //when
-        List foundMaterial = defaultMaterialService.findByName("TestMaterial");
+        Material foundMaterial = defaultMaterialService.findByName("TestMaterial");
         //then
-        assertTrue(foundMaterial.contains(testMaterial.get()));
-        assertEquals(1, foundMaterial.size());
+        assertEquals(testMaterial.get().getName(),foundMaterial.getName());
+        assertEquals("TestMaterial", foundMaterial.getName());
     }
     @Test
     public void findByNameTestFalse() {
         //given
         when(materialRepository.findByName(Mockito.any()))
-                .thenReturn( new ArrayList<>());
+                .thenReturn(Optional.empty());
         //when
-        List foundMaterial = defaultMaterialService.findByName("TestMaterial");
+        Material foundMaterial = defaultMaterialService.findByName("TestMaterial");
         //then
-        assertFalse(foundMaterial.contains(testMaterial.get()));
-        assertEquals(0, foundMaterial.size());
+        assertNotEquals(testMaterial.get().getName(),foundMaterial.getName());
+        assertNull(foundMaterial.getId());
     }
 
 

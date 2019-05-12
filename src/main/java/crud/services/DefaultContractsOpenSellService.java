@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import tools.PropertiesReader;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DefaultContractsOpenSellService implements ContractsOpenService<ContractsOpenSell> {
@@ -39,19 +38,16 @@ public class DefaultContractsOpenSellService implements ContractsOpenService<Con
 
     @Override
     public ContractsOpenSell findById(Long id) {
-        Optional<ContractsOpenSell> foundContractsOpenSell = contractOpenSellRepository.findById(id);
-        return foundContractsOpenSell.orElseGet(() -> ContractsOpenSell.builder()
+        return contractOpenSellRepository.findById(id).orElse((ContractsOpenSell)ContractsOpenSell.builder()
                 .contractName(propertiesReader.getPropertiesFile().getProperty("lackOfOpenContract"))
                 .build());
     }
 
-
     @Override
     public ContractsOpenSell findByContractNumber(String name) {
-       return contractOpenSellRepository.findByContractName(name).orElse(
+       return contractOpenSellRepository.findByContractName(name).orElse((ContractsOpenSell)
                 ContractsOpenSell.builder()
-                        .contractName(propertiesReader.getPropertiesFile()
-                                .getProperty("lackOfOpenContract"))
+                        .contractName(propertiesReader.getPropertiesFile().getProperty("lackOfOpenContract"))
                         .build());
     }
 }

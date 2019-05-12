@@ -14,8 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import org.springframework.stereotype.Controller;
+import tools.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TableController {
@@ -27,9 +29,9 @@ public class TableController {
      * Class with multiple responsibilities:
      * - Contain Method for making live change on Table by {@link #doChange(TableColumn.CellEditEvent)}
      * - Contain Method for refreshing Table by {@link #refresh(ActionEvent)}
-     * - Contain Method for making background columnColor on row by {@link #color(ActionEvent)}}
+     * - Contain Method for making background colorColumn on row by {@link #color(ActionEvent)}}
      * refresh - crud.fxControllers.alltruck refreshing button
-     * colorChoice - Simple columnColor picker to get columnColor value
+     * colorChoice - Simple colorColumn picker to get colorColumn value
      *
      *
      */
@@ -43,45 +45,39 @@ public class TableController {
     private TableView<AllTruck> tables;
 
     @FXML
-    public TableColumn<AllTruck, Integer> columnId;
+    public TableColumn<AllTruck, Integer> idColumn;
     @FXML
-    private TableColumn<AllTruck, String> columnDate;
+    private TableColumn<AllTruck, String> dateColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnMaterial;
+    private TableColumn<AllTruck, String> materialColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnTruckNumber;
+    private TableColumn<AllTruck, String> truckNumberColumn;
 
     @FXML
-    private TableColumn<AllTruck, Integer> columnAmount;
+    private TableColumn<AllTruck, Integer> amountColumn;
 
     @FXML
-    private TableColumn<AllTruck, Integer> columnFinalAmount;
+    private TableColumn<AllTruck, Integer> finalAmountColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnSeller;
+    private TableColumn<AllTruck, String> customerColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnBuyer;
+    private TableColumn<AllTruck, String> truckNrColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnTruckNr;
+    private TableColumn<AllTruck, String> transportOrderColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnTransportOrder;
+    private TableColumn<AllTruck, String> contractNumberColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnSalesContractNumber;
+    private TableColumn<AllTruck, String> documentNameColumn;
 
     @FXML
-    private TableColumn<AllTruck, String> columnPurchaseContractNumber;
-
-    @FXML
-    private TableColumn<AllTruck, String> columnDocumentName;
-
-    @FXML
-    private TableColumn<AllTruck, String> columnColor;
+    private TableColumn<AllTruck, String> colorColumn;
 
     private ObservableList<AllTruck> getData;
 
@@ -90,16 +86,18 @@ public class TableController {
      * <h2> initialize Method</h2>
      * Method started with program start.
      * filling crud.fxControllers.alltruck View by Data from Data Base
-     * setting background columnColor based on Value in Data Base.
+     * setting background colorColumn based on Value in Data Base.
      */
     private AllTruckService allTruckService;
     private AllTablesUpdateRecordService allTablesUpdateRecordService;
     private MaterialService materialService;
+    private PropertiesReader propertiesFile;
 
-    public TableController(AllTruckService allTruckService, AllTablesUpdateRecordService allTablesUpdateRecordService, MaterialService materialService) {
+    public TableController(AllTruckService allTruckService, AllTablesUpdateRecordService allTablesUpdateRecordService, MaterialService materialService, PropertiesReader propertiesFile) {
         this.allTruckService = allTruckService;
         this.allTablesUpdateRecordService = allTablesUpdateRecordService;
         this.materialService = materialService;
+        this.propertiesFile = propertiesFile;
     }
 
     public void initialize() {
@@ -109,20 +107,25 @@ public class TableController {
 
         getData.addAll(list);
 
-        columnId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        columnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        columnMaterial.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
-        columnTruckNumber.setCellValueFactory(new PropertyValueFactory<>("TruckNumber"));
-        columnAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        columnFinalAmount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
-        columnSeller.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSeller().getName()));
-        columnBuyer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBuyer().getName()));
-        columnTruckNr.setCellValueFactory(new PropertyValueFactory<>("TruckNr"));
-        columnTransportOrder.setCellValueFactory(new PropertyValueFactory<>("TransportOrder"));
-        columnSalesContractNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenSell().getContractName()));
-        columnPurchaseContractNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenBuy().getContractName()));
-        columnDocumentName.setCellValueFactory(new PropertyValueFactory<>("DocumentName"));
-        columnColor.setCellValueFactory(new PropertyValueFactory<>("Color"));
+        getData.forEach(item -> {
+            if(Optional.ofNullable(item.getContractsOpenBuy()).isPresent()){
+                contractNumberColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenBuy().getContractName()));
+            }else {
+                contractNumberColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContractsOpenSell().getContractName()));
+            }
+        });
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        materialColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMaterial().getName()));
+        truckNumberColumn.setCellValueFactory(new PropertyValueFactory<>("TruckNumber"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("Amount"));
+        finalAmountColumn.setCellValueFactory(new PropertyValueFactory<>("Amount"));
+        customerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomer().getName()));
+        truckNrColumn.setCellValueFactory(new PropertyValueFactory<>("TruckNr"));
+        transportOrderColumn.setCellValueFactory(new PropertyValueFactory<>("TransportOrder"));
+        documentNameColumn.setCellValueFactory(new PropertyValueFactory<>("DocumentName"));
+        colorColumn.setCellValueFactory(new PropertyValueFactory<>("Color"));
         tables.setItems(null);
         tables.setItems(getData);
 
@@ -142,16 +145,15 @@ public class TableController {
             }
         });
 
-        columnDate.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnTruckNumber.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        columnFinalAmount.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        columnSeller.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnBuyer.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnTruckNr.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnTransportOrder.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnDocumentName.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnColor.setCellFactory(TextFieldTableCell.forTableColumn());
+        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        truckNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        finalAmountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        customerColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        truckNrColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        transportOrderColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        documentNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        colorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 
 
@@ -164,7 +166,7 @@ public class TableController {
      */
 
     public void doChange(TableColumn.CellEditEvent<AllTruck, String> tableStringCellEditEvent) {
-        String newValue = tableStringCellEditEvent.getNewValue();
+        String newValue = String.valueOf(tableStringCellEditEvent.getNewValue());
         Long idOfRow = tableStringCellEditEvent.getRowValue().getId();
         String idOfColumn = tableStringCellEditEvent.getTableColumn().getId();
         allTablesUpdateRecordService.updateRecord(AllTruck.class,idOfColumn,newValue,idOfRow);
@@ -175,17 +177,17 @@ public class TableController {
     }
 
     /**
-     * <h2> columnColor Method </h2>
+     * <h2> colorColumn Method </h2>
      * <p>
-     * Changing value of default columnColor by getting new value form {@link #colorChoice}
-     * Updating in Data Base value of new columnColor.
+     * Changing value of default colorColumn by getting new value form {@link #colorChoice}
+     * Updating in Data Base value of new colorColumn.
      */
     public void color(ActionEvent actionEvent) {
         String newCellColor = "#" + String.valueOf(colorChoice.getValue()).substring(2);
         Long colorRowId = tables.getSelectionModel().getSelectedItem().getId();
 
         TablePosition tablePosition = tables.getFocusModel().getFocusedCell();
-        allTablesUpdateRecordService.updateRecord(AllTruck.class,"columnColor", newCellColor, colorRowId);
+        allTablesUpdateRecordService.updateRecord(AllTruck.class,"color", newCellColor, colorRowId);
 
         TableColor TableColor = new TableColor();
 

@@ -38,15 +38,16 @@ public class DefaultContractsOpenBuyService implements ContractsOpenService<Cont
 
     @Override
     public ContractsOpenBuy findById(Long id) {
-        return contractOpenBuyRepository.findById(id).get();
+        return contractOpenBuyRepository.findById(id).orElse((ContractsOpenBuy)ContractsOpenBuy.builder()
+                .contractName(propertiesReader.getPropertiesFile().getProperty("lackOfOpenContract"))
+                .build());
     }
 
     @Override
     public ContractsOpenBuy findByContractNumber(String name) {
-        return contractOpenBuyRepository.findByContractName(name).orElse(
+        return contractOpenBuyRepository.findByContractName(name).orElse((ContractsOpenBuy)
                 ContractsOpenBuy.builder()
-                        .contractName(propertiesReader.getPropertiesFile()
-                                .getProperty("lackOfOpenContract"))
+                        .contractName(propertiesReader.getPropertiesFile().getProperty("lackOfOpenContract"))
                         .build());
     }
 

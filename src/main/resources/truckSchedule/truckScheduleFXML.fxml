@@ -11,20 +11,18 @@
    <children>
        <TableView fx:id="tables" editable="true" layoutY="39.0" prefHeight="576.0" prefWidth="1154.0" styleClass="table-row-cell" stylesheets="@../style.css">
            <columns>
-            <TableColumn fx:id="columnId" prefWidth="27.0" text="id" />
-               <TableColumn fx:id="columnDate" onEditCommit="#doChange" prefWidth="74.0" text="Data" />
-               <TableColumn fx:id="columnMaterial" onEditCommit="#doChange" prefWidth="93.0" text="Materiał" />
-               <TableColumn fx:id="columnTruckNumber" onEditCommit="#doChange" prefWidth="82.0" text="Rejestracja" />
-               <TableColumn fx:id="columnAmount" onEditCommit="#doChange" prefWidth="63.0" text="Ilość" />
-               <TableColumn fx:id="columnFinalAmount" onEditCommit="#doChange" prefWidth="99.0" text="Ilość finalna" />
-               <TableColumn fx:id="columnSeller" onEditCommit="#doChange" prefWidth="87.0" text="Od kogo" />
-               <TableColumn fx:id="columnBuyer" onEditCommit="#doChange" prefWidth="86.0" text="Do kogo" />
-               <TableColumn fx:id="columnTruckNr" prefWidth="69.0" text="Ilość aut" />
-               <TableColumn fx:id="columnTransportOrder" onEditCommit="#doChange" prefWidth="79.0" text="Zlecenie" />
-               <TableColumn fx:id="columnSalesContractNumber" prefWidth="152.0" text="Kontrakt sprzedażowy" />
-               <TableColumn fx:id="columnPurchaseContractNumber" prefWidth="130.0" text="Kontrakt zakupowy" />
-               <TableColumn fx:id="columnDocumentName" onEditCommit="#doChange" prefWidth="113.0" text="Nr. Dokumentu" />
-            <TableColumn fx:id="columnColor" minWidth="0.0" onEditCommit="#doChange" prefWidth="0.0" text="Color" />
+            <TableColumn fx:id="idColumn" prefWidth="27.0" text="id" />
+               <TableColumn fx:id="dateColumn" onEditCommit="#doChange" prefWidth="74.0" text="Data" />
+               <TableColumn fx:id="materialColumn" prefWidth="93.0" text="Materiał" />
+               <TableColumn fx:id="truckNumberColumn" onEditCommit="#doChange" prefWidth="82.0" text="Rejestracja" />
+               <TableColumn fx:id="amountColumn" onEditCommit="#doChange" prefWidth="63.0" text="Ilość" />
+               <TableColumn fx:id="finalAmountColumn" onEditCommit="#doChange" prefWidth="99.0" text="Ilość finalna" />
+               <TableColumn fx:id="customerColumn" onEditCommit="#doChange" prefWidth="87.0" text="Od kogo" />
+               <TableColumn fx:id="truckNrColumn" prefWidth="69.0" text="Ilość aut" />
+               <TableColumn fx:id="transportOrderColumn" onEditCommit="#doChange" prefWidth="79.0" text="Zlecenie" />
+               <TableColumn fx:id="contractNumberColumn" prefWidth="152.0" text="Kontrakt" />
+               <TableColumn fx:id="documentNameColumn" onEditCommit="#doChange" prefWidth="113.0" text="Nr. Dokumentu" />
+            <TableColumn fx:id="colorColumn" minWidth="0.0" onEditCommit="#doChange" prefWidth="0.0" text="Color" />
            </columns>
          <padding>
             <Insets bottom="3.0" />
