@@ -15,7 +15,7 @@ public class DefaultAllTablesUpdateRecordService implements AllTablesUpdateRecor
     @Override
     @Transactional
     public void updateRecord(Class clazz, String columnName, String newValue, Long idRow) {
-        String hql = "UPDATE " + clazz.getSimpleName() + " a SET a." + columnName + "  = :newValue where id = :idRow ";
+        String hql = "UPDATE " + clazz.getSimpleName() + " a SET a." + columnName.substring(0,columnName.length()-6) + "  = :newValue where id = :idRow ";
         Query query1 = entityManager.createQuery(hql);
         try {
             query1.setParameter("newValue", Integer.parseInt(newValue));

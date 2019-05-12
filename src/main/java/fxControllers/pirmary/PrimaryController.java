@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.stereotype.Controller;
+import tools.PropertiesReader;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +21,13 @@ public class PrimaryController {
     private TextField deliveryAmount;
 
     @FXML
-    private ComboBox sender;
+    private ComboBox customer;
 
     @FXML
     private Button deliveryAdd;
 
     @FXML
+
     private TextField deliveryPlate;
 
     @FXML
@@ -33,9 +35,6 @@ public class PrimaryController {
 
     @FXML
     private ComboBox nrContractSell;
-
-    @FXML
-    private ComboBox receiver;
 
     @FXML
     private Label materialName;
@@ -61,33 +60,33 @@ public class PrimaryController {
     private ContractsOpenAbstract contractsOpenAbstract;
     private ContractsClose contractsClose;
     private Material materialChosen;
+    private PropertiesReader propertiesFile;
 
     ContractsOpenBuy contractsOpenBuy;
     ContractsOpenSell contractsOpenSell;
 
     public PrimaryController(CustomerService customerService, AllTruckService allTruckService, MaterialService materialService,
                              ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
-                             ContractsCloseService contractsCloseService) {
+                             ContractsCloseService contractsCloseService, PropertiesReader propertiesFile) {
         this.customerService = customerService;
         this.allTruckService = allTruckService;
         this.materialService = materialService;
         this.contractsOpenSellService = contractsOpenSell;
         this.contractsOpenBuyService = contractsOpenBuy;
         this.contractsCloseService = contractsCloseService;
-
+        this.propertiesFile = propertiesFile;
     }
 
     public void initialize() {
         customersList.setAll(customerService.selectList());
-        receiver.setItems(customersList);
-        sender.setItems(customersList);
+        customer.setItems(customersList);
+        customer.setItems(customersList);
     }
 
     public void addButton() {
         String datePickerString = String.valueOf(datePickerChoice.getValue());
         String deliveryAmountText = deliveryAmount.getText();
-        Customer chosenReceiver = (Customer) receiver.getValue();
-        Customer chosenSender = (Customer) sender.getValue();
+        Customer chosenReceiver = (Customer) customer.getValue();
         if (deliveryPlate.getText().length() > 0) {
             if (deliveryAmount.getText().length() > 0) {
                 if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
@@ -98,34 +97,31 @@ public class PrimaryController {
                                 .material(materialChosen)
                                 .truckNumber(deliveryPlate.getText())
                                 .amount(Integer.parseInt(deliveryAmountText))
-                                .contractsOpenBuy(contractsOpenBuy)
-                                .contractsOpenSell(contractsOpenSell)
                                 .finalAmount(0)
                                 .transportOrder("Do uzupełnienia")
                                 .documentName("-")
                                 .color("white")
+                                .customer(chosenReceiver)
                                 .build();
                         if (typeOfTransaction == 0) {
-                            addedTruck.setSeller(chosenSender);
-                            addedTruck.setBuyer(chosenReceiver);
-                            allTruckService.addOrUpdate(addedTruck);
+                            addedTruck.setContractsOpenBuy(contractsOpenBuy);
                             contractsOpenBuyService.addOrUpdate(contractsOpenBuy);
-                            updateOpenCloseStatus(ContractsOpenBuy.class, contractsOpenBuy);
+                            contractsCloseService.findByContractBuy(contractsOpenBuy)
+                                    .orElse(new ContractsClose()).setContractsOpenBuy(contractsOpenBuy);
                             updateTruckAmountCompleted(contractsOpenBuy);
                         } else {
-                            addedTruck.setSeller(chosenSender);
-                            addedTruck.setBuyer(chosenReceiver);
-                            allTruckService.addOrUpdate(addedTruck);
+                            addedTruck.setContractsOpenSell(contractsOpenSell);
                             contractsOpenSellService.addOrUpdate(contractsOpenSell);
-                            updateOpenCloseStatus(ContractsOpenSell.class, contractsOpenSell);
+                            contractsCloseService.findByContractSell(contractsOpenSell)
+                                    .orElse(new ContractsClose()).setContractsOpenSell(contractsOpenSell);
                             updateTruckAmountCompleted(contractsOpenSell);
                         }
+                        allTruckService.addOrUpdate(addedTruck);
                         deliveryPlate.clear();
                         deliveryAmount.clear();
                         materialName.setText("");
                         dataPickError.setText("");
-                        receiver.setValue(null);
-                        receiver.setValue(null);
+                        customer.setValue(null);
                         nrContractBuy.setValue(null);
                         nrContractSell.setValue(null);
                         datePickerChoice.setValue(null);
@@ -145,23 +141,11 @@ public class PrimaryController {
         }
     }
 
-    private void updateTruckAmountCompleted (ContractsOpenAbstract chosenContract){
+    private void updateTruckAmountCompleted(ContractsOpenAbstract chosenContract) {
         chosenContract.setNrTruck(chosenContract.getNrTruck() + 1);
         if (chosenContract.getNrTruckContract() == chosenContract.getNrTruck()) {
             chosenContract.setOpenClose(1);
         }
-    }
-
-    private void updateOpenCloseStatus(Class clazz, ContractsOpenAbstract chosenContract) {
-        String nameOfEntity = clazz.getSimpleName();
-        if (nameOfEntity.equals(ContractsOpenBuy.class.getSimpleName())) {
-            contractsClose = contractsCloseService.findByContractBuy((ContractsOpenBuy) chosenContract).orElse(new ContractsClose());
-            contractsClose.setContractsOpenBuy((ContractsOpenBuy) chosenContract);
-        } else {
-            contractsClose = contractsCloseService.findByContractSell((ContractsOpenSell) chosenContract).orElse(new ContractsClose());
-            contractsClose.setContractsOpenSell((ContractsOpenSell) chosenContract);
-        }
-
     }
 
     public void materialPrepareBuy() {
@@ -170,7 +154,7 @@ public class PrimaryController {
         materialChosen = contractsOpenBuy.getMaterial();
         materialName.setText(contractsOpenBuy.getMaterial().toString());
     }
-    
+
     public void materialPrepareSell() {
         typeOfTransaction = 1;
         contractsOpenSell = (ContractsOpenSell) nrContractSell.getValue();
@@ -180,10 +164,10 @@ public class PrimaryController {
 
 
     public void selectComboBoxList() {
-        String customerIdValue = Optional.ofNullable(receiver.getValue()).orElse("Empty").toString();
-        if (!(customerIdValue.equals("Wybierz") || customerIdValue.equals("Empty"))) {
+        if(Optional.ofNullable(customer.getValue()).isPresent()  ||
+                !(customer.getValue().toString().equals(propertiesFile.getPropertiesFile().getProperty("choiceInformation")))){
             Long customerId = customerService
-                    .findByName(receiver.getValue().toString())
+                    .findByName(customer.getValue().toString())
                     .getId();
             listOfContractsBaseOnCustomer(customerId);
         }
@@ -192,13 +176,13 @@ public class PrimaryController {
     private void listOfContractsBaseOnCustomer(Long customerId) {
         List<ContractsOpenBuy> contractsOpenBuy = contractsOpenBuyService.selectList();
         choiceContractListBuy.setAll(contractsOpenBuy.stream()
-                .filter(e -> e.getIdCustomer().equals(customerId))
+                .filter(e -> e.getCustomer().getId().equals(customerId))
                 .collect(Collectors.toList()));
-         nrContractBuy.setItems(choiceContractListBuy);
+        nrContractBuy.setItems(choiceContractListBuy);
 
         List<ContractsOpenSell> contractsOpenSell = contractsOpenSellService.selectList();
         choiceContractListSell.setAll(contractsOpenSell.stream()
-                .filter(e -> e.getIdCustomer().equals(customerId))
+                .filter(e -> e.getCustomer().getId().equals(customerId))
                 .collect(Collectors.toList()));
         nrContractSell.setItems(choiceContractListSell);
     }
