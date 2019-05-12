@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-@ComponentScan({"crud", "fxControllers", "main", "crud.model","enums","tools"})
+@ComponentScan({"crud", "fxControllers", "main", "crud.model","enums","tools","annotations"})
 @EntityScan("crud/model")
 @EnableJpaRepositories("crud.repository")
 @SpringBootApplication
