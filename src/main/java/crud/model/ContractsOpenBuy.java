@@ -13,20 +13,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContractsOpenBuy  extends ContractsOpenAbstract {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idSell;
-    private Long idCustomer;
-    private String customerName;
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "MaterialId", nullable = false, columnDefinition = "int default 0")
     private Material material;
-    private int amount;
     private String contractName;
+    @ManyToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "CustomerId", nullable = false)
+    private Customer customer;
+    private int amount;
     private int nrTruck;
     private int nrTruckContract;
     private int openClose;
+
 
     public Long getMaterialId(){
         return material.getId();
