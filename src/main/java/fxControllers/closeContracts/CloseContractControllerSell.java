@@ -1,9 +1,7 @@
 package fxControllers.closeContracts;
 
-import crud.model.ContractsClose;
 import crud.model.ContractsOpenSell;
 import crud.model.Material;
-import crud.services.interfaces.ContractsCloseService;
 import crud.services.interfaces.ContractsOpenService;
 import crud.services.interfaces.MaterialService;
 import javafx.beans.property.SimpleStringProperty;
@@ -54,28 +52,25 @@ public class CloseContractControllerSell {
 
     private ObservableList materialList = FXCollections.observableArrayList();
     private ObservableList<ContractsOpenSell> data;
-    private ContractsCloseService contractsCloseService ;
-    private ContractsOpenService<ContractsOpenSell> contractsOpenServiceSell;
+    private ContractsOpenService<ContractsOpenSell> contractsOpenSellService;
     private MaterialService materialService;
 
-    public CloseContractControllerSell(ContractsCloseService contractsCloseService, ContractsOpenService<ContractsOpenSell> contractsOpenServiceSell, MaterialService materialService) {
-        this.contractsCloseService = contractsCloseService;
-        this.contractsOpenServiceSell = contractsOpenServiceSell;
+    public CloseContractControllerSell(ContractsOpenService<ContractsOpenSell> contractsOpenSellService, MaterialService materialService) {
+        this.contractsOpenSellService = contractsOpenSellService;
         this.materialService = materialService;
     }
 
-    private List<ContractsClose> allClosedContracts;
+    private List<ContractsOpenSell> closedContracts;
 
     public void initialize() {
-        allClosedContracts = contractsCloseService.findAll();
+        closedContracts = contractsOpenSellService.selectList();
         materialList.setAll(materialService.selectList());
         choiceMaterialContract.setItems(materialList);
     }
 
-    private void selectMaterial(Long materialId) {
-        List<ContractsOpenSell> closedSellContracts = allClosedContracts.stream()
-                .map(ContractsClose::getContractsOpenSell)
-                .filter(contractsOpenSell -> contractsOpenSell.getMaterialId().equals(materialId))
+    private void selectMaterial(Material chosenMaterial) {
+        List<ContractsOpenSell> closedSellContracts = closedContracts.stream()
+                .filter(contractsOpenSell -> contractsOpenSell.getOpenClose()==1 && contractsOpenSell.getMaterial().equals(chosenMaterial) )
                 .collect(Collectors.toList());
         data = FXCollections.observableArrayList();
         data.setAll(closedSellContracts);
@@ -92,6 +87,6 @@ public class CloseContractControllerSell {
 
     public void MaterialContractList(ActionEvent actionEvent) {
         Material chosenMaterial =(Material) choiceMaterialContract.getValue();
-        selectMaterial(chosenMaterial.getId());
+        selectMaterial(chosenMaterial);
     }
 }

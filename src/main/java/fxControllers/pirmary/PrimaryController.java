@@ -1,11 +1,19 @@
 package fxControllers.pirmary;
 
+import annotations.ComboBoxNoEmpty;
+import annotations.DatePickerNoEmpty;
+import annotations.TextFieldNoEmpty;
 import crud.model.*;
-import crud.services.interfaces.*;
+import crud.services.interfaces.AllTruckService;
+import crud.services.interfaces.ContractsCloseService;
+import crud.services.interfaces.ContractsOpenService;
+import crud.services.interfaces.CustomerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import main.ValidatorGUI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import tools.PropertiesReader;
 
@@ -18,59 +26,64 @@ public class PrimaryController {
 
 
     @FXML
-    private TextField deliveryAmount;
+    @TextFieldNoEmpty(message = "Podaj ilość materiału")
+    public TextField deliveryAmount;
 
     @FXML
-    private ComboBox customer;
+    @ComboBoxNoEmpty(message = "Wybierz klienta")
+    public ComboBox customer;
 
     @FXML
-    private Button deliveryAdd;
+    public Button deliveryAdd;
 
     @FXML
-
-    private TextField deliveryPlate;
-
-    @FXML
-    private ComboBox nrContractBuy;
+    @TextFieldNoEmpty(message = "Podaj numer rejestracyjny")
+    public TextField deliveryPlate;
 
     @FXML
-    private ComboBox nrContractSell;
+    public ComboBox nrContractBuy;
 
     @FXML
-    private Label materialName;
+    public ComboBox nrContractSell;
 
     @FXML
-    private DatePicker datePickerChoice;
+    public Label materialName;
 
     @FXML
-    private Label dataPickError;
+    @DatePickerNoEmpty(message = "Wybiez datę")
+    public DatePicker datePickerChoice;
+
+    @FXML
+    public Label dataPickError;
 
     private int typeOfTransaction;
 
-    ObservableList<ContractsOpenBuy> choiceContractListBuy = FXCollections.observableArrayList();
-    ObservableList<ContractsOpenSell> choiceContractListSell = FXCollections.observableArrayList();
-    ObservableList customersList = FXCollections.observableArrayList();
+    private ObservableList<ContractsOpenBuy> choiceContractListBuy = FXCollections.observableArrayList();
+    private ObservableList<ContractsOpenSell> choiceContractListSell = FXCollections.observableArrayList();
+    private ObservableList customersList = FXCollections.observableArrayList();
 
     private CustomerService customerService;
     private AllTruckService allTruckService;
-    private MaterialService materialService;
     private ContractsOpenService<ContractsOpenSell> contractsOpenSellService;
     private ContractsOpenService<ContractsOpenBuy> contractsOpenBuyService;
     private ContractsCloseService contractsCloseService;
-    private ContractsOpenAbstract contractsOpenAbstract;
-    private ContractsClose contractsClose;
     private Material materialChosen;
     private PropertiesReader propertiesFile;
+
+
+    @Autowired
+    ValidatorGUI validateObject;
+
+    String choiceInformation;
 
     ContractsOpenBuy contractsOpenBuy;
     ContractsOpenSell contractsOpenSell;
 
-    public PrimaryController(CustomerService customerService, AllTruckService allTruckService, MaterialService materialService,
+    public PrimaryController(CustomerService customerService, AllTruckService allTruckService,
                              ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
                              ContractsCloseService contractsCloseService, PropertiesReader propertiesFile) {
         this.customerService = customerService;
         this.allTruckService = allTruckService;
-        this.materialService = materialService;
         this.contractsOpenSellService = contractsOpenSell;
         this.contractsOpenBuyService = contractsOpenBuy;
         this.contractsCloseService = contractsCloseService;
@@ -81,63 +94,58 @@ public class PrimaryController {
         customersList.setAll(customerService.selectList());
         customer.setItems(customersList);
         customer.setItems(customersList);
+        choiceInformation = propertiesFile.getPropertiesFile().getProperty("choiceInformation");
     }
 
+    AllTruck newTruckToSave;
+
     public void addButton() {
-        String datePickerString = String.valueOf(datePickerChoice.getValue());
-        String deliveryAmountText = deliveryAmount.getText();
-        Customer chosenReceiver = (Customer) customer.getValue();
-        if (deliveryPlate.getText().length() > 0) {
-            if (deliveryAmount.getText().length() > 0) {
-                if (((datePickerString.length()) > 0) && (!datePickerString.equals("Wybierz Datę"))) {
-                    try {
-                        Integer.parseInt(deliveryAmountText);
-                        AllTruck addedTruck = AllTruck.builder()
-                                .date(datePickerString)
-                                .material(materialChosen)
-                                .truckNumber(deliveryPlate.getText())
-                                .amount(Integer.parseInt(deliveryAmountText))
-                                .finalAmount(0)
-                                .transportOrder("Do uzupełnienia")
-                                .documentName("-")
-                                .color("white")
-                                .customer(chosenReceiver)
-                                .build();
-                        if (typeOfTransaction == 0) {
-                            addedTruck.setContractsOpenBuy(contractsOpenBuy);
-                            contractsOpenBuyService.addOrUpdate(contractsOpenBuy);
-                            contractsCloseService.findByContractBuy(contractsOpenBuy)
-                                    .orElse(new ContractsClose()).setContractsOpenBuy(contractsOpenBuy);
-                            updateTruckAmountCompleted(contractsOpenBuy);
-                        } else {
-                            addedTruck.setContractsOpenSell(contractsOpenSell);
-                            contractsOpenSellService.addOrUpdate(contractsOpenSell);
-                            contractsCloseService.findByContractSell(contractsOpenSell)
-                                    .orElse(new ContractsClose()).setContractsOpenSell(contractsOpenSell);
-                            updateTruckAmountCompleted(contractsOpenSell);
-                        }
-                        allTruckService.addOrUpdate(addedTruck);
-                        deliveryPlate.clear();
-                        deliveryAmount.clear();
-                        materialName.setText("");
-                        dataPickError.setText("");
-                        customer.setValue(null);
-                        nrContractBuy.setValue(null);
-                        nrContractSell.setValue(null);
-                        datePickerChoice.setValue(null);
-                        datePickerChoice.setPromptText("Wybierz date");
-                    } catch (Exception e) {
-                        deliveryAmount.setText("Tylko liczby");
-                        e.printStackTrace();
-                    }
-                } else {
-                    dataPickError.setText("Wymagana data");
-                }
+        try {
+            if (validateObject.validateObject(this) && (
+                    Optional.ofNullable(nrContractBuy.getValue()).isPresent() ||
+                            Optional.ofNullable(nrContractSell.getValue()).isPresent()
+            )) {
+                newTruckToSave = AllTruck.builder()
+                        .date(String.valueOf(datePickerChoice.getValue()))
+                        .material(materialChosen)
+                        .truckNumber(deliveryPlate.getText())
+                        .amount(Integer.parseInt(deliveryAmount.getText()))
+                        .finalAmount(0)
+                        .transportOrder("Do uzupełnienia")
+                        .documentName("-")
+                        .color("white")
+                        .customer((Customer) customer.getValue())
+                        .build();
+                setTruckContract();
+                allTruckService.addOrUpdate(newTruckToSave);
+                deliveryPlate.clear();
+                deliveryAmount.clear();
+                materialName.setText("");
+                dataPickError.setText("");
+                customer.setValue(null);
+                nrContractBuy.setValue(null);
+                nrContractSell.setValue(null);
+                datePickerChoice.setValue(null);
             } else {
-                deliveryAmount.setText("Wpisz ilość");
+                nrContractSell.setPromptText(choiceInformation);
+                nrContractBuy.setPromptText(choiceInformation);
             }
+        } catch (NumberFormatException e) {
+            deliveryAmount.setText("Tylko liczby");
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setTruckContract() {
+        if (typeOfTransaction == 0) {
+            newTruckToSave.setContractsOpenBuy(contractsOpenBuy);
+            updateTruckAmountCompleted(contractsOpenBuy);
+            contractsOpenBuyService.addOrUpdate(contractsOpenBuy);
         } else {
-            deliveryPlate.setText("Wpisz numer rejestracyjny");
+            newTruckToSave.setContractsOpenSell(contractsOpenSell);
+            updateTruckAmountCompleted(contractsOpenSell);
+            contractsOpenSellService.addOrUpdate(contractsOpenSell);
         }
     }
 
@@ -149,23 +157,27 @@ public class PrimaryController {
     }
 
     public void materialPrepareBuy() {
-        typeOfTransaction = 0;
-        contractsOpenBuy = (ContractsOpenBuy) nrContractBuy.getValue();
-        materialChosen = contractsOpenBuy.getMaterial();
-        materialName.setText(contractsOpenBuy.getMaterial().toString());
+        if (Optional.ofNullable(nrContractBuy.getValue()).isPresent()) {
+            typeOfTransaction = 0;
+            contractsOpenBuy = (ContractsOpenBuy) nrContractBuy.getValue();
+            materialChosen = contractsOpenBuy.getMaterial();
+            materialName.setText(contractsOpenBuy.getMaterial().toString());
+        }
     }
 
     public void materialPrepareSell() {
-        typeOfTransaction = 1;
-        contractsOpenSell = (ContractsOpenSell) nrContractSell.getValue();
-        materialChosen = contractsOpenSell.getMaterial();
-        materialName.setText(contractsOpenSell.getMaterial().toString());
+        if (Optional.ofNullable(nrContractSell.getValue()).isPresent()) {
+            typeOfTransaction = 1;
+            contractsOpenSell = (ContractsOpenSell) nrContractSell.getValue();
+            materialChosen = contractsOpenSell.getMaterial();
+            materialName.setText(contractsOpenSell.getMaterial().toString());
+        }
     }
 
 
     public void selectComboBoxList() {
-        if(Optional.ofNullable(customer.getValue()).isPresent()  ||
-                !(customer.getValue().toString().equals(propertiesFile.getPropertiesFile().getProperty("choiceInformation")))){
+        if (Optional.ofNullable(customer.getValue()).isPresent() &&
+                !(customer.getValue().toString().equals(propertiesFile.getPropertiesFile().getProperty("choiceInformation")))) {
             Long customerId = customerService
                     .findByName(customer.getValue().toString())
                     .getId();

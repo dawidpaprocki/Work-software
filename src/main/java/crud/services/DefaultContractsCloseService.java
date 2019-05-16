@@ -1,9 +1,9 @@
 package crud.services;
 
+import crud.model.BuySellConnection;
 import crud.model.ContractsOpenBuy;
 import crud.model.ContractsOpenSell;
 import crud.repository.ContractCloseRepository;
-import crud.model.ContractsClose;
 import crud.services.interfaces.ContractsCloseService;
 import org.springframework.stereotype.Service;
 
@@ -20,36 +20,36 @@ public class DefaultContractsCloseService implements ContractsCloseService {
     }
 
     @Override
-    public void addUpdate(ContractsClose contractsClose) {
-        contractCloseRepository.save(contractsClose);
+    public void addUpdate(BuySellConnection buySellConnection) {
+        contractCloseRepository.save(buySellConnection);
 
     }
 
     @Override
     public void deleteContract(Long id) {
-        Optional<ContractsClose> foundContract = contractCloseRepository.findById(id);
+        Optional<BuySellConnection> foundContract = contractCloseRepository.findById(id);
         foundContract.ifPresent(contractCloseRepository::delete);
     }
 
     @Override
-    public Optional<ContractsClose> findById(Long id) {
+    public Optional<BuySellConnection> findById(Long id) {
         return contractCloseRepository.findById(id);
     }
 
     @Override
-    public Optional<ContractsClose> findByContractBuy(ContractsOpenBuy contractsOpenBuy) {
+    public Optional<BuySellConnection> findByContractBuy(ContractsOpenBuy contractsOpenBuy) {
         return contractCloseRepository.findByContractsOpenBuy(contractsOpenBuy);
     }
 
     @Override
-    public Optional<ContractsClose> findByContractSell(ContractsOpenSell contractsOpenSell) {
+    public Optional<BuySellConnection> findByContractSell(ContractsOpenSell contractsOpenSell) {
         return contractCloseRepository.findByContractsOpenSell(contractsOpenSell);
     }
 
 
 
     @Override
-    public List<ContractsClose> findAll() {
+    public List<BuySellConnection> findAll() {
         return contractCloseRepository.findAll();
     }
 

@@ -1,6 +1,6 @@
 package crud.services.interfaces;
 
-import crud.model.ContractsClose;
+import crud.model.BuySellConnection;
 import crud.model.ContractsOpenBuy;
 import crud.model.ContractsOpenSell;
 
@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContractsCloseService {
-    void addUpdate(ContractsClose contractsClose);
+    void addUpdate(BuySellConnection buySellConnection);
     void deleteContract(Long id);
-    Optional<ContractsClose> findById(Long id);
-    Optional<ContractsClose> findByContractBuy(ContractsOpenBuy contractsOpenBuy);
-    Optional<ContractsClose> findByContractSell(ContractsOpenSell contractsOpenSell);
-    List<ContractsClose> findAll();
+    Optional<BuySellConnection> findById(Long id);
+    Optional<BuySellConnection> findByContractBuy(ContractsOpenBuy contractsOpenBuy);
+    Optional<BuySellConnection> findByContractSell(ContractsOpenSell contractsOpenSell);
+    List<BuySellConnection> findAll();
 
 
 
