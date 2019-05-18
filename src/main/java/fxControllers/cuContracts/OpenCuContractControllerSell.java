@@ -47,6 +47,7 @@ public class OpenCuContractControllerSell {
 
 
 
+
     public OpenCuContractControllerSell(ContractsOpenService<ContractsOpenSell> contractsOpenService) {
         this.contractsOpenService = contractsOpenService;
 

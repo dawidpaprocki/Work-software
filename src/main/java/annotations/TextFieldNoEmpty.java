@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = TextNoEmptyValidator.class)
 public @interface TextFieldNoEmpty {
     String message();
+
     Class[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

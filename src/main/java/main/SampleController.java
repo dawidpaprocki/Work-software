@@ -27,6 +27,7 @@ public class SampleController  {
     public Tab copperZincTab;
     public Tab contractCloseTab;
     public Tab loginTab;
+    public Tab customerTab;
 
     @Autowired
     private AccessPointRepository accessPointRepository;

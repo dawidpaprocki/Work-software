@@ -20,6 +20,8 @@ public class Customer {
     private Long id;
     private String name;
     private String country;
+    private String address;
+    private String nip;
     @Override
     public String toString() {
         return name;

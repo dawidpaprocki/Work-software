@@ -102,7 +102,7 @@ public class PrimaryController {
     public void addButton() {
         try {
             if (validateObject.validateObject(this) && (
-                    Optional.ofNullable(nrContractBuy.getValue()).isPresent() ||
+                    Optional.ofNullable(nrContractBuy.getValue()).isPresent() &&
                             Optional.ofNullable(nrContractSell.getValue()).isPresent()
             )) {
                 newTruckToSave = AllTruck.builder()

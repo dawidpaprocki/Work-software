@@ -16,13 +16,13 @@ public class DefaultAllTablesUpdateRecordService implements AllTablesUpdateRecor
     @Transactional
     public void updateRecord(Class clazz, String columnName, String newValue, Long idRow) {
         String hql = "UPDATE " + clazz.getSimpleName() + " a SET a." + columnName.substring(0,columnName.length()-6) + "  = :newValue where id = :idRow ";
-        Query query1 = entityManager.createQuery(hql);
+        Query managerQuery = entityManager.createQuery(hql);
         try {
-            query1.setParameter("newValue", Integer.parseInt(newValue));
+            managerQuery.setParameter("newValue", Integer.parseInt(newValue));
         } catch (Exception e) {
-            query1.setParameter("newValue", newValue);
+            managerQuery.setParameter("newValue", newValue);
         }
-        query1.setParameter("idRow", idRow);
-        query1.executeUpdate();
+        managerQuery.setParameter("idRow", idRow);
+        managerQuery.executeUpdate();
     }
 }

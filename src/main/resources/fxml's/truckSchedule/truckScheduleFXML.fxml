@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="617.0" prefWidth="1154.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.alltruck.TableController">
    <children>
-       <TableView fx:id="tables" editable="true" layoutY="39.0" prefHeight="576.0" prefWidth="1154.0" styleClass="table-row-cell" stylesheets="@../style.css">
+       <TableView fx:id="tables" editable="true" layoutY="39.0" prefHeight="576.0" prefWidth="1154.0" styleClass="table-row-cell" stylesheets="@../../style.css">
            <columns>
             <TableColumn fx:id="idColumn" prefWidth="27.0" text="id" />
                <TableColumn fx:id="dateColumn" onEditCommit="#doChange" prefWidth="74.0" text="Data" />
