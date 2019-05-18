@@ -6,6 +6,7 @@ import enums.MaterialTypes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -27,7 +28,7 @@ public class OpenCuContractControllerBuy {
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnMaterialName;
     @FXML
-    private TableColumn<ContractsOpenBuy, String> columnNrTruckContract;
+    private  TableColumn<ContractsOpenBuy, String> columnNrTruckContract;
     @FXML
     private TableColumn<ContractsOpenBuy, String> columnNrTruck;
     @FXML

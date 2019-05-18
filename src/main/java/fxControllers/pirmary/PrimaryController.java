@@ -58,7 +58,6 @@ public class PrimaryController {
 
     private int typeOfTransaction;
 
-    private ObservableList<ContractsOpenBuy> choiceContractListBuy = FXCollections.observableArrayList();
     private ObservableList<ContractsOpenSell> choiceContractListSell = FXCollections.observableArrayList();
     private ObservableList customersList = FXCollections.observableArrayList();
 
@@ -69,6 +68,7 @@ public class PrimaryController {
     private ContractsCloseService contractsCloseService;
     private Material materialChosen;
     private PropertiesReader propertiesFile;
+    private ListOfContractsFromCustomer listOfContractsFromCustomer;
 
 
     @Autowired
@@ -79,15 +79,17 @@ public class PrimaryController {
     ContractsOpenBuy contractsOpenBuy;
     ContractsOpenSell contractsOpenSell;
 
+
     public PrimaryController(CustomerService customerService, AllTruckService allTruckService,
                              ContractsOpenService<ContractsOpenSell> contractsOpenSell, ContractsOpenService<ContractsOpenBuy> contractsOpenBuy,
-                             ContractsCloseService contractsCloseService, PropertiesReader propertiesFile) {
+                             ContractsCloseService contractsCloseService, PropertiesReader propertiesFile, ListOfContractsFromCustomer listOfContractsFromCustomer) {
         this.customerService = customerService;
         this.allTruckService = allTruckService;
         this.contractsOpenSellService = contractsOpenSell;
         this.contractsOpenBuyService = contractsOpenBuy;
         this.contractsCloseService = contractsCloseService;
         this.propertiesFile = propertiesFile;
+        this.listOfContractsFromCustomer = listOfContractsFromCustomer;
     }
 
     public void initialize() {
@@ -176,26 +178,7 @@ public class PrimaryController {
 
 
     public void selectComboBoxList() {
-        if (Optional.ofNullable(customer.getValue()).isPresent() &&
-                !(customer.getValue().toString().equals(propertiesFile.getPropertiesFile().getProperty("choiceInformation")))) {
-            Long customerId = customerService
-                    .findByName(customer.getValue().toString())
-                    .getId();
-            listOfContractsBaseOnCustomer(customerId);
-        }
+       nrContractBuy.setItems();
     }
 
-    private void listOfContractsBaseOnCustomer(Long customerId) {
-        List<ContractsOpenBuy> contractsOpenBuy = contractsOpenBuyService.selectList();
-        choiceContractListBuy.setAll(contractsOpenBuy.stream()
-                .filter(e -> e.getCustomer().getId().equals(customerId))
-                .collect(Collectors.toList()));
-        nrContractBuy.setItems(choiceContractListBuy);
-
-        List<ContractsOpenSell> contractsOpenSell = contractsOpenSellService.selectList();
-        choiceContractListSell.setAll(contractsOpenSell.stream()
-                .filter(e -> e.getCustomer().getId().equals(customerId))
-                .collect(Collectors.toList()));
-        nrContractSell.setItems(choiceContractListSell);
-    }
 }
