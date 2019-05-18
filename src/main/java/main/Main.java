@@ -37,7 +37,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        fxmlLoader.setLocation(getClass().getResource("/UserInterfaceFXML/mainUIFXML.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/fxml's/UserInterface/mainUIFXML.fxml"));
         rootNode = fxmlLoader.load();
         primaryStage.setTitle("Organizacja pracy");
         Scene scene = new Scene(rootNode);
