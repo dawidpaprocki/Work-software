@@ -3,7 +3,6 @@ package fxControllers;
 import crud.services.interfaces.AccessPointService;
 import javafx.scene.control.Tab;
 import lombok.extern.slf4j.Slf4j;
-import main.SampleController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
 @Component
 public class SecurityPrivilegesSetup {
 
-    private SampleController sampleController;
+    private MainController mainController;
     private AccessPointService accessPointService;
 
-    public SecurityPrivilegesSetup(SampleController sampleController, AccessPointService accessPointService) {
-        this.sampleController = sampleController;
+    public SecurityPrivilegesSetup(MainController mainController, AccessPointService accessPointService) {
+        this.mainController = mainController;
         this.accessPointService = accessPointService;
     }
 
@@ -37,9 +36,9 @@ public class SecurityPrivilegesSetup {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         List<String> accessPointsForLoggedUser = accessPointService.getAccessPointsForLoggedUser(authentication);
         List<Tab> enterAllowTabs = new ArrayList<>();
-        List<Tab> listOfTabs = sampleController.getListOfTabs();
+        List<Tab> listOfTabs = mainController.getListOfTabs();
         accessPointsForLoggedUser.forEach(element ->
-                sampleController.getListOfTabs().forEach(tab -> {
+                mainController.getListOfTabs().forEach(tab -> {
                     if (tab.getId().equals(element)){
                         enterAllowTabs.add(tab);
                     }
