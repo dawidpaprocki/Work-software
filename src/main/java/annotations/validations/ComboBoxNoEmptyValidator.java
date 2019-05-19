@@ -12,7 +12,6 @@ public class ComboBoxNoEmptyValidator implements ConstraintValidator<ComboBoxNoE
    public void initialize(ComboBoxNoEmpty constraint) {
    }
 
-
    public boolean isValid(ComboBox comboBox, ConstraintValidatorContext context) {
       return  Optional.ofNullable(comboBox.getValue()).isPresent();
    }

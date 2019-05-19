@@ -1,4 +1,4 @@
-package main;
+package fxControllers;
 
 import crud.model.AccessPoint;
 import crud.model.Role;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-public class SampleController  {
+public class MainController {
 
     public TabPane tabPane;
     public Tab mainPageTab;
