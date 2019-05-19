@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SampleController">
+<VBox prefHeight="631.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.MainController">
     <children>
         <TabPane fx:id="tabPane" prefHeight="631.0" prefWidth="1154.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="loginTab" text="Login Page">
                     <content>
-                        <fx:include source="LoginUIFXML.fxml" />
+                        <fx:include source="LoginPanelUIFXML.fxml" />
                     </content>
                 </Tab>
                 <Tab fx:id="mainPageTab" text="Główna Strona">

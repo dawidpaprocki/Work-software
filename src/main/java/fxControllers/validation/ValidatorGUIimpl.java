@@ -1,4 +1,4 @@
-package main;
+package fxControllers.validation;
 
 import javafx.geometry.Bounds;
 import javafx.scene.control.Control;

@@ -10,7 +10,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.pirmary.PrimaryController">
+<AnchorPane prefHeight="576.0" prefWidth="891.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxControllers.primary.PrimaryController">
+
 
     <children>
         <Label layoutX="15.0" layoutY="13.0" prefHeight="17.0" prefWidth="149.0" text="Material" />
