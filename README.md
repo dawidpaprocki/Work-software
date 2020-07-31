@@ -29,8 +29,8 @@ Final close tab with every Contracts
 ![Close tab](./img/Close contracts.JPG)
 
 ## Technologies
-* Java - version 2.0.5
-* JavaFX
+* Java - 1.8
+* JavaFX - version 2.0.5
 * Lombok
 * Maven
 * Junit - version 4.12
